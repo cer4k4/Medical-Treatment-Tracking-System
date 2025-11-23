@@ -1,0 +1,3116 @@
+{
+  "apidogProject": "1.0.0",
+  "$schema": {
+    "app": "apidog",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "NodeJsTutorial",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "apiCollection": [
+    {
+      "name": "Root",
+      "id": 5027172,
+      "auth": {},
+      "securityScheme": {},
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "identityPattern": {
+        "httpApi": {
+          "type": "methodAndPath",
+          "bodyType": "",
+          "fields": []
+        }
+      },
+      "shareSettings": {},
+      "visibility": "SHARED",
+      "moduleId": 903739,
+      "preProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "postProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "inheritPostProcessors": {},
+      "inheritPreProcessors": {},
+      "items": [
+        {
+          "name": "User",
+          "id": 5048102,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 903739,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "Create User",
+              "api": {
+                "id": "21995780",
+                "method": "post",
+                "path": "/users/create",
+                "parameters": {
+                  "query": []
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32413545",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "html",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"username\":\"234525s5692\",\n    \"fullName\":\"ali2karimi\",\n    \"password\":\"124S5d@675\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [
+                  {
+                    "id": 31536367,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "32413545",
+                    "parameters": {
+                      "query": []
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"username\":\"234525s5692\",\n    \"fullName\":\"ali2karimi\",\n    \"password\":\"124S5d@675\"\n}",
+                      "type": "application/json"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.2780b7d0-31ef-48f0-911f-31af18b96759\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"2780b7d0-31ef-48f0-911f-31af18b96759\",\"requestIndex\":0,\"httpRequestId\":\"dbe35432-e2bb-4a5d-845e-a4725536aef6\"},\"type\":\"http\",\"response\":{\"id\":\"5d9d0689-bd09-4141-b014-02a4878ac2a5\",\"status\":\"Created\",\"code\":201,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"169\"},{\"key\":\"ETag\",\"value\":\"W/\\\"a9-nZ2H06/I2kjZ1B2nNq7+ttlnP4I\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 06:45:11 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,49,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,44,34,100,97,116,97,34,58,123,34,117,115,101,114,110,97,109,101,34,58,34,50,51,52,53,50,53,115,53,54,57,50,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,50,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,125,125]},\"cookie\":[],\"responseTime\":62,\"responseSize\":169,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.3702460005879402,\"wait\":0.4372129999101162,\"dns\":0,\"tcp\":0.08830899931490421,\"firstByte\":60.08040500059724,\"download\":0.5107649993151426,\"process\":0.033118000254034996,\"total\":61.52005599997938}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"create\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":90,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"username\\\":\\\"234525s5692\\\",\\n    \\\"fullName\\\":\\\"ali2karimi\\\",\\n    \\\"password\\\":\\\"124S5d@675\\\"\\n}\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://127.0.0.1:4000/users/create\",\"headers\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"90\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":201,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"169\"},{\"key\":\"ETag\",\"value\":\"W/\\\"a9-nZ2H06/I2kjZ1B2nNq7+ttlnP4I\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 06:45:11 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760165111888,\"requestStart\":1760165111889,\"offset\":{\"request\":0.3702460005879402,\"socket\":0.8074590004980564,\"connect\":0.8957679998129606,\"response\":60.9761730004102,\"end\":61.48693799972534,\"lookup\":0.8074590004980564,\"done\":61.52005599997938}}}]}},\"responseValidation\":{\"responseCode\":{\"valid\":false,\"result\":{\"actual\":201,\"expect\":200},\"message\":\"Returned 201 while expected 200.\"}},\"passed\":false,\"timings\":{\"started\":1760165111883,\"preProcessorsStarted\":1760165111884,\"preProcessorsCompleted\":1760165111884,\"postProcessorsStarted\":1760165111951,\"postProcessorsCompleted\":1760165111951,\"completed\":1760165111952},\"metaInfo\":{\"httpApiId\":21995780,\"httpApiName\":\"Create User\",\"httpApiPath\":\"/users/create\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32413545"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Get User",
+              "api": {
+                "id": "21996142",
+                "method": "get",
+                "path": "/users/byId",
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "zdHYkakTGO",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTczMDY1LCJleHAiOjE3NjAxNzY2NjV9.sjmiQ2LaICXJk4Hjg-O7Um7huyO1bhB91uEmKgqVOe8",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32412749",
+                    "code": 200,
+                    "name": "Success",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 20,
+                "cases": [
+                  {
+                    "id": 31538388,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "32412749",
+                    "parameters": {
+                      "query": [],
+                      "path": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "w5UaErJOxv",
+                          "relatedId": "zdHYkakTGO",
+                          "relatedName": "Authorization",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGVhMjJjZDFmMWQyYjIzODVkZmEwYTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDE3NDg0NiwiZXhwIjoxNzYwMTc4NDQ2fQ.iop8Q2r6pp5YB0sBtJnSb9l4runDzdo_q6RLznKiTxE",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "generateMode": "normal"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.65e40211-7e5b-4d5e-857a-6eba0a811efd\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"65e40211-7e5b-4d5e-857a-6eba0a811efd\",\"requestIndex\":0,\"httpRequestId\":\"0668cb7d-14e5-4cd4-9baf-227ef7a4ace4\"},\"type\":\"http\",\"response\":{\"id\":\"8bd6aca9-ea0d-4d43-8577-bd0627f3a6c6\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"151\"},{\"key\":\"ETag\",\"value\":\"W/\\\"97-OqE4k8q3G7Xm9dnXJhbQur3OQDw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:28:56 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,44,34,100,97,116,97,34,58,123,34,117,115,101,114,110,97,109,101,34,58,34,97,100,108,105,107,97,114,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,50,107,97,114,105,109,105,34,125,125]},\"cookie\":[],\"responseTime\":5,\"responseSize\":151,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.3793490007519722,\"wait\":0.40486400201916695,\"dns\":0,\"tcp\":0.102827999740839,\"firstByte\":3.2839129976928234,\"download\":0.38927900046110153,\"process\":0.014586001634597778,\"total\":4.574819002300501}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"byId\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGVhMjJjZDFmMWQyYjIzODVkZmEwYTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDE3NDg0NiwiZXhwIjoxNzYwMTc4NDQ2fQ.iop8Q2r6pp5YB0sBtJnSb9l4runDzdo_q6RLznKiTxE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://127.0.0.1:4000/users/byId\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGVhMjJjZDFmMWQyYjIzODVkZmEwYTMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDE3NDg0NiwiZXhwIjoxNzYwMTc4NDQ2fQ.iop8Q2r6pp5YB0sBtJnSb9l4runDzdo_q6RLznKiTxE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"151\"},{\"key\":\"ETag\",\"value\":\"W/\\\"97-OqE4k8q3G7Xm9dnXJhbQur3OQDw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:28:56 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760174936419,\"requestStart\":1760174936419,\"offset\":{\"request\":0.3793490007519722,\"socket\":0.7842130027711391,\"connect\":0.8870410025119781,\"response\":4.170954000204802,\"end\":4.560233000665903,\"lookup\":0.7842130027711391,\"done\":4.574819002300501}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1760174936413,\"preProcessorsStarted\":1760174936414,\"preProcessorsCompleted\":1760174936414,\"postProcessorsStarted\":1760174936425,\"postProcessorsCompleted\":1760174936425,\"completed\":1760174936426},\"metaInfo\":{\"httpApiId\":21996142,\"httpApiCaseId\":31538388,\"httpApiName\":\"Get User\",\"httpApiPath\":\"/users/byId\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32412749"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Update User",
+              "api": {
+                "id": "22003270",
+                "method": "patch",
+                "path": "/users/update",
+                "parameters": {
+                  "query": [],
+                  "path": []
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32413550",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "acknowledged": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "acknowledged"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "result"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"username\":\"ce22r4k4\",\n    \"fullName\":\"aliw342karimi\",\n    \"password\":\"1245675\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 50,
+                "cases": [
+                  {
+                    "id": 31536598,
+                    "type": "DEBUG_CASE",
+                    "path": "/users/update",
+                    "name": "Success",
+                    "responseId": "32413550",
+                    "parameters": {
+                      "query": [],
+                      "path": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"username\":\"ce22r4k4\",\n    \"fullName\":\"aliw342karimi\",\n    \"password\":\"124Sd@5675\",\n    \"newPassword\":\"124S@d15675\"\n}",
+                      "generateMode": "normal"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.10ec9b1d-3d40-4be9-99c5-d139491e984c\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"10ec9b1d-3d40-4be9-99c5-d139491e984c\",\"requestIndex\":0,\"httpRequestId\":\"909a1288-87f0-4539-b5dd-9e0caf515c82\"},\"type\":\"http\",\"response\":{\"id\":\"4a41f977-6dd1-46ed-a27d-8e850e70fb57\",\"status\":\"Bad Request\",\"code\":400,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"149\"},{\"key\":\"ETag\",\"value\":\"W/\\\"95-OH7z66/9KNMgzXHR33d15kLv07s\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 05:34:02 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,102,97,108,115,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,52,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,167,219,140,217,134,32,217,134,216,167,217,133,32,218,169,216,167,216,177,216,168,216,177,219,140,32,217,130,216,168,217,132,216,167,32,216,170,217,136,216,179,216,183,32,216,180,216,174,216,181,32,216,175,219,140,218,175,216,177,219,140,32,218,175,216,177,217,129,216,170,217,135,32,216,180,216,175,217,135,32,216,167,216,179,216,170,34,44,34,100,97,116,97,34,58,123,125,125]},\"cookie\":[],\"responseTime\":36,\"responseSize\":149,\"type\":\"http\",\"tempFilePath\":\"\"},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"update\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTU4NTMyLCJleHAiOjE3NjAxNjIxMzJ9.zYUdpYQAireq0G-o7lNCq6SHwP7L_GlrcKqOO3ZZT_k\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":61,\"system\":true}],\"method\":\"PATCH\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"username\\\":\\\"ce22r4k4\\\",\\n    \\\"fullName\\\":\\\"aliw342karimi\\\"\\n}\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"PATCH\",\"href\":\"http://127.0.0.1:4000/users/update\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTU4NTMyLCJleHAiOjE3NjAxNjIxMzJ9.zYUdpYQAireq0G-o7lNCq6SHwP7L_GlrcKqOO3ZZT_k\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"61\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":400,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"149\"},{\"key\":\"ETag\",\"value\":\"W/\\\"95-OH7z66/9KNMgzXHR33d15kLv07s\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 05:34:02 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760160842609,\"requestStart\":1760160842610,\"offset\":{\"request\":0.7346719997003675,\"socket\":1.3809460001066327,\"connect\":1.690701000392437,\"response\":35.419921999797225,\"end\":36.38074200041592,\"lookup\":1.3809460001066327,\"done\":36.44114500004798}}}]}},\"responseValidation\":{\"schema\":{\"valid\":false,\"message\":\"data should have required property result\",\"errors\":[{\"keyword\":\"required\",\"dataPath\":\"\",\"schemaPath\":\"#/required\",\"params\":{\"missingProperty\":\"result\"},\"message\":\"should have required property result\"}]},\"responseCode\":{\"valid\":false,\"result\":{\"actual\":400,\"expect\":200},\"message\":\"Returned 400 while expected 200.\"}},\"passed\":false,\"timings\":{\"started\":1760160842604,\"preProcessorsStarted\":1760160842605,\"preProcessorsCompleted\":1760160842605,\"postProcessorsStarted\":1760160842647,\"postProcessorsCompleted\":1760160842647,\"completed\":1760160842650},\"metaInfo\":{\"httpApiId\":22003270,\"httpApiName\":\"Update User\",\"httpApiPath\":\"/users/update\",\"httpApiMethod\":\"patch\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32413550"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "User Login",
+              "api": {
+                "id": "22037626",
+                "method": "post",
+                "path": "/users/login",
+                "parameters": {},
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32480087",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "token"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"username\":\"ce22r4k4\",\n    \"password\":\"124S@d15675\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 60,
+                "cases": [
+                  {
+                    "id": 31536264,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "user",
+                    "responseId": "32480087",
+                    "parameters": {
+                      "query": [],
+                      "path": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"username\":\"23425s5692\",\n    \"password\":\"124S5d@675\"\n}",
+                      "generateMode": "normal"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.3708d9e4-ebc2-4555-948f-c064dc2517fe\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"3708d9e4-ebc2-4555-948f-c064dc2517fe\",\"requestIndex\":0,\"httpRequestId\":\"7ae88581-7c6c-445a-93f0-f0381fdfd8a0\"},\"type\":\"http\",\"response\":{\"id\":\"cc422191-e953-4b14-b7d0-b985324484e2\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"302\"},{\"key\":\"ETag\",\"value\":\"W/\\\"12e-+62+9yG8WPXbgCn6fxedGmTZT6o\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 22 Nov 2025 08:36:17 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,100,97,116,97,34,58,34,101,121,74,104,98,71,99,105,79,105,74,73,85,122,73,49,78,105,73,115,73,110,82,53,99,67,73,54,73,107,112,88,86,67,74,57,46,101,121,74,49,99,50,86,121,83,87,81,105,79,105,73,50,79,84,73,120,78,122,85,53,89,109,89,48,90,84,108,109,78,84,107,122,77,68,103,49,79,84,85,122,77,106,99,105,76,67,74,121,98,50,120,108,73,106,111,105,100,88,78,108,99,105,73,115,73,109,108,104,100,67,73,54,77,84,99,50,77,122,103,119,77,68,85,51,78,121,119,105,90,88,104,119,73,106,111,120,78,122,89,122,79,68,65,48,77,84,99,51,102,81,46,97,73,102,109,103,107,87,67,120,114,119,89,90,83,72,53,78,120,104,86,113,45,49,98,81,106,90,119,77,82,82,103,53,82,103,52,75,54,109,112,120,108,111,34,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,125]},\"cookie\":[],\"responseTime\":60,\"responseSize\":302,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.39931599982082844,\"wait\":0.5344890002161264,\"dns\":0,\"tcp\":0.18371200002729893,\"firstByte\":57.9653289988637,\"download\":0.9360320009291172,\"process\":0.06602699868381023,\"total\":60.08490499854088}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"login\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":60,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"username\\\":\\\"23425s5692\\\",\\n    \\\"password\\\":\\\"124S5d@675\\\"\\n}\",\"generateMode\":\"normal\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://127.0.0.1:4000/users/login\",\"headers\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"60\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"302\"},{\"key\":\"ETag\",\"value\":\"W/\\\"12e-+62+9yG8WPXbgCn6fxedGmTZT6o\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 22 Nov 2025 08:36:17 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1763800577422,\"requestStart\":1763800577423,\"offset\":{\"request\":0.39931599982082844,\"socket\":0.9338050000369549,\"connect\":1.1175170000642538,\"response\":59.08284599892795,\"end\":60.01887799985707,\"lookup\":0.9338050000369549,\"done\":60.08490499854088}}}]}},\"responseValidation\":{\"schema\":{\"valid\":false,\"message\":\"data should have required property token\",\"errors\":[{\"keyword\":\"required\",\"dataPath\":\"\",\"schemaPath\":\"#/required\",\"params\":{\"missingProperty\":\"token\"},\"message\":\"should have required property token\"}]},\"responseCode\":{\"valid\":true}},\"passed\":false,\"timings\":{\"started\":1763800577414,\"preProcessorsStarted\":1763800577419,\"preProcessorsCompleted\":1763800577419,\"postProcessorsStarted\":1763800577484,\"postProcessorsCompleted\":1763800577484,\"completed\":1763800577487},\"metaInfo\":{\"httpApiId\":22037626,\"httpApiCaseId\":31536264,\"httpApiName\":\"User Login\",\"httpApiPath\":\"/users/login\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"user\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  },
+                  {
+                    "id": 31538436,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "admin",
+                    "responseId": "32480087",
+                    "parameters": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"username\":\"ce22r4k4\",\n    \"password\":\"124S@d15675\"\n}",
+                      "type": "application/json"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.5692dea7-01c9-4187-a09b-5feefe404f29\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"5692dea7-01c9-4187-a09b-5feefe404f29\",\"requestIndex\":0,\"httpRequestId\":\"46baeca9-3410-4156-8cbc-5cc2d94e3cf3\"},\"type\":\"http\",\"response\":{\"id\":\"59927db6-1f18-44d2-aead-ffede47d88ec\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"302\"},{\"key\":\"ETag\",\"value\":\"W/\\\"12e-Vf0BjS+fr2JTSf8mWOZ+T2aTJJw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:25:08 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,44,34,100,97,116,97,34,58,34,101,121,74,104,98,71,99,105,79,105,74,73,85,122,73,49,78,105,73,115,73,110,82,53,99,67,73,54,73,107,112,88,86,67,74,57,46,101,121,74,49,99,50,86,121,83,87,81,105,79,105,73,50,79,71,85,53,90,84,77,121,78,109,89,53,78,122,104,107,79,68,108,108,90,68,107,53,78,87,69,50,90,87,69,105,76,67,74,121,98,50,120,108,73,106,111,105,100,88,78,108,99,105,73,115,73,109,108,104,100,67,73,54,77,84,99,50,77,68,69,51,78,68,99,119,79,67,119,105,90,88,104,119,73,106,111,120,78,122,89,119,77,84,99,52,77,122,65,52,102,81,46,122,82,120,69,54,104,100,103,53,49,86,88,68,109,89,121,107,67,111,105,76,74,109,99,57,109,117,80,99,70,122,66,115,114,68,109,65,70,55,110,115,104,52,34,125]},\"cookie\":[],\"responseTime\":54,\"responseSize\":302,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":1.3905859999358654,\"wait\":0.3369779996573925,\"dns\":0,\"tcp\":0.09627700224518776,\"firstByte\":52.51725099980831,\"download\":0.43778499960899353,\"process\":0.016196999698877335,\"total\":54.79507400095463}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"login\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":59,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"username\\\":\\\"ce22r4k4\\\",\\n    \\\"password\\\":\\\"124S@d15675\\\"\\n}\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://127.0.0.1:4000/users/login\",\"headers\":[{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"59\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"302\"},{\"key\":\"ETag\",\"value\":\"W/\\\"12e-Vf0BjS+fr2JTSf8mWOZ+T2aTJJw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:25:08 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760174708911,\"requestStart\":1760174708913,\"offset\":{\"request\":1.3905859999358654,\"socket\":1.727563999593258,\"connect\":1.8238410018384457,\"response\":54.34109200164676,\"end\":54.77887700125575,\"lookup\":1.727563999593258,\"done\":54.79507400095463}}}]}},\"responseValidation\":{\"schema\":{\"valid\":false,\"message\":\"data should have required property token\",\"errors\":[{\"keyword\":\"required\",\"dataPath\":\"\",\"schemaPath\":\"#/required\",\"params\":{\"missingProperty\":\"token\"},\"message\":\"should have required property token\"}]},\"responseCode\":{\"valid\":true}},\"passed\":false,\"timings\":{\"started\":1760174708905,\"preProcessorsStarted\":1760174708907,\"preProcessorsCompleted\":1760174708907,\"postProcessorsStarted\":1760174708968,\"postProcessorsCompleted\":1760174708968,\"completed\":1760174708969},\"metaInfo\":{\"httpApiId\":22037626,\"httpApiName\":\"User Login\",\"httpApiPath\":\"/users/login\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32480087"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin",
+          "id": 5154965,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 903739,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "Delete User",
+              "api": {
+                "id": "21997410",
+                "method": "delete",
+                "path": "/admin/delete/{userId}",
+                "parameters": {
+                  "query": [],
+                  "path": [
+                    {
+                      "id": "userId#0",
+                      "name": "userId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68e11b19a789d04e8029b0af"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "tUyAYkwuiO",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY1Mjg1LCJleHAiOjE3NjAxNjg4ODV9.dU0E0Q_IiCT6LNjRD2j8gh7esUd3uzJ5BBWIGSxDGaI",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32412751",
+                    "code": 500,
+                    "name": "Internal Server Error",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "html",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 30,
+                "cases": [
+                  {
+                    "id": 31538391,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "32412751",
+                    "parameters": {
+                      "query": [],
+                      "header": [
+                        {
+                          "id": "nqKegWDEs4",
+                          "relatedName": "Authorization",
+                          "relatedId": "tUyAYkwuiO",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY1Mjg1LCJleHAiOjE3NjAxNjg4ODV9.dU0E0Q_IiCT6LNjRD2j8gh7esUd3uzJ5BBWIGSxDGaI",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "userId#0",
+                          "name": "userId",
+                          "relatedName": "userId",
+                          "relatedId": "userId#0",
+                          "value": "68e11b19a789d04e8029b0af",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.8f71c509-2dd6-4d85-bdf5-c285fed571c2\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"8f71c509-2dd6-4d85-bdf5-c285fed571c2\",\"requestIndex\":0,\"httpRequestId\":\"d164347b-e722-4eb1-a1ca-ed3a300c8abb\"},\"type\":\"http\",\"response\":{\"id\":\"2b3d8c8a-ac4d-42c5-a406-9744e5771f6b\",\"status\":\"Unauthorized\",\"code\":401,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"134\"},{\"key\":\"ETag\",\"value\":\"W/\\\"86-XlU5nCp8SsjF9HzU9Sg4hOOlfgw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:11:50 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,52,48,49,44,34,109,101,115,115,97,103,101,34,58,34,216,170,217,136,218,169,217,134,32,216,180,217,133,216,167,32,217,133,217,134,217,130,216,182,219,140,32,216,180,216,175,217,135,32,219,140,218,169,216,168,216,167,216,177,32,216,175,219,140,218,175,217,135,32,217,132,216,167,218,175,219,140,217,134,32,218,169,217,134,219,140,216,175,34,44,34,100,97,116,97,34,58,123,125,125]},\"cookie\":[],\"responseTime\":23,\"responseSize\":134,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.42308200150728226,\"wait\":0.558203000575304,\"dns\":0,\"tcp\":0.15509499981999397,\"firstByte\":21.419553000479937,\"download\":0.6390419974923134,\"process\":0.027424000203609467,\"total\":23.22239900007844}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"admin\",\"delete\",\"68e11b19a789d04e8029b0af\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY1Mjg1LCJleHAiOjE3NjAxNjg4ODV9.dU0E0Q_IiCT6LNjRD2j8gh7esUd3uzJ5BBWIGSxDGaI\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"DELETE\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"DELETE\",\"href\":\"http://127.0.0.1:4000/admin/delete/68e11b19a789d04e8029b0af\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY1Mjg1LCJleHAiOjE3NjAxNjg4ODV9.dU0E0Q_IiCT6LNjRD2j8gh7esUd3uzJ5BBWIGSxDGaI\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":401,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"134\"},{\"key\":\"ETag\",\"value\":\"W/\\\"86-XlU5nCp8SsjF9HzU9Sg4hOOlfgw\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:11:50 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760173910541,\"requestStart\":1760173910542,\"offset\":{\"request\":0.42308200150728226,\"socket\":0.9812850020825863,\"connect\":1.1363800019025803,\"response\":22.555933002382517,\"end\":23.19497499987483,\"lookup\":0.9812850020825863,\"done\":23.22239900007844}}}]}},\"responseValidation\":{\"responseCode\":{\"valid\":false,\"result\":{\"actual\":401,\"expect\":500},\"message\":\"Returned 401 while expected 500.\"}},\"passed\":false,\"timings\":{\"started\":1760173910230,\"preProcessorsStarted\":1760173910502,\"preProcessorsCompleted\":1760173910502,\"postProcessorsStarted\":1760173910566,\"postProcessorsCompleted\":1760173910566,\"completed\":1760173910567},\"metaInfo\":{\"httpApiId\":21997410,\"httpApiName\":\"Delete User\",\"httpApiPath\":\"/admin/delete/{userId}\",\"httpApiMethod\":\"delete\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32412751"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Get All Users",
+              "api": {
+                "id": "22003185",
+                "method": "get",
+                "path": "/admin/list/{page}/{limit}",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "number",
+                      "id": "jamFSy02jg",
+                      "enable": true,
+                      "name": "feild",
+                      "example": "username",
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "number",
+                      "id": "sFWflvKxpW",
+                      "enable": true,
+                      "name": "word",
+                      "example": "212",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  ],
+                  "path": [
+                    {
+                      "id": "page#0",
+                      "name": "page",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "example": "1",
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "id": "limit#0",
+                      "name": "limit",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "example": "10",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "EEVN2W40YK",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI4MTE2NiwiZXhwIjoxNzYwMjg0NzY2fQ.Z83d-EeECm5SNyv3wdPJr6lX0_-6fWqu4cAtC_WTl2I",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "32407625",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "fullName": {
+                                "type": "string"
+                              },
+                              "password": {
+                                "type": "string"
+                              },
+                              "__v": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "users"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 40,
+                "cases": [
+                  {
+                    "id": 31538392,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "32407625",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "XJL94hiiyK",
+                          "relatedName": "Authorization",
+                          "relatedId": "EEVN2W40YK",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY0MDAxLCJleHAiOjE3NjAxNjc2MDF9.PaoGL8we8xBh-lswg9ZoFkE-nDIf9uCOWjGrGZR6BJ8",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "page#0",
+                          "name": "page",
+                          "relatedName": "page",
+                          "relatedId": "page#0",
+                          "value": "1",
+                          "enable": true,
+                          "isDelete": false
+                        },
+                        {
+                          "id": "limit#0",
+                          "name": "limit",
+                          "relatedName": "limit",
+                          "relatedId": "limit#0",
+                          "value": "10",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.3aeede25-7c83-4204-bebe-0cf89a6acbb5\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"3aeede25-7c83-4204-bebe-0cf89a6acbb5\",\"requestIndex\":0,\"httpRequestId\":\"12f15332-dcd1-4093-b71f-649164ff0cdb\"},\"type\":\"http\",\"response\":{\"id\":\"20fa01d3-e603-4ae6-be52-059f5e5e713e\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"1768\"},{\"key\":\"ETag\",\"value\":\"W/\\\"6e8-AJtIXfpMlsoveWwoobJvEq6ioZg\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 06:44:24 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,44,34,100,97,116,97,34,58,91,123,34,95,105,100,34,58,34,54,56,101,49,49,97,102,100,97,55,56,57,100,48,52,101,56,48,50,57,98,48,97,53,34,44,34,117,115,101,114,110,97,109,101,34,58,34,50,51,50,52,51,50,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,119,51,52,50,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,102,106,87,122,89,78,106,80,116,119,120,107,49,75,83,74,99,111,50,46,117,101,81,54,71,119,112,48,50,67,68,87,99,69,108,71,108,106,102,46,99,75,115,54,111,78,74,119,117,47,86,112,46,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,48,99,97,55,56,57,100,48,52,101,56,48,50,57,98,48,97,57,34,44,34,117,115,101,114,110,97,109,101,34,58,34,50,50,50,50,50,50,50,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,80,53,89,87,51,55,113,114,105,109,51,106,50,51,78,83,48,83,83,69,78,101,68,48,51,78,113,50,107,76,69,89,101,106,75,57,97,65,57,87,76,86,98,56,84,121,114,82,109,46,122,68,83,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,49,51,97,55,56,57,100,48,52,101,56,48,50,57,98,48,97,99,34,44,34,117,115,101,114,110,97,109,101,34,58,34,51,51,51,51,51,51,51,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,53,114,119,111,101,84,55,50,67,114,102,46,77,57,108,75,102,104,71,106,68,101,103,68,103,101,99,112,117,118,112,82,71,49,71,70,98,82,113,86,74,100,70,120,120,97,103,105,51,57,98,79,109,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,49,57,97,55,56,57,100,48,52,101,56,48,50,57,98,48,97,102,34,44,34,117,115,101,114,110,97,109,101,34,58,34,52,52,52,52,52,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,101,47,83,83,81,69,108,85,120,89,74,73,90,88,52,109,102,65,106,75,98,46,121,53,102,48,80,109,109,73,98,97,90,86,107,67,69,76,71,119,55,56,55,99,103,112,102,55,46,90,86,106,101,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,50,48,97,55,56,57,100,48,52,101,56,48,50,57,98,48,98,50,34,44,34,117,115,101,114,110,97,109,101,34,58,34,53,53,53,53,53,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,87,97,73,82,99,118,103,73,55,78,76,116,107,97,71,85,80,86,87,106,75,117,67,83,56,48,115,57,102,83,77,85,111,90,99,105,68,111,77,107,101,74,51,85,49,47,105,122,48,46,122,114,117,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,50,57,97,55,56,57,100,48,52,101,56,48,50,57,98,48,98,53,34,44,34,117,115,101,114,110,97,109,101,34,58,34,54,54,54,54,54,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,53,51,53,84,98,98,81,73,105,54,74,121,83,50,122,52,51,72,117,72,98,46,88,65,54,87,122,69,88,56,54,117,84,53,53,47,121,50,77,111,65,79,105,57,120,111,99,82,100,78,49,101,101,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,54,102,102,56,101,53,98,102,48,51,102,53,101,56,55,101,53,52,34,44,34,117,115,101,114,110,97,109,101,34,58,34,55,55,55,55,55,55,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,77,67,70,118,117,115,98,89,117,54,73,83,114,76,115,81,103,78,71,116,69,79,97,78,120,87,68,120,66,86,77,122,103,71,120,103,113,79,75,81,70,73,113,103,101,52,84,75,116,76,117,78,105,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,55,52,102,56,101,53,98,102,48,51,102,53,101,56,55,101,53,55,34,44,34,117,115,101,114,110,97,109,101,34,58,34,56,56,56,56,56,56,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,70,117,108,119,73,55,66,68,75,66,115,113,49,66,115,120,83,106,114,119,112,117,115,49,110,99,79,46,114,75,79,47,115,67,51,87,88,111,76,106,72,67,103,117,75,78,82,57,83,103,46,103,101,34,125,44,123,34,95,105,100,34,58,34,54,56,101,49,49,98,55,100,102,56,101,53,98,102,48,51,102,53,101,56,55,101,53,97,34,44,34,117,115,101,114,110,97,109,101,34,58,34,57,57,57,57,57,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,46,78,67,118,71,68,105,87,99,118,49,102,97,71,102,105,104,69,87,54,118,46,83,122,111,104,55,56,71,82,122,109,77,106,79,76,50,87,103,121,112,78,49,55,80,100,68,87,90,110,99,73,109,34,125,44,123,34,95,105,100,34,58,34,54,56,101,50,49,102,56,53,49,54,49,52,100,57,56,55,57,56,52,57,101,56,100,52,34,44,34,117,115,101,114,110,97,109,101,34,58,34,51,50,51,52,50,52,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,107,97,114,105,109,105,34,44,34,114,111,108,101,34,58,34,117,115,101,114,34,44,34,112,97,115,115,119,111,114,100,34,58,34,36,50,98,36,49,48,36,101,106,107,66,100,68,116,121,122,102,98,103,68,73,107,47,84,50,77,70,68,46,72,78,52,108,65,53,81,114,77,48,69,98,53,55,82,110,66,104,97,111,86,104,70,66,83,82,56,56,115,57,87,34,125,93,125]},\"cookie\":[],\"responseTime\":20,\"responseSize\":1768,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.5087970001623034,\"wait\":0.4730620002374053,\"dns\":0,\"tcp\":0.09906299971044064,\"firstByte\":18.875975999981165,\"download\":0.49340800009667873,\"process\":0.02237000036984682,\"total\":20.47267600055784}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"list\",\"1\",\"10\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY0MDAxLCJleHAiOjE3NjAxNjc2MDF9.PaoGL8we8xBh-lswg9ZoFkE-nDIf9uCOWjGrGZR6BJ8\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://127.0.0.1:4000/users/list/1/10\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTY0MDAxLCJleHAiOjE3NjAxNjc2MDF9.PaoGL8we8xBh-lswg9ZoFkE-nDIf9uCOWjGrGZR6BJ8\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"1768\"},{\"key\":\"ETag\",\"value\":\"W/\\\"6e8-AJtIXfpMlsoveWwoobJvEq6ioZg\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 06:44:24 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760165064112,\"requestStart\":1760165064113,\"offset\":{\"request\":0.5087970001623034,\"socket\":0.9818590003997087,\"connect\":1.0809220001101494,\"response\":19.956898000091314,\"end\":20.450306000187993,\"lookup\":0.9818590003997087,\"done\":20.47267600055784}}}]}},\"responseValidation\":{\"schema\":{\"valid\":false,\"message\":\"data should have required property users\",\"errors\":[{\"keyword\":\"required\",\"dataPath\":\"\",\"schemaPath\":\"#/required\",\"params\":{\"missingProperty\":\"users\"},\"message\":\"should have required property users\"}]},\"responseCode\":{\"valid\":true}},\"passed\":false,\"timings\":{\"started\":1760165064106,\"preProcessorsStarted\":1760165064108,\"preProcessorsCompleted\":1760165064108,\"postProcessorsStarted\":1760165064134,\"postProcessorsCompleted\":1760165064134,\"completed\":1760165064136},\"metaInfo\":{\"httpApiId\":22003185,\"httpApiName\":\"Get All Users\",\"httpApiPath\":\"/users/list/{page}/{limit}\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.32407625"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Update Users By Admin",
+              "api": {
+                "id": "22499525",
+                "method": "put",
+                "path": "/admin/update/{userId}",
+                "parameters": {
+                  "query": [],
+                  "path": [
+                    {
+                      "id": "userId#0",
+                      "name": "userId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33357754",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "acknowledged": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "acknowledged"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "result"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"username\":\"ce22r4k4\",\n    \"fullName\":\"aliw342karimi\",\n    \"password\":\"1245675\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 55,
+                "cases": [
+                  {
+                    "id": 31538395,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33357754",
+                    "parameters": {
+                      "query": [],
+                      "path": [
+                        {
+                          "id": "userId#0",
+                          "name": "userId",
+                          "relatedName": "userId",
+                          "relatedId": "userId#0",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"username\":\"ce22r4k4\",\n    \"fullName\":\"aliw342karimi\",\n    \"password\":\"1245675\"\n}",
+                      "type": "application/json"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Get User",
+              "api": {
+                "id": "22499528",
+                "method": "get",
+                "path": "/users/byId/{userId}",
+                "parameters": {
+                  "query": [
+                    {
+                      "id": "qYAlGblp03",
+                      "name": "{}",
+                      "required": false,
+                      "description": "",
+                      "enable": true,
+                      "type": "string"
+                    }
+                  ],
+                  "path": [
+                    {
+                      "id": "userId#0",
+                      "name": "userId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "zdHYkakTGO",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDE3NDI3NiwiZXhwIjoxNzYwMTc3ODc2fQ.fAvBq4AEX7SZdH6UOuqUbzf9Wqf-MDqNQ2RXOMsJAiM",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33349746",
+                    "code": 200,
+                    "name": "Success",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 35,
+                "cases": [
+                  {
+                    "id": 31538399,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33349746",
+                    "parameters": {
+                      "query": [],
+                      "header": [
+                        {
+                          "id": "w5UaErJOxv",
+                          "relatedName": "Authorization",
+                          "relatedId": "zdHYkakTGO",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTczMDY1LCJleHAiOjE3NjAxNzY2NjV9.sjmiQ2LaICXJk4Hjg-O7Um7huyO1bhB91uEmKgqVOe8",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": []
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.b4976e27-0f35-4d29-a4bb-62a9d82be00c\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"b4976e27-0f35-4d29-a4bb-62a9d82be00c\",\"requestIndex\":0,\"httpRequestId\":\"e8cad895-6562-4571-b544-cf19a2e8c7be\"},\"type\":\"http\",\"response\":{\"id\":\"06325bbc-5b08-457d-a104-4878f75b9474\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"155\"},{\"key\":\"ETag\",\"value\":\"W/\\\"9b-VG/fE1a2IVp3cDc1wlOM/0YmTbI\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:03:45 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,44,34,100,97,116,97,34,58,123,34,117,115,101,114,110,97,109,101,34,58,34,99,101,50,50,114,52,107,52,34,44,34,102,117,108,108,78,97,109,101,34,58,34,97,108,105,119,51,52,50,107,97,114,105,109,105,34,125,125]},\"cookie\":[],\"responseTime\":19,\"responseSize\":155,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.5155490003526211,\"wait\":0.40430499985814095,\"dns\":0,\"tcp\":0.0875610001385212,\"firstByte\":17.836396999657154,\"download\":0.48868099972605705,\"process\":0.022404000163078308,\"total\":19.354896999895573}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"users\",\"byId\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTczMDY1LCJleHAiOjE3NjAxNzY2NjV9.sjmiQ2LaICXJk4Hjg-O7Um7huyO1bhB91uEmKgqVOe8\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://127.0.0.1:4000/users/byId\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlSWRzIjpbInVzZXIiXSwiaWF0IjoxNzYwMTczMDY1LCJleHAiOjE3NjAxNzY2NjV9.sjmiQ2LaICXJk4Hjg-O7Um7huyO1bhB91uEmKgqVOe8\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"155\"},{\"key\":\"ETag\",\"value\":\"W/\\\"9b-VG/fE1a2IVp3cDc1wlOM/0YmTbI\\\"\"},{\"key\":\"Date\",\"value\":\"Sat, 11 Oct 2025 09:03:45 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760173425621,\"requestStart\":1760173425621,\"offset\":{\"request\":0.5155490003526211,\"socket\":0.919854000210762,\"connect\":1.0074150003492832,\"response\":18.843812000006437,\"end\":19.332492999732494,\"lookup\":0.919854000210762,\"done\":19.354896999895573}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1760173425615,\"preProcessorsStarted\":1760173425616,\"preProcessorsCompleted\":1760173425616,\"postProcessorsStarted\":1760173425642,\"postProcessorsCompleted\":1760173425642,\"completed\":1760173425643},\"metaInfo\":{\"httpApiId\":21996142,\"httpApiName\":\"Get User\",\"httpApiPath\":\"/users/byId\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33349746"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Task",
+          "id": 5162721,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 903739,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "Create Task",
+              "api": {
+                "id": "22526415",
+                "method": "post",
+                "path": "/task/create",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "F3gpBcacKM",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33399191",
+                    "code": 201,
+                    "name": "Created",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "taskId": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "taskId",
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"title\":\"slm\",\n    \"description\":\"ddddddddd\",\n    \"status\":\"\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [
+                  {
+                    "id": 31564581,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33399191",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "MU6aTDDYpg",
+                          "relatedName": "Authorization",
+                          "relatedId": "F3gpBcacKM",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"title\":\"slm\",\n    \"description\":\"ddddddddd\",\n    \"status\":\"\"\n}",
+                      "type": "application/json"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.7009a48c-2cc4-43f7-8592-000ebbdf40b3\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"7009a48c-2cc4-43f7-8592-000ebbdf40b3\",\"requestIndex\":0,\"httpRequestId\":\"73634a2e-a80e-4678-9162-a42783ad8fe1\"},\"type\":\"http\",\"response\":{\"id\":\"7f33a512-0f0b-4348-80fa-84534e4e27e9\",\"status\":\"Created\",\"code\":201,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"182\"},{\"key\":\"ETag\",\"value\":\"W/\\\"b6-ahJhMvOdP8M3exvtAkwyyMuHHEI\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:15:14 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,100,97,116,97,34,58,123,34,116,97,115,107,73,100,34,58,34,54,56,101,98,97,57,101,50,56,57,56,57,49,51,52,52,102,98,56,98,101,48,57,52,34,44,34,116,105,116,108,101,34,58,34,115,108,109,34,44,34,100,101,115,99,114,105,112,116,105,111,110,34,58,34,100,100,100,100,100,100,100,100,100,34,125,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,49,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,125]},\"cookie\":[],\"responseTime\":8,\"responseSize\":182,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.290350005030632,\"wait\":0.3543119952082634,\"dns\":0,\"tcp\":0.07892800122499466,\"firstByte\":6.798808000981808,\"download\":0.5428580045700073,\"process\":0.02185199409723282,\"total\":8.087108001112938}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"task\",\"create\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":69,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"title\\\":\\\"slm\\\",\\n    \\\"description\\\":\\\"ddddddddd\\\",\\n    \\\"status\\\":\\\"\\\"\\n}\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://127.0.0.1:4000/task/create\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"69\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":201,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"182\"},{\"key\":\"ETag\",\"value\":\"W/\\\"b6-ahJhMvOdP8M3exvtAkwyyMuHHEI\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:15:14 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760274914927,\"requestStart\":1760274914928,\"offset\":{\"request\":0.290350005030632,\"socket\":0.6446620002388954,\"connect\":0.7235900014638901,\"response\":7.522398002445698,\"end\":8.065256007015705,\"lookup\":0.6446620002388954,\"done\":8.087108001112938}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1760274914922,\"preProcessorsStarted\":1760274914923,\"preProcessorsCompleted\":1760274914923,\"postProcessorsStarted\":1760274914937,\"postProcessorsCompleted\":1760274914937,\"completed\":1760274914938},\"metaInfo\":{\"httpApiId\":22526415,\"httpApiName\":\"Create Task\",\"httpApiPath\":\"/task/create\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33399191"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "All Tasks",
+              "api": {
+                "id": "22527363",
+                "method": "get",
+                "path": "/task/all/{page}/{limit}",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "number",
+                      "id": "2NQXA28zEU",
+                      "enable": true,
+                      "name": "feild",
+                      "example": "description",
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "number",
+                      "id": "vfed3WJ2w1",
+                      "enable": true,
+                      "name": "word",
+                      "example": "z",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  ],
+                  "path": [
+                    {
+                      "id": "page#0",
+                      "name": "page",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "example": "1",
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "id": "limit#0",
+                      "name": "limit",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "example": "60",
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "hzUdmIuo1Q",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI4MTE2NiwiZXhwIjoxNzYwMjg0NzY2fQ.Z83d-EeECm5SNyv3wdPJr6lX0_-6fWqu4cAtC_WTl2I",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33399112",
+                    "code": 400,
+                    "name": "Bad Request",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "error": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "statusCode",
+                        "error"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 20,
+                "cases": [
+                  {
+                    "id": 31564576,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33399112",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "EzEAvcZPu9",
+                          "relatedName": "Authorization",
+                          "relatedId": "hzUdmIuo1Q",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "page#0",
+                          "name": "page",
+                          "relatedName": "page",
+                          "relatedId": "page#0",
+                          "value": "1",
+                          "enable": true,
+                          "isDelete": false
+                        },
+                        {
+                          "id": "limit#0",
+                          "name": "limit",
+                          "relatedName": "limit",
+                          "relatedId": "limit#0",
+                          "value": "60",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.1c74c3ce-b04d-4224-99c6-7e1fa047e07d\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"1c74c3ce-b04d-4224-99c6-7e1fa047e07d\",\"requestIndex\":0,\"httpRequestId\":\"1459beb2-7245-4b89-bb2c-2657ef7e6c99\"},\"type\":\"http\",\"response\":{\"id\":\"5b27551c-8660-411b-a37f-0c833fd0c59c\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"295\"},{\"key\":\"ETag\",\"value\":\"W/\\\"127-U7P+WwOQaCYrnbmKcRtvAk1uiO4\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:14:07 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,100,97,116,97,34,58,91,123,34,95,105,100,34,58,34,54,56,101,98,57,53,57,100,49,101,100,102,49,52,49,50,51,57,99,48,54,101,54,98,34,44,34,116,105,116,108,101,34,58,34,115,100,100,97,115,100,34,44,34,100,101,115,99,114,105,112,116,105,111,110,34,58,34,97,115,100,106,106,106,106,34,44,34,115,116,97,116,117,115,34,58,34,111,112,101,110,34,44,34,99,114,101,97,116,111,114,34,58,34,54,56,101,57,101,51,50,54,102,57,55,56,100,56,57,101,100,57,57,53,97,54,101,97,34,44,34,99,114,101,97,116,101,100,65,116,34,58,49,55,54,48,50,54,57,55,50,53,52,50,52,44,34,117,112,100,97,116,101,100,65,116,34,58,49,55,54,48,50,55,52,48,55,56,50,52,52,44,34,95,95,118,34,58,48,125,93,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,125]},\"cookie\":[],\"responseTime\":6,\"responseSize\":295,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.2820580005645752,\"wait\":0.36715099960565567,\"dns\":0,\"tcp\":0.11653000116348267,\"firstByte\":4.990079000592232,\"download\":0.37144800275564194,\"process\":0.058145999908447266,\"total\":6.1854120045900345}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"task\",\"all\",\"1\",\"60\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://127.0.0.1:4000/task/all/1/60\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"295\"},{\"key\":\"ETag\",\"value\":\"W/\\\"127-U7P+WwOQaCYrnbmKcRtvAk1uiO4\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:14:07 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760274847790,\"requestStart\":1760274847790,\"offset\":{\"request\":0.2820580005645752,\"socket\":0.6492090001702309,\"connect\":0.7657390013337135,\"response\":5.755818001925945,\"end\":6.127266004681587,\"lookup\":0.6492090001702309,\"done\":6.1854120045900345}}}]}},\"responseValidation\":{\"schema\":{\"valid\":false,\"message\":\"data should have required property error\",\"errors\":[{\"keyword\":\"required\",\"dataPath\":\"\",\"schemaPath\":\"#/required\",\"params\":{\"missingProperty\":\"error\"},\"message\":\"should have required property error\"}]},\"responseCode\":{\"valid\":false,\"result\":{\"actual\":200,\"expect\":400},\"message\":\"Returned 200 while expected 400.\"}},\"passed\":false,\"timings\":{\"started\":1760274847784,\"preProcessorsStarted\":1760274847786,\"preProcessorsCompleted\":1760274847786,\"postProcessorsStarted\":1760274847798,\"postProcessorsCompleted\":1760274847798,\"completed\":1760274847799},\"metaInfo\":{\"httpApiId\":22527363,\"httpApiName\":\"All Tasks\",\"httpApiPath\":\"/task/all/{page}/{limit}\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33399112"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Get Task By ID",
+              "api": {
+                "id": "22527415",
+                "method": "get",
+                "path": "/task/byId/{taskId}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "taskId#0",
+                      "name": "taskId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68eb959d1edf141239c06e6b"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "Y5a9IKTZ3y",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3MzYyNCwiZXhwIjoxNzYwMjc3MjI0fQ.9_jlM--nrmSGWXO4o-dHW66ORz4RDXA8ZpAgGCtTPu8",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33401977",
+                    "code": 200,
+                    "name": "OK",
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "task": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "status": {
+                                  "type": "string"
+                                },
+                                "creator": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "integer"
+                                },
+                                "updatedAt": {
+                                  "type": "integer"
+                                },
+                                "__v": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "title",
+                                "description",
+                                "status",
+                                "creator",
+                                "createdAt",
+                                "updatedAt",
+                                "__v"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "task"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "contentType": "json"
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 30,
+                "cases": [
+                  {
+                    "id": 31564425,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33401977",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "jV6oiLPe6r",
+                          "relatedName": "Authorization",
+                          "relatedId": "Y5a9IKTZ3y",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3MzYyNCwiZXhwIjoxNzYwMjc3MjI0fQ.9_jlM--nrmSGWXO4o-dHW66ORz4RDXA8ZpAgGCtTPu8",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "taskId#0",
+                          "name": "taskId",
+                          "relatedName": "taskId",
+                          "relatedId": "taskId#0",
+                          "value": "68eb959d1edf141239c06e6b",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33401977"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Edit Task",
+              "api": {
+                "id": "22527515",
+                "method": "put",
+                "path": "/task/edit/{taskId}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "taskId#0",
+                      "name": "taskId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68eb959d1edf141239c06e6b"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "LhyFAt2HnI",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3MzgwNCwiZXhwIjoxNzYwMjc3NDA0fQ.Ucl7HuttVaz2j3tzT0N4O4updCHcxX32lb-VmNc4sOQ",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33397728",
+                    "code": 200,
+                    "name": "OK",
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "acknowledged": {
+                              "type": "boolean"
+                            },
+                            "modifiedCount": {
+                              "type": "integer"
+                            },
+                            "upsertedId": {
+                              "type": "null"
+                            },
+                            "upsertedCount": {
+                              "type": "integer"
+                            },
+                            "matchedCount": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "acknowledged",
+                            "modifiedCount",
+                            "upsertedId",
+                            "upsertedCount",
+                            "matchedCount"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "contentType": "json"
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": "{\n    \"status\": \"open\",\n    \"description\":\"asdjjjj\",\n    \"title\":\"sddasd\"\n}"
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 40,
+                "cases": [
+                  {
+                    "id": 31564523,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33397728",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "WsSPsZs5QE",
+                          "relatedName": "Authorization",
+                          "relatedId": "LhyFAt2HnI",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3MzgwNCwiZXhwIjoxNzYwMjc3NDA0fQ.Ucl7HuttVaz2j3tzT0N4O4updCHcxX32lb-VmNc4sOQ",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "taskId#0",
+                          "name": "taskId",
+                          "relatedName": "taskId",
+                          "relatedId": "taskId#0",
+                          "value": "68eb959d1edf141239c06e6b",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "{\n    \"status\": \"open\",\n    \"description\":\"asdjjjj\",\n    \"title\":\"sddasd\"\n}",
+                      "type": "application/json"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33397728"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Get All my Tasks",
+              "api": {
+                "id": "22527566",
+                "method": "get",
+                "path": "/task/my/{page}/{limit}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "page#0",
+                      "name": "page",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "schema": {
+                        "type": "number"
+                      },
+                      "example": "1"
+                    },
+                    {
+                      "id": "limit#0",
+                      "name": "limit",
+                      "required": true,
+                      "description": "",
+                      "type": "number",
+                      "enable": true,
+                      "schema": {
+                        "type": "number"
+                      },
+                      "example": "100"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "DfVAXReIQJ",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33399197",
+                    "code": 200,
+                    "name": "OK",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "creator": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "integer"
+                              },
+                              "updatedAt": {
+                                "type": "integer"
+                              },
+                              "__v": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "mediaType": "application/json",
+                      "value": ""
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 50,
+                "cases": [
+                  {
+                    "id": 31564578,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33399197",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "ihdEN5O1EU",
+                          "relatedName": "Authorization",
+                          "relatedId": "DfVAXReIQJ",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "page#0",
+                          "name": "page",
+                          "relatedName": "page",
+                          "relatedId": "page#0",
+                          "value": "1",
+                          "enable": true,
+                          "isDelete": false
+                        },
+                        {
+                          "id": "limit#0",
+                          "name": "limit",
+                          "relatedName": "limit",
+                          "relatedId": "limit#0",
+                          "value": "100",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": "{\"id\":\"temp.94174677-5968-4cd1-b66d-8a4b2f030c92\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"94174677-5968-4cd1-b66d-8a4b2f030c92\",\"requestIndex\":0,\"httpRequestId\":\"5c13b2b3-cb75-4219-a6c9-8ec2aa0e718f\"},\"type\":\"http\",\"response\":{\"id\":\"c9f72258-6391-4239-8aed-215582033837\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"107\"},{\"key\":\"ETag\",\"value\":\"W/\\\"6b-1Qm0j8FT04lOU5WeCVxbW5DZG3c\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:13:34 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,115,117,99,99,101,115,115,102,117,108,108,121,34,58,116,114,117,101,44,34,100,97,116,97,34,58,91,93,44,34,115,116,97,116,117,115,67,111,100,101,34,58,50,48,48,44,34,109,101,115,115,97,103,101,34,58,34,216,185,217,133,217,132,219,140,216,167,216,170,32,216,168,216,167,32,217,133,217,136,217,129,217,130,219,140,216,170,32,216,167,217,134,216,172,216,167,217,133,32,216,180,216,175,34,125]},\"cookie\":[],\"responseTime\":6,\"responseSize\":107,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.3470899984240532,\"wait\":0.40987899899482727,\"dns\":0,\"tcp\":0.07981900125741959,\"firstByte\":4.715683996677399,\"download\":0.48637500405311584,\"process\":0.029535993933677673,\"total\":6.068382993340492}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"4000\",\"path\":[\"task\",\"my\",\"1\",\"100\"],\"host\":[\"127\",\"0\",\"0\",\"1\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"127.0.0.1:4000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://127.0.0.1:4000/task/my/1/100\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE\"},{\"key\":\"User-Agent\",\"value\":\"Apidog/1.0.0 (https://apidog.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"127.0.0.1:4000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"X-Powered-By\",\"value\":\"Express\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"107\"},{\"key\":\"ETag\",\"value\":\"W/\\\"6b-1Qm0j8FT04lOU5WeCVxbW5DZG3c\\\"\"},{\"key\":\"Date\",\"value\":\"Sun, 12 Oct 2025 13:13:34 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1760274814209,\"requestStart\":1760274814209,\"offset\":{\"request\":0.3470899984240532,\"socket\":0.7569689974188805,\"connect\":0.8367879986763,\"response\":5.552471995353699,\"end\":6.038846999406815,\"lookup\":0.7569689974188805,\"done\":6.068382993340492}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1760274814203,\"preProcessorsStarted\":1760274814205,\"preProcessorsCompleted\":1760274814205,\"postProcessorsStarted\":1760274814217,\"postProcessorsCompleted\":1760274814217,\"completed\":1760274814219},\"metaInfo\":{\"httpApiId\":22527566,\"httpApiName\":\"Get All my Tasks\",\"httpApiPath\":\"/task/my/{page}/{limit}\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"Success\",\"moduleId\":903739}}",
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33399197"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Update Status",
+              "api": {
+                "id": "22528299",
+                "method": "patch",
+                "path": "/task/status/{taskId}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "taskId#0",
+                      "name": "taskId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68ebb0fede18203314de11f3"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "tT5JKTXjqE",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NTY2NywiZXhwIjoxNzYwMjc5MjY3fQ.iH0g1FtwLlnCJNHKERS6y3wHlGFpGlXaxd7DqQBCH6o",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33399115",
+                    "code": 200,
+                    "name": "OK",
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "task": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "status": {
+                                  "type": "string"
+                                },
+                                "creator": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "integer"
+                                },
+                                "updatedAt": {
+                                  "type": "integer"
+                                },
+                                "__v": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "_id",
+                                "title",
+                                "description",
+                                "status",
+                                "creator",
+                                "createdAt",
+                                "updatedAt",
+                                "__v"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "task"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "contentType": "json"
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 70,
+                "cases": [
+                  {
+                    "id": 31565290,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33399115",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "sjvt1AyUlM",
+                          "relatedName": "Authorization",
+                          "relatedId": "tT5JKTXjqE",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NTY2NywiZXhwIjoxNzYwMjc5MjY3fQ.iH0g1FtwLlnCJNHKERS6y3wHlGFpGlXaxd7DqQBCH6o",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "taskId#0",
+                          "name": "taskId",
+                          "relatedName": "taskId",
+                          "relatedId": "taskId#0",
+                          "value": "68ebb0fede18203314de11f3",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33399115"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Soft Delete Task",
+              "api": {
+                "id": "22527846",
+                "method": "delete",
+                "path": "/task/soft/delete/{taskId}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "taskId#0",
+                      "name": "taskId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68eba9e289891344fb8be094"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "M2nGNvhP8r",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NTY2NywiZXhwIjoxNzYwMjc5MjY3fQ.iH0g1FtwLlnCJNHKERS6y3wHlGFpGlXaxd7DqQBCH6o",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33401981",
+                    "code": 200,
+                    "name": "OK",
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "creator": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "integer"
+                            },
+                            "updatedAt": {
+                              "type": "integer"
+                            },
+                            "__v": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "_id",
+                            "title",
+                            "description",
+                            "status",
+                            "creator",
+                            "createdAt",
+                            "updatedAt",
+                            "__v"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "contentType": "json"
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 60,
+                "cases": [
+                  {
+                    "id": 31565245,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33401981",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "avH7vGo5rG",
+                          "relatedName": "Authorization",
+                          "relatedId": "M2nGNvhP8r",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGU5ZTMyNmY5NzhkODllZDk5NWE2ZWEiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NTY2NywiZXhwIjoxNzYwMjc5MjY3fQ.iH0g1FtwLlnCJNHKERS6y3wHlGFpGlXaxd7DqQBCH6o",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "taskId#0",
+                          "name": "taskId",
+                          "relatedName": "taskId",
+                          "relatedId": "taskId#0",
+                          "value": "68eba9e289891344fb8be094",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33401981"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "Hard Delete Task",
+              "api": {
+                "id": "22529828",
+                "method": "delete",
+                "path": "/task/delete/{taskId}",
+                "parameters": {
+                  "path": [
+                    {
+                      "id": "taskId#0",
+                      "name": "taskId",
+                      "required": true,
+                      "description": "",
+                      "type": "string",
+                      "enable": true,
+                      "example": "68ebb0fede18203314de11f3"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "z21e9cZIku",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "33397731",
+                    "code": 404,
+                    "name": "Not Found",
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {
+                        "successfully": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "successfully",
+                        "data",
+                        "statusCode",
+                        "message"
+                      ]
+                    },
+                    "contentType": "json"
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "examples": [],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 80,
+                "cases": [
+                  {
+                    "id": 31567539,
+                    "type": "DEBUG_CASE",
+                    "path": null,
+                    "name": "Success",
+                    "responseId": "33397731",
+                    "parameters": {
+                      "header": [
+                        {
+                          "id": "5fwqJzxeLW",
+                          "relatedName": "Authorization",
+                          "relatedId": "z21e9cZIku",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGViYTk0MDg5ODkxMzQ0ZmI4YmUwOGMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MDI3NDc3MiwiZXhwIjoxNzYwMjc4MzcyfQ.uePJzS2bdaxaJf40zniNoVUY6LL2s83MAYsrq_L_aHE",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ],
+                      "path": [
+                        {
+                          "id": "taskId#0",
+                          "name": "taskId",
+                          "relatedName": "taskId",
+                          "relatedId": "taskId#0",
+                          "value": "68ebb0fede18203314de11f3",
+                          "enable": true,
+                          "isDelete": false
+                        }
+                      ]
+                    },
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "header": [],
+                      "cookie": []
+                    },
+                    "requestBody": {
+                      "parameters": [],
+                      "data": "",
+                      "type": "none"
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {},
+                      "isDefaultUrlEncoding": 3,
+                      "disableUrlEncoding": false
+                    },
+                    "requestResult": null,
+                    "visibility": "INHERITED",
+                    "moduleId": 903739,
+                    "categoryId": 0,
+                    "tagIds": [],
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                ],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.33397731"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 903739,
+                "oasExtensions": "",
+                "type": "http",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "socketCollection": [],
+  "docCollection": [],
+  "webSocketCollection": [],
+  "socketIOCollection": [],
+  "responseCollection": [
+    {
+      "_databaseId": 1136610,
+      "updatedAt": "2025-09-28T09:28:24.000Z",
+      "name": "Root",
+      "type": "root",
+      "children": [],
+      "moduleId": 903739,
+      "parentId": 0,
+      "id": 1136610,
+      "ordering": [],
+      "items": []
+    }
+  ],
+  "schemaCollection": [
+    {
+      "id": 2591445,
+      "name": "Root",
+      "visibility": "SHARED",
+      "moduleId": 903739,
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "securitySchemeCollection": [
+    {
+      "id": 771658,
+      "moduleId": 903739,
+      "name": "Root",
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "requestCollection": [
+    {
+      "name": "Root",
+      "children": [],
+      "ordering": [
+        "requestFolder.8252773"
+      ],
+      "items": []
+    }
+  ],
+  "apiTestCaseCollection": [
+    {
+      "name": "Root",
+      "children": [],
+      "items": []
+    }
+  ],
+  "testCaseReferences": [],
+  "environments": [],
+  "commonScripts": [],
+  "databaseConnections": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "projectSetting": {
+    "id": "1080505",
+    "auth": {},
+    "securityScheme": {},
+    "gateway": [],
+    "language": "en-US",
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "mockSettings": {},
+    "preProcessors": [],
+    "postProcessors": [],
+    "advancedSettings": {
+      "enableJsonc": false,
+      "enableBigint": false,
+      "responseValidate": true,
+      "enableTestScenarioSetting": false,
+      "enableYAPICompatScript": false,
+      "isDefaultUrlEncoding": 3,
+      "publishedDocUrlRules": {
+        "defaultRule": "SLUGIFY_WITH_RESOURCE_KEY",
+        "resourceKeyStandard": "NEW"
+      }
+    },
+    "initialDisabledMockIds": [],
+    "servers": [
+      {
+        "id": "default",
+        "name": "Default Server"
+      }
+    ],
+    "cloudMock": {
+      "security": "free",
+      "enable": false,
+      "tokenKey": "apidogToken"
+    }
+  },
+  "customFunctions": [],
+  "projectTestCaseCategories": [
+    {
+      "id": 283715,
+      "name": "Positive",
+      "description": null
+    },
+    {
+      "id": 283716,
+      "name": "Negative",
+      "description": null
+    },
+    {
+      "id": 283717,
+      "name": "Boundary Value",
+      "description": null
+    },
+    {
+      "id": 283718,
+      "name": "Security",
+      "description": null
+    },
+    {
+      "id": 283719,
+      "name": "Other",
+      "description": null
+    }
+  ],
+  "projectTestCaseTags": [],
+  "projectAssociations": [],
+  "moduleSettings": [
+    {
+      "id": "903739",
+      "name": "Default module",
+      "description": "",
+      "moduleVariables": [],
+      "openApiInfo": {}
+    }
+  ]
+}

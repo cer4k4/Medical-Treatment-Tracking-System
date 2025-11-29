@@ -1,8 +1,10 @@
 import { error } from "console";
 
-export enum UserRoles{
+export enum UserRoles {
     ADMIN = "admin",
+    DOCTOR = "doctor",
     USER = "user"
+
 }
 
 export enum systemErrors {

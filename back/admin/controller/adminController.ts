@@ -50,7 +50,6 @@ async function updateUserByAdmin(req: RequestWithUser,res: Response) {
 }
 
 
-
 async function getUserByAdmin(req:RequestWithUser, res:Response) {
   try {
     const id = req.params["userId"]
@@ -138,7 +137,7 @@ async function softDeleteUser(req: RequestWithUser,res: Response) {
 }
 
 async function checkRoles(role:string) {
-  for (let r of Object(UserRoles).values){
+  for (let r of Object.values(UserRoles)){
     if (role === r) {
       return true
     }

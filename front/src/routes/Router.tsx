@@ -10,6 +10,7 @@ import { useAuth } from "../context/AuthContext";
 import GetAllMyTasks from "../pages/GetMyTasksPage";
 import GetMyTask from "../pages/GetTaskById";
 import GetUsers from "../pages/UsersList";
+import ChangeUserPage from "../pages/CreateDr";
 
 const AppRouter: React.FC = () => {
   const { token } = useAuth();
@@ -20,20 +21,14 @@ const AppRouter: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
-        {/* Users routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/getusers" element={<GetUsers />} />
-        </Route>
-
-
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
+        {/* Users routes */}
+          <Route path="/getusers" element={<GetUsers />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/update" element={<UpdatePage />} />
-        </Route>
-
+          <Route path="/create/doctor/:userId" element={< ChangeUserPage/>} />
         {/* Task routes */}
-        <Route element={<ProtectedRoute />}>
           <Route path="/createtask" element={<CreateTask />} />
           <Route path="/getalltask" element={<GetAllMyTasks />} />
           <Route path="/gettask" element={<GetMyTask />} />

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom"
 import api from "../api/axios";
 
 type User = {
   _id: string;
   username: string;
   fullName: string;
-  role:string;
-  phoneNumber?:string;
+  role: string;
+  phoneNumber?: string;
   password?: string;
-  createdAt:number;
-  updatedAt:number;
+  createdAt: number;
+  updatedAt: number;
   __v?: number;
 };
 
@@ -63,12 +64,17 @@ export default function GetUsers() {
           onChange={(e) => setLimit(e.target.value)}
         />
 
-        <input
+        <select
           className="input"
-          placeholder="Search Field (e.g. username)"
           value={feild}
           onChange={(e) => setField(e.target.value)}
-        />
+        >
+          <option value="">Select Field</option>
+          <option value="fullName">Full Name</option>
+          <option value="username">Username</option>
+          <option value="phoneNumber">Phone Number</option>
+          <option value="role">Role</option>
+        </select>
 
         <input
           className="input"
@@ -81,22 +87,41 @@ export default function GetUsers() {
           {loading ? "Loading..." : "Load"}
         </button>
       </div>
+      {users.length > 0 && (
+        <div className="mt-6 rounded-xl shadow-md border bg-white overflow-hidden">
+          <table className="min-w-full text-sm text-left">
+            <thead className="bg-gray-50 border-b">
+              <tr>
+                <th className="px-4 py-3 font-semibold text-gray-700">ID</th>
+                <th className="px-4 py-3 font-semibold text-gray-700">Username</th>
+                <th className="px-4 py-3 font-semibold text-gray-700">Full Name</th>
+                <th className="px-4 py-3 font-semibold text-gray-700">Phone Number</th>
+                <th className="px-4 py-3 font-semibold text-gray-700">Role</th>
+              </tr>
+            </thead>
+      
+            <tbody>
+              {users.map((u, i) => (
+                <tr
+                  key={u._id}
+                  className={`${
+                    i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                  } hover:bg-gray-100 transition`}
+                >
+                  <td className="px-4 py-3 border-b text-gray-700">{u._id}</td>
+                  <td className="px-4 py-3 border-b text-gray-700">{u.username}</td>
+                  <td className="px-4 py-3 border-b text-gray-700">{u.fullName}</td>
+                  <td className="px-4 py-3 border-b text-gray-700">
+                    {u.phoneNumber || "-"}
+                  </td>
+                  <td className="px-4 py-3 border-b text-gray-700">{u.role}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
-        {users.length > 0 && (
-          <div>
-            {users.map((u) => (
-              <div key={u._id} className="p-3 border mb-2">
-                <p><b>id:</b> {u._id}</p>
-                <p><b>Username:</b> {u.username}</p>
-                <p><b>Full Name:</b> {u.fullName}</p>
-                <p><b>Phone Number:</b> {u.phoneNumber}</p>
-                <p><b>Role:</b> {u.role}</p>
-                <br></br>
-                <br></br>
-              </div>
-            ))}
-          </div>
-        )}
     </div>
   );
 }

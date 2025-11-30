@@ -20,7 +20,6 @@ const AppRouter: React.FC = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
         {/* Users routes */}

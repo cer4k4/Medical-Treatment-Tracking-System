@@ -46,6 +46,27 @@ export default function GetAllMyTasks() {
     // navigate("/login");
   };
 
+
+  const toggleStatus = async (id: string) => {
+  try {
+    await api.patch(`/task/status/${id}`);
+
+    // UI را آپدیت کن
+    setUser((prev) =>
+      prev
+        ? prev.map((t) =>
+            t._id === id
+              ? { ...t, status: t.status === "open" ? "done" : "open" }
+              : t
+          )
+        : prev
+    );
+  } catch (err) {
+    alert("Failed to update task");
+  }
+};
+
+
   return (
     <Wrapper title="List Of My Tasks">
       <div style={{ display: "flex", gap: 8 }}>
@@ -56,21 +77,29 @@ export default function GetAllMyTasks() {
           Update
         </Link> */}
       </div>
+        {tasks && (
+          <div className="mt-4">
+            {tasks.map((task) => (
+              <div key={task._id} className="p-3 border rounded-xl mb-3 flex justify-between">
 
-
-      {tasks && (
-        <div className="mt-4">
-          {tasks?.map((task) => (
-            <div key={task._id} className="p-3 border rounded-xl mb-3">
-              <p><b>Title:</b> {task.title}</p>
-              <p><b>Description:</b> {task.description}</p>
-              <p><b>Status:</b> {task.status}</p>
-              <p><b>Task ID:</b> {task._id}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
+                <div>
+                  <p><b>Title:</b> {task.title}</p>
+                  <p><b>Status:</b> {task.status}</p>
+                </div>
+            
+                <div className="flex items-center gap-2">
+                  <label>Done</label>
+                  <input
+                    type="checkbox"
+                    checked={task.status === "done"}
+                    onChange={() => toggleStatus(task._id!)}
+                  />
+                </div>
+            
+              </div>
+            ))}
+          </div>
+        )}
       {/* {tasks && ( */}
         {/* <div className="p-4 border rounded-xl mt-3"> */}
           {/* <p><b>Username:</b> {tasks}</p> */}

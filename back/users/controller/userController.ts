@@ -77,7 +77,7 @@ async function updateUser(req: RequestWithUser,res: Response) {
 async function getUser(req:RequestWithUser, res:Response) {
   try {
     const user = req.user as IUser
-    const response = new SuccessResponse({"username":user.username,"fullName":user.fullName})
+    const response = new SuccessResponse({"username":user.username,"fullName":user.fullName,"phoneNumber":user.phoneNumber})
     return res.status(200).json(response);
   } catch (error) {
     console.log("Server Error GetUser",error)

@@ -15,6 +15,7 @@ export async function addAdmin() {
             password: configFile.adminPassword || "",
             role: UserRoles.ADMIN,
             phoneNumber: configFile.adminPhonenumber || "",
+            patient: "",
             userId: "superadmin",
             fullName: "Admin",
             createdAt: Date.now(),

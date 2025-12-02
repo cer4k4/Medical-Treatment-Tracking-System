@@ -5,4 +5,6 @@ export interface ITask extends IBaseModel {
     description: string
     status:      string
     creator:     string
+    patient:     string
+    patientDefault:     boolean
 }

@@ -17,6 +17,8 @@ userRouter.post("/create",RegisterUserDto,DataValidator,userController.registerU
 
 userRouter.get("/byId",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER]),userController.getUser)
 
+userRouter.get("/by/phone/:phoneNumber",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER]),userController.getUserByPhoneNumber)
+
 userRouter.patch("/update",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER]),UpdateUserDto,DataValidator,userController.updateUser)
 
 userRouter.post("/login",LoginUserDto,DataValidator,userController.loginUser)

@@ -12,6 +12,7 @@ async function registerUser(req:Request, res:Response) {
   try {
     const body = req.body
     const username = body.username;
+    const patient = body.patient
     const userFoundByUsername = await model.UserModel.findOne({username});
     if (userFoundByUsername) {
       const response = new SuccessResponse({},false,409,systemErrors.USERNAMEEXISTED)
@@ -30,6 +31,7 @@ async function registerUser(req:Request, res:Response) {
       username,
       fullName,
       phoneNumber,
+      patient,
       password: hashedPassword,
     });
     const response = new SuccessResponse({username: newUser.username, fullName: newUser.fullName, role: newUser.role},true,201,systemErrors.SUCCESSFUL)
@@ -45,7 +47,6 @@ async function updateUser(req: RequestWithUser,res: Response) {
   try {
     const updateData = req.body;
     const user = (req.user) as IUser
-    console.log(user)
     if (updateData.username){
       if (await model.UserModel.findOne({username:updateData.username})) {
         const response = new SuccessResponse({},false,409,systemErrors.USERNAMEEXISTED)
@@ -62,7 +63,12 @@ async function updateUser(req: RequestWithUser,res: Response) {
       const hashedPassword = await hash(updateData.newPassword, 10);
       user.password = hashedPassword
     }
-    user.fullName = updateData.fullName
+    if ( updateData.fullName ){
+      user.fullName = updateData.fullName
+    }
+    if ( updateData.patient ) {
+      user.patient = updateData.patient
+    }
     user.updatedAt = Date.now()
     const result = await model.UserModel.updateOne({ _id: user.userId }, { $set: user});
     const response = new SuccessResponse(result,true,200,systemErrors.UPDATESUCCESSFUL)
@@ -91,6 +97,7 @@ async function loginUser(req:Request, res:Response) {
     const username = req.body.username || '';
     const password = req.body.password || '';
     const phoneNumber = req.body.password || '';
+    const patient = req.body.patient || '';
     const userFound = await model.UserModel.findOne({username,deletedAt: { $exists: false } });
     if (!userFound) {
       const response = new SuccessResponse({},false,404,systemErrors.USERNOTFOUNDED)
@@ -105,6 +112,7 @@ async function loginUser(req:Request, res:Response) {
       username: username,
       password: password,
       phoneNumber: phoneNumber,
+      patient: patient,
       role: UserRoles.USER,
       fullName: String(userFound.fullName),
       createdAt: Date.now(),
@@ -119,6 +127,22 @@ async function loginUser(req:Request, res:Response) {
   }
 }
 
+async function getUserByPhoneNumber(req:Request, res:Response) {
+  try {
+    const phoneNumber = req.params["phoneNumber"]
+    const userFound = await model.UserModel.findOne({phoneNumber,deletedAt: { $exists: false } });
+    if (!userFound) {
+      const response = new SuccessResponse({},false,404,systemErrors.USERNOTFOUNDED)
+      return res.status(404).json(response);
+    }
+    const response = new SuccessResponse({"username":userFound.username,"fullName":userFound.fullName,"phoneNumber":userFound.phoneNumber})
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log("Server Error GetUser",error)
+    const response = new SuccessResponse({},false,500,systemErrors.SERVERERROR)
+    return res.status(500).json(response);
+  }
+}
 
 
 
@@ -127,5 +151,4 @@ async function loginUser(req:Request, res:Response) {
 
 
 
-
-export = {getUser,registerUser,updateUser,loginUser};
+export = {getUser,registerUser,updateUser,loginUser,getUserByPhoneNumber};

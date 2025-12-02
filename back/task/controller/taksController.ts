@@ -14,11 +14,13 @@ async function createTask(req:RequestWithUser, res:Response) {
     const user = (req.user) as IUser
     const body = req.body
     const newTask = await model.TaskModel.create({
-      title:body.title,
-      description:body.description,
-      creator:user.userId,
-      createdAt:Date.now(),
-      updatedAt:Date.now(),
+      title: body.title,
+      description: body.description,
+      creator: user.userId,
+      patient: body.patient,
+      patientDefault: true,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     });
     const response = new SuccessResponse({"taskId":newTask.id,"title":newTask.title,"description":newTask.description},true,201,systemErrors.SUCCESSFUL)
     return res.status(201).json(response);
@@ -37,11 +39,14 @@ async function editTask(req: Request,res: Response) {
     if (updateData.title){
       task.title = updateData.title
     }
-    if (updateData.description){
+    if (updateData.description) {
       task.description = updateData.description
     }
     if (updateData.status && (updateData.status === "open" || updateData.status === "done")){
       task.status = updateData.status
+    }
+    if (updateData.patient) {
+      task.patient = updateData.patient
     }
     task.updatedAt = Date.now()
     const result = await model.TaskModel.updateOne({ _id: id }, { $set: task});

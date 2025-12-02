@@ -7,4 +7,5 @@ export interface IUser extends IBaseModel{
   phoneNumber: string;
   role:      string;
   password:  string;
+  patient: string;
 }

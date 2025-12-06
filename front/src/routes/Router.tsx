@@ -11,6 +11,7 @@ import GetAllMyTasks from "../pages/GetMyTasksPage";
 import GetMyTask from "../pages/GetTaskById";
 import GetUsers from "../pages/UsersList";
 import ChangeUserPage from "../pages/CreateDr";
+import Dashboard from "../pages/Dashboard";
 
 const AppRouter: React.FC = () => {
   const { token } = useAuth();
@@ -18,6 +19,7 @@ const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         {/* Protected routes */}

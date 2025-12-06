@@ -10,6 +10,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true, unique: true },
   patient:  { type: String },
+  doctor:   { type:String },
   ...baseSchema,
 },{ versionKey: false },);
 

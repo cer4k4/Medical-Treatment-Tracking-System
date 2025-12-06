@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import api from "../api/axios";
-import { useAuth } from "../context/AuthContext";
+//import { useAuth } from "../context/AuthContext";
 import Wrapper from "../components/Wrapper";
-import { useNavigate, Link } from "react-router-dom";
+//import { useNavigate,  } from "react-router-dom";
 
 type Task = {
   _id?: string,
@@ -19,21 +19,23 @@ type Task = {
 type GetMyAllTask = Task[];
 
 export default function GetAllMyTasks() {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+  // const { logout } = useAuth();
+  // const navigate = useNavigate();
   const [tasks, setUser] = useState<GetMyAllTask | null>(null);
   const [loading, setLoading] = useState(false);
 
   // 👇 state برای inputs
   const [page, setPage] = useState<string>("");
   const [limit, setLimit] = useState<string>("");
+  const [doctor, setDoctor] = useState<string>("");
 
-  const load = async (page:number,limit:number) => {
+  const load = async (page: number, limit: number,doctor: string) => {
     try {
       setLoading(true);
-      const { data } = await api.get<{ data: GetMyAllTask }>(`/task/my/${page}/${limit}`);
+      const { data } = await api.get<{ data: GetMyAllTask }>(
+        `/task/my/${page}/${limit}/${doctor}`
+      );
       setUser(data.data);
-      console.log(data)
     } catch (err) {
       alert("Failed to load tasks");
     } finally {
@@ -41,10 +43,11 @@ export default function GetAllMyTasks() {
     }
   };
 
-  const handleLogout = () => {
+
+  //const handleLogout = () => {
     //logout();
     // navigate("/login");
-  };
+  //};
 
 
   const toggleStatus = async (id: string) => {
@@ -72,7 +75,8 @@ export default function GetAllMyTasks() {
       <div style={{ display: "flex", gap: 8 }}>
         <input className="input" name="page" placeholder="page" onChange={(e) => setPage(e.target.value)} />
         <input className="input" name="limit" placeholder="limit" onChange={(e) => setLimit(e.target.value)} />
-        <button className="btn" onClick={() => load(Number(page), Number(limit))} disabled={loading}>{loading ? "Loading..." : "Load Tasks"}</button>
+        <input className="input" name="doctor" placeholder="doctorID" onChange={(e) => setDoctor(e.target.value)} />
+        <button className="btn" onClick={() => load(Number(page), Number(limit),String(doctor))} disabled={loading}>{loading ? "Loading..." : "Load Tasks"}</button>
         {/* <Link to="/update" className="btn" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
           Update
         </Link> */}

@@ -7,7 +7,9 @@ type UpdateUserForm = {
   role?: string;
   username?: string;
   fullName?: string;
-  newPassword?: string;  
+  newPassword?: string;
+  patient?: string;
+  doctor?: string;
 };
 
 export default function ChangeUserPage() {
@@ -39,6 +41,8 @@ export default function ChangeUserPage() {
       <input className="input" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} />
       <input className="input" name="role" placeholder="Role Name" onChange={handleChange} />
       <input className="input" type="newPassword" name="newPassword" placeholder="Password" onChange={handleChange} />
+      <input className="input" type="patient" name="patient" placeholder="Patient" onChange={handleChange} />
+      <input className="input" type="doctor" name="doctor" placeholder="Doctor" onChange={handleChange} />
       <button className="btn" onClick={submit} disabled={loading}>
         {loading ? "Loading..." : "Change User"}
       </button>

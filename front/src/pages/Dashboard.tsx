@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-//import { useParams } from "react-router-dom"
+import React, { useState, useEffect } from "react";
 import api from "../api/axios";
 
 type User = {
@@ -8,15 +7,12 @@ type User = {
   fullName: string;
   role: string;
   phoneNumber?: string;
-  password?: string;
   createdAt: number;
-  updatedAt: number;
   patient: string;
   doctor: string;
-  __v?: number;
 };
 
-export default function GetUsers() {
+export default function Dashboard() {
   const [page, setPage] = useState("1");
   const [limit, setLimit] = useState("10");
   const [feild, setField] = useState("");
@@ -25,33 +21,34 @@ export default function GetUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const loadUsers = async () => {
-    try {
-      setLoading(true);
+const loadUsers = async () => {
+  try {
+    setLoading(true);
 
-      const { data } = await api.get<{ data: User[] }>(
-        `/admin/list/${page}/${limit}`,
-        {
-          params: {
-            feild,
-            word,
-          },
-        }
-      );
+    const { data } = await api.get<{ data: User[] }>(
+      `/admin/list/${Number(page)}/${Number(limit)}`,
+      {
+        params: { feild, word }, // make sure 'field' matches your backend
+      }
+    );
 
-      setUsers(data.data);
-    } catch (err) {
-      alert("Failed to load users");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setUsers(data.data);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load users");
+  } finally {
+    setLoading(false);
+  }
+};
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2 className="text-xl mb-3">Get All Users</h2>
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold mb-4">Admin Dashboard</h1>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+      <div className="flex gap-3 mb-4">
         <input
           className="input"
           placeholder="Page"
@@ -71,13 +68,13 @@ export default function GetUsers() {
           value={feild}
           onChange={(e) => setField(e.target.value)}
         >
-          <option value="">Select Field</option>
+          <option value="">Field</option>
           <option value="fullName">Full Name</option>
           <option value="username">Username</option>
           <option value="phoneNumber">Phone Number</option>
+          <option value="role">Role</option>
           <option value="patient">Patient</option>
           <option value="doctor">Doctor</option>
-          <option value="role">Role</option>
         </select>
 
         <input
@@ -91,8 +88,9 @@ export default function GetUsers() {
           {loading ? "Loading..." : "Load"}
         </button>
       </div>
-      {users.length > 0 && (
-        <div className="mt-6 rounded-xl shadow-md border bg-white overflow-hidden">
+
+      {users.length > 0 ? (
+        <div className="rounded-xl shadow-md border bg-white overflow-hidden">
           <table className="min-w-full text-sm text-left">
             <thead className="bg-gray-50 border-b">
               <tr>
@@ -105,31 +103,28 @@ export default function GetUsers() {
                 <th className="px-4 py-3 font-semibold text-gray-700">Doctor</th>
               </tr>
             </thead>
-      
+
             <tbody>
               {users.map((u, i) => (
                 <tr
                   key={u._id}
-                  className={`${
-                    i % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100 transition`}
+                  className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
                 >
-                  <td className="px-4 py-3 border-b text-gray-700">{u._id}</td>
-                  <td className="px-4 py-3 border-b text-gray-700">{u.username}</td>
-                  <td className="px-4 py-3 border-b text-gray-700">{u.fullName}</td>
-                  <td className="px-4 py-3 border-b text-gray-700">{u.patient}</td>
-                  <td className="px-4 py-3 border-b text-gray-700">{u.doctor}</td>
-                  <td className="px-4 py-3 border-b text-gray-700">
-                    {u.phoneNumber || "-"}
-                  </td>
-                  <td className="px-4 py-3 border-b text-gray-700">{u.role}</td>
+                  <td className="px-4 py-3 border-b">{u._id}</td>
+                  <td className="px-4 py-3 border-b">{u.username}</td>
+                  <td className="px-4 py-3 border-b">{u.fullName}</td>
+                  <td className="px-4 py-3 border-b">{u.phoneNumber || "-"}</td>
+                  <td className="px-4 py-3 border-b">{u.role}</td>
+                  <td className="px-4 py-3 border-b">{u.patient}</td>
+                  <td className="px-4 py-3 border-b">{u.doctor}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      ) : (
+        <p>No users found</p>
       )}
-
     </div>
   );
 }

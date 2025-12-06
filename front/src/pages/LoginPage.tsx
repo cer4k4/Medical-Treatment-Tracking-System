@@ -19,18 +19,45 @@ export default function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async () => {
-    try {
-      setLoading(true);
-      const res = await api.post<{ data: string; message?: string }>("/users/login", form);
-      // فرض: JWT یا توکن در res.data.data قرار دارد
-      login(res.data.data);
+  try {
+    setLoading(true);
+    const res = await api.post<{ data: { token: string; role: string } }>
+      ("/users/login", form);
+
+    // Save token
+    login(res.data.data.token);
+
+    // Redirect based on role
+    if (res.data.data.role === "admin" || res.data.data.role === "doctor") {
+      navigate("/dashboard");
+    } else {
       navigate("/profile");
-    } catch (err) {
-      alert("Login failed");
-    } finally {
-      setLoading(false);
     }
-  };
+
+  } catch (err) {
+    alert("Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
+  // const submit = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await api.post<{ data: string; message?: string }>("/users/login", form);
+  //     // فرض: JWT یا توکن در res.data.data قرار دارد
+  //     login(res.data.data);
+  //     navigate("/profile");
+  //   } catch (err) {
+  //     alert("Login failed");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+
+
+
 
   return (
     <Wrapper title="Login">

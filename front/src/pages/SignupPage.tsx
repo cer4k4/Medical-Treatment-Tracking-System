@@ -8,11 +8,13 @@ type SignupForm = {
   fullName: string;
   phoneNumber: string;
   password: string;
+  patient: string;
+  doctor: string;
 };
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const [form, setForm] = useState<SignupForm>({ username: "", fullName: "", phoneNumber: "", password: "" });
+  const [form, setForm] = useState<SignupForm>({ username: "", fullName: "", phoneNumber: "", password: "" ,patient: "",doctor:""});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -37,6 +39,8 @@ export default function SignupPage() {
       <input className="input" name="fullName" placeholder="Full Name" onChange={handleChange} />
       <input className="input" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} />
       <input className="input" type="password" name="password" placeholder="Password" onChange={handleChange} />
+      <input className="input" type="patient" name="patient" placeholder="Patient" onChange={handleChange} />
+      <input className="input" type="doctor" name="doctor" placeholder="Doctor" onChange={handleChange} />
       <button className="btn" onClick={submit} disabled={loading}>
         {loading ? "Loading..." : "Signup"}
       </button>

@@ -11,8 +11,9 @@ import { IUser } from "../../shared/models/user.interface";
 async function registerUser(req:Request, res:Response) {
   try {
     const body = req.body
-    const username = body.username;
+    const username = body.username
     const patient = body.patient
+    const doctor = body.doctor
     const userFoundByUsername = await model.UserModel.findOne({username});
     if (userFoundByUsername) {
       const response = new SuccessResponse({},false,409,systemErrors.USERNAMEEXISTED)
@@ -32,6 +33,7 @@ async function registerUser(req:Request, res:Response) {
       fullName,
       phoneNumber,
       patient,
+      doctor,
       password: hashedPassword,
     });
     const response = new SuccessResponse({username: newUser.username, fullName: newUser.fullName, role: newUser.role},true,201,systemErrors.SUCCESSFUL)
@@ -83,7 +85,7 @@ async function updateUser(req: RequestWithUser,res: Response) {
 async function getUser(req:RequestWithUser, res:Response) {
   try {
     const user = req.user as IUser
-    const response = new SuccessResponse({"username":user.username,"fullName":user.fullName,"phoneNumber":user.phoneNumber})
+    const response = new SuccessResponse({"username":user.username,"fullName":user.fullName,"phoneNumber":user.phoneNumber,"role":user.role})
     return res.status(200).json(response);
   } catch (error) {
     console.log("Server Error GetUser",error)
@@ -109,16 +111,16 @@ async function loginUser(req:Request, res:Response) {
     }
     const user:IUser = {
       userId: userFound.id,
-      username: username,
-      password: password,
-      phoneNumber: phoneNumber,
-      patient: patient,
-      role: UserRoles.USER,
+      username: userFound.username,
+      password: '',
+      phoneNumber: userFound.phoneNumber,
+      patient: userFound.patient,
+      role: userFound.role,
       fullName: String(userFound.fullName),
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-    const response = new SuccessResponse(auth.generateToken(user))
+    const response = new SuccessResponse({token:auth.generateToken(user),'role':user.role})
     return res.json(response);
   } catch (error) {
     console.log("Server Error LoginUser",error)

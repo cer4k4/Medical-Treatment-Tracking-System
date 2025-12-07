@@ -2,7 +2,7 @@ import  { useState } from "react";
 import api from "../api/axios";
 //import { useAuth } from "../context/AuthContext";
 import Wrapper from "../components/Wrapper";
-//import { useNavigate,  } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 type Task = {
   _id?: string,
@@ -84,7 +84,7 @@ export default function GetAllMyTasks() {
         {tasks && (
           <div className="mt-4">
             {tasks.map((task) => (
-              <div key={task._id} className="p-3 border rounded-xl mb-3 flex justify-between">
+              <div key={ task._id } className="p-3 border rounded-xl mb-3 flex justify-between">
 
                 <div>
                   <p><b>Title:</b> {task.title}</p>

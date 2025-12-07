@@ -98,8 +98,6 @@ async function loginUser(req:Request, res:Response) {
   try {
     const username = req.body.username || '';
     const password = req.body.password || '';
-    const phoneNumber = req.body.password || '';
-    const patient = req.body.patient || '';
     const userFound = await model.UserModel.findOne({username,deletedAt: { $exists: false } });
     if (!userFound) {
       const response = new SuccessResponse({},false,404,systemErrors.USERNOTFOUNDED)
@@ -117,6 +115,7 @@ async function loginUser(req:Request, res:Response) {
       patient: userFound.patient,
       role: userFound.role,
       fullName: String(userFound.fullName),
+      doctor:userFound.doctor,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };

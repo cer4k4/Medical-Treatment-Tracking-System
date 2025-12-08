@@ -1,118 +1,92 @@
-import  { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import api from "../api/axios";
-//import { useAuth } from "../context/AuthContext";
 import Wrapper from "../components/Wrapper";
-//import { useNavigate } from "react-router-dom";
 
 type Task = {
-  _id?: string,
-  status?: string,
-  creator?: string,
-  createdAt?: number,
-  updatedAt?: number,
+  _id?: string;
+  status?: string;
+  creator?: string;
+  createdAt?: number;
+  updatedAt?: number;
   title?: string;
   description?: string;
   taskId?: string;
-  __v?: number
+  __v?: number;
 };
 
 type GetMyAllTask = Task[];
 
 export default function GetAllMyTasks() {
-  // const { logout } = useAuth();
-  // const navigate = useNavigate();
-  const [tasks, setUser] = useState<GetMyAllTask | null>(null);
+  const [tasks, setTasks] = useState<GetMyAllTask | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // 👇 state برای inputs
-  const [page, setPage] = useState<string>("");
-  const [limit, setLimit] = useState<string>("");
-  const [doctor, setDoctor] = useState<string>("");
+  const [searchParams] = useSearchParams();
+  const defaultPage = Number(searchParams.get("page")) || 1;
+  const defaultLimit = Number(searchParams.get("limit")) || 10;
 
-  const load = async (page: number, limit: number,doctor: string) => {
+  const [page, setPage] = useState<string>(String(defaultPage));
+  const [limit, setLimit] = useState<string>(String(defaultLimit));
+
+  const load = async (p: number, l: number) => {
     try {
       setLoading(true);
-      const { data } = await api.get<{ data: GetMyAllTask }>(
-        `/task/my/${page}/${limit}/${doctor}`
-      );
-      setUser(data.data);
+      const { data } = await api.get<{ data: GetMyAllTask }>(`/task/my/${p}/${l}`);
+      setTasks(data.data);
     } catch (err) {
+      console.error(err);
       alert("Failed to load tasks");
     } finally {
       setLoading(false);
     }
   };
 
-
-  //const handleLogout = () => {
-    //logout();
-    // navigate("/login");
-  //};
-
-
-  const toggleStatus = async (id: string) => {
-  try {
-    await api.patch(`/task/status/${id}`);
-
-    // UI را آپدیت کن
-    setUser((prev) =>
-      prev
-        ? prev.map((t) =>
-            t._id === id
-              ? { ...t, status: t.status === "open" ? "done" : "open" }
-              : t
-          )
-        : prev
-    );
-  } catch (err) {
-    alert("Failed to update task");
-  }
-};
-
+  // AUTO load on mount (and when query params change)
+  useEffect(() => {
+    load(defaultPage, defaultLimit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultPage, defaultLimit]);
 
   return (
     <Wrapper title="List Of My Tasks">
       <div style={{ display: "flex", gap: 8 }}>
-        <input className="input" name="page" placeholder="page" onChange={(e) => setPage(e.target.value)} />
-        <input className="input" name="limit" placeholder="limit" onChange={(e) => setLimit(e.target.value)} />
-        <input className="input" name="doctor" placeholder="doctorID" onChange={(e) => setDoctor(e.target.value)} />
-        <button className="btn" onClick={() => load(Number(page), Number(limit),String(doctor))} disabled={loading}>{loading ? "Loading..." : "Load Tasks"}</button>
-        {/* <Link to="/update" className="btn" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-          Update
-        </Link> */}
+        <input className="input" name="page" placeholder="page" onChange={(e) => setPage(e.target.value)} defaultValue={String(defaultPage)} />
+        <input className="input" name="limit" placeholder="limit" onChange={(e) => setLimit(e.target.value)} defaultValue={String(defaultLimit)} />
+        <button className="btn" onClick={() => load(Number(page), Number(limit))} disabled={loading}>
+          {loading ? "Loading..." : "Load Tasks"}
+        </button>
       </div>
-        {tasks && (
-          <div className="mt-4">
-            {tasks.map((task) => (
-              <div key={ task._id } className="p-3 border rounded-xl mb-3 flex justify-between">
 
-                <div>
-                  <p><b>Title:</b> {task.title}</p>
-                  <p><b>Status:</b> {task.status}</p>
-                </div>
-            
-                <div className="flex items-center gap-2">
-                  <label>Done</label>
-                  <input
-                    type="checkbox"
-                    checked={task.status === "done"}
-                    onChange={() => toggleStatus(task._id!)}
-                  />
-                </div>
-            
+      {tasks && (
+        <div className="mt-4">
+          {tasks.map((task) => (
+            <div key={task._id} className="p-3 border rounded-xl mb-3 flex justify-between">
+              <div>
+                <p><b>Title:</b> {task.title}</p>
+                <p><b>Status:</b> {task.status}</p>
               </div>
-            ))}
-          </div>
-        )}
-      {/* {tasks && ( */}
-        {/* <div className="p-4 border rounded-xl mt-3"> */}
-          {/* <p><b>Username:</b> {tasks}</p> */}
-          {/* <p><b>Full Name:</b> {task.fullName}</p>
-          <p><b>Full Name:</b> {task.fullName}</p>
-          <p><b>Phone:</b> {task.phoneNumber}</p> */}
-        {/* </div> */}
-      {/* )} */}
-      {/* <button className="btn mt-4 bg-red-600" onClick={handleLogout}>Logout</button> */}
+
+              <div className="flex items-center gap-2">
+                <label>Done</label>
+                <input
+                  type="checkbox"
+                  checked={task.status === "done"}
+                  onChange={async () => {
+                    try {
+                      await api.patch(`/task/status/${task._id}`);
+                      setTasks((prev) =>
+                        prev ? prev.map((t) => (t._id === task._id ? { ...t, status: t.status === "open" ? "done" : "open" } : t)) : prev
+                      );
+                    } catch {
+                      alert("Failed to update task");
+                    }
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </Wrapper>
   );
 }

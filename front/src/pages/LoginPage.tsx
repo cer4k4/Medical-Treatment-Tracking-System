@@ -19,55 +19,59 @@ export default function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async () => {
-  try {
-    setLoading(true);
-    const res = await api.post<{ data: { token: string; role: string } }>
-      ("/users/login", form);
+    try {
+      setLoading(true);
 
-    // Save token
-    login(res.data.data.token);
+      const res = await api.post<{ data: { token: string; role: string } }>(
+        "/users/login",
+        form
+      );
 
-    // Redirect based on role
-    if (res.data.data.role === "admin" || res.data.data.role === "doctor") {
-      navigate("/dashboard");
-    } else {
-      navigate("/profile");
+      // Save JWT token
+      login(res.data.data.token);
+
+      const role = res.data.data.role;
+
+      // Redirect based on role
+      if (role === "admin" || role === "doctor") {
+        navigate("/dashboard");
+      } else if (role === "user") {
+        navigate("/profile");
+      }
+
+    } catch (err) {
+      alert("Login failed");
+    } finally {
+      setLoading(false);
     }
-
-  } catch (err) {
-    alert("Login failed");
-  } finally {
-    setLoading(false);
-  }
-};
-  // const submit = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const res = await api.post<{ data: string; message?: string }>("/users/login", form);
-  //     // فرض: JWT یا توکن در res.data.data قرار دارد
-  //     login(res.data.data);
-  //     navigate("/profile");
-  //   } catch (err) {
-  //     alert("Login failed");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-
-
-
+  };
 
   return (
     <Wrapper title="Login">
-      <input className="input" name="username" placeholder="Username" onChange={handleChange} />
-      <input className="input" type="password" name="password" placeholder="Password" onChange={handleChange} />
+      <input
+        className="input"
+        name="username"
+        placeholder="Username"
+        onChange={handleChange}
+      />
+
+      <input
+        className="input"
+        type="password"
+        name="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
+
       <button className="btn" onClick={submit} disabled={loading}>
         {loading ? "Loading..." : "Login"}
       </button>
+
       <p style={{ marginTop: 10, textAlign: "center" }}>
-        Don't have an account? <Link to="/signup" style={{ color: "blue" }}>Signup</Link>
+        Don't have an account?{" "}
+        <Link to="/signup" style={{ color: "blue" }}>
+          Signup
+        </Link>
       </p>
     </Wrapper>
   );

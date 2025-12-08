@@ -117,9 +117,8 @@ async function allMyTasks(req:RequestWithUser, res:Response) {
     const user = (req.user) as IUser
     const limit = Number(req.params["limit"])
     const page = Number(req.params["page"])
-    const doctorId = req.params["doctor"]
     const offset = (page - 1) * limit
-    const allMyTasks = await model.TaskModel.find({creator:doctorId,deletedAt:{$exists:false}}).skip(offset).limit(limit);
+    const allMyTasks = await model.TaskModel.find({creator:user.doctor,deletedAt:{$exists:false}}).skip(offset).limit(limit);
     const response = new SuccessResponse(allMyTasks)
     return res.status(200).json(response);
   } catch (error) {

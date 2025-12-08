@@ -16,7 +16,7 @@ taskRouter.put("/edit/:taskId",middleware.Authentication,ParamTaskIdDto,UpdateTa
 
 taskRouter.get("/byId/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.getTask)
 
-taskRouter.get("/my/:page/:limit/:doctor",middleware.Authentication,PaginationParam,DataValidator,taskController.allMyTasks)
+taskRouter.get("/my/:page/:limit",middleware.Authentication,PaginationParam,DataValidator,taskController.allMyTasks)
 
 taskRouter.get("/all/:page/:limit",middleware.Authentication,PaginationParam,DataValidator,taskController.allTasks)
 

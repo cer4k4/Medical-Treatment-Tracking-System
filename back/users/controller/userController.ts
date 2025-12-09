@@ -27,6 +27,7 @@ async function registerUser(req:Request, res:Response) {
     }
     const fullName = body.fullName;
     const password = body.password;
+    const specialty = body.specialty;
     const hashedPassword = await hash(String(password), 10);
     const newUser = await model.UserModel.create({
       username,
@@ -34,9 +35,17 @@ async function registerUser(req:Request, res:Response) {
       phoneNumber,
       patient,
       doctor,
+      specialty,
       password: hashedPassword,
     });
-    const response = new SuccessResponse({username: newUser.username, fullName: newUser.fullName, role: newUser.role},true,201,systemErrors.SUCCESSFUL)
+    const response = new SuccessResponse({
+      username: newUser.username,
+      fullName: newUser.fullName,
+      role: newUser.role,
+      doctor: newUser.doctor,
+      specialty: newUser.specialty,
+      patient: newUser.patient,
+      phoneNumber:newUser.phoneNumber},true,201,systemErrors.SUCCESSFUL)
     return res.status(201).json(response);
   } catch (error) {
     console.log("Server Error RegisterUser",error)

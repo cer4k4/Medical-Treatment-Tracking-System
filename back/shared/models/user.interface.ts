@@ -9,4 +9,5 @@ export interface IUser extends IBaseModel{
   password:  string;
   patient: string;
   doctor?: string;
+  specialty?: string;
 }

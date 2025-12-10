@@ -103,7 +103,7 @@ async function allUser(req:RequestWithUser, res:Response) {
     const allusers = await model.UserModel.find(query)
       .skip(offset)
       .limit(limit);
-
+    
     const response = new SuccessResponse(allusers);
     return res.status(200).json(response);
   } catch (error) {

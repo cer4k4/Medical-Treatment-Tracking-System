@@ -1,9 +1,8 @@
-import Swal from 'sweetalert2'
-import { useState } from 'react';
+import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react';
 import { User } from '../App';
 import { LogOut, UserPlus, Trash2, Search, Users, Stethoscope } from 'lucide-react';
-import { userService ,CreateUserRequest} from '../services/userService';
-import { ApiResponse } from '../services/api';
+import { userService, CreateUserRequest } from '../services/userService';
 
 interface AdminDashboardProps {
   user: User;
@@ -11,85 +10,114 @@ interface AdminDashboardProps {
 }
 
 interface Doctor {
-  username?:string;
+  id: string;
+  username?: string;
   fullName: string;
-  phoneNumber:string;
+  phoneNumber: string;
   role?: string;
   password?: string;
   specialty?: string;
   patientsCount: number;
 }
 
-const mockDoctors: Doctor[] = [
-  { fullName: 'دکتر احمدی', phoneNumber: 'doctor@clinic.com', specialty: 'قلب و عروق', patientsCount: 12 },
-  { fullName: 'دکتر رضایی', phoneNumber: 'rezaei@clinic.com', specialty: 'داخلی', patientsCount: 8 },
-  { fullName: 'دکتر کریمی', phoneNumber: 'karimi@clinic.com', specialty: 'گوارش', patientsCount: 15 },
-];
-
 export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
-  const [doctors, setDoctors] = useState<Doctor[]>(mockDoctors);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [newDoctor, setNewDoctor] = useState({
-    name: '',
-    email: '',
+    id: '',
+    fullName: 'سس',
+    password: '',
+    phoneNumber: '',
     specialty: '',
+    role: '',
+    
+    username: '',
   });
 
+  // گرفتن دکترها از سرور
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+const fetchDoctors = async () => {
+  try {
+    const res: any = await userService.getDoctors();
+
+    // بررسی اینکه res.data آرایه هست یا داخل فیلد allusers
+    const doctorsArray = Array.isArray(res.data)
+      ? res.data
+      : Array.isArray(res.data?.allusers)
+        ? res.data.allusers
+        : [];
+    setDoctors(
+      doctorsArray.map((d: any) => ({
+        id: d.id || d._id,
+        fullName: d.fullName || d.full_name || '',
+        phoneNumber: d.phoneNumber || d.phone || '',
+        specialty: d.specialty || '',
+        ...d,
+        patientsCount: d.patientsCount || 0,
+      }))
+    );
+
+  } catch (err: any) {
+    Swal.fire('خطا!', err.message || 'خطای سرور', 'error');
+  }
+};
+
+
+
+  // اضافه کردن دکتر جدید
   const handleAddDoctor = async (e: React.FormEvent) => {
     e.preventDefault();
-    const doctor: Doctor = {
-      fullName: '',
-      phoneNumber: '',
-      password: '',
-      role:'',
-      username:'',
-      ...newDoctor,
-      patientsCount: 0,
-    };
-    setDoctors([...doctors, doctor]);
-    const userSer = userService
-    try{
-      const user: CreateUserRequest={
+    const doctor: Doctor = { ...newDoctor, patientsCount: 0 };
+
+    try {
+      const user: CreateUserRequest = {
         username: doctor.username || '',
-        fullName:doctor.fullName || '',
+        fullName: doctor.fullName || '',
         password: doctor.password || '',
         phoneNumber: doctor.phoneNumber || '',
         specialty: doctor.specialty || '',
-        role:"doctor",
-        doctor:'',
-        patient:'',
+        role: 'doctor',
+        doctor: '',
+        patient: '',
       };
-      const res = await userSer.createUser(user)
-      if (res.error){
-        Swal.fire({
-          title: 'خطا!',
-          text: res.error,
-          icon: 'error',
-          confirmButtonText: 'باشه'
-        });
-      }
-    }catch(err: any){
-      const message =
-        err?.err ||
-        "An unexpected error occurred";
-        Swal.fire({
-          title: 'خطا!',
-          text: message,
-          icon: 'error',
-          confirmButtonText: 'باشه'
-        });
-    }
-    setNewDoctor({ name: '', email: '', specialty: '' });
-    setShowAddForm(false);
-  };  
 
-  const handleDeleteDoctor = (id: string) => {
-    setDoctors(doctors.filter(d => d.id !== id));
+      const res = await userService.createUser(user);
+      if (res.error || !res.success) {
+        Swal.fire('خطا!', res.error || 'خطایی رخ داده', 'error');
+      } else {
+        Swal.fire('🙂', res.message, 'success');
+        // بعد از اضافه کردن، دوباره دکترها رو از سرور بگیر
+        fetchDoctors();
+      }
+    } catch (err: any) {
+      Swal.fire('خطا!', err?.err || 'خطای غیرمنتظره', 'error');
+    }
+
+    setNewDoctor({id:'', fullName: '', password: '', phoneNumber: '', specialty: '', role: '', username: '' });
+    setShowAddForm(false);
+  };
+
+  // حذف دکتر
+  const handleDeleteDoctor = async (id: string) => {
+    try {
+      const res = await userService.deleteUser(id); // فرض بر این است که چنین API دارید
+      if (res.success) {
+        Swal.fire('🙂', 'دکتر حذف شد', 'success');
+        setDoctors(doctors.filter(d => d.id !== id));
+      } else {
+        Swal.fire('خطا!', res.error || 'خطا در حذف', 'error');
+      }
+    } catch (err: any) {
+      Swal.fire('خطا!', err.message || 'خطای سرور', 'error');
+    }
   };
 
   const filteredDoctors = doctors.filter(d =>
-    d.name.includes(searchTerm) || d.specialty.includes(searchTerm)
+    d.fullName.includes(searchTerm) || d.specialty?.includes(searchTerm)
   );
 
   return (
@@ -179,16 +207,16 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
                 <input
                   type="text"
                   placeholder="نام و نام خانوادگی"
-                  value={newDoctor.name}
-                  onChange={(e) => setNewDoctor({ ...newDoctor, name: e.target.value })}
+                  value={newDoctor.fullName}
+                  onChange={(e) => setNewDoctor({ ...newDoctor, fullName: e.target.value })}
                   className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
                   required
                 />
                 <input
-                  type="email"
+                  type="text"
                   placeholder="شماره همراه"
-                  value={newDoctor.email}
-                  onChange={(e) => setNewDoctor({ ...newDoctor, email: e.target.value })}
+                  value={newDoctor.phoneNumber}
+                  onChange={(e) => setNewDoctor({ ...newDoctor, phoneNumber: e.target.value })}
                   className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
                   required
                 />
@@ -197,6 +225,22 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
                   placeholder="تخصص"
                   value={newDoctor.specialty}
                   onChange={(e) => setNewDoctor({ ...newDoctor, specialty: e.target.value })}
+                  className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="نام کاربری"
+                  value={newDoctor.username}
+                  onChange={(e) => setNewDoctor({ ...newDoctor, username: e.target.value })}
+                  className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="گذرواژه"
+                  value={newDoctor.password}
+                  onChange={(e) => setNewDoctor({ ...newDoctor, password: e.target.value })}
                   className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
                   required
                 />
@@ -237,8 +281,8 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
               <tbody className="divide-y divide-gray-200">
                 {filteredDoctors.map((doctor) => (
                   <tr key={doctor.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-gray-900">{doctor.name}</td>
-                    <td className="px-6 py-4 text-gray-600">{doctor.email}</td>
+                    <td className="px-6 py-4 text-gray-900">{doctor.fullName}</td>
+                    <td className="px-6 py-4 text-gray-600">{doctor.phoneNumber}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.specialty}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.patientsCount}</td>
                     <td className="px-6 py-4">
@@ -261,7 +305,7 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
               <div key={doctor.id} className="p-4 border border-gray-200 rounded-lg">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
-                    <h3 className="text-gray-900 mb-1">{doctor.name}</h3>
+                    <h3 className="text-gray-900 mb-1">{doctor.fullName}</h3>
                     <p className="text-gray-600 text-sm">{doctor.specialty}</p>
                   </div>
                   <button
@@ -272,7 +316,7 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
                   </button>
                 </div>
                 <div className="space-y-1 text-sm">
-                  <p className="text-gray-600">{doctor.email}</p>
+                  <p className="text-gray-600">{doctor.phoneNumber}</p>
                   <p className="text-gray-600">بیماران: {doctor.patientsCount}</p>
                 </div>
               </div>

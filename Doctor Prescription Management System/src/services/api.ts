@@ -39,16 +39,16 @@ class ApiService {
   constructor(baseURL: string) {
     this.baseURL = baseURL;
     // بارگذاری توکن از localStorage در صورت وجود
-    this.token = localStorage.getItem('authToken');
+    this.token = localStorage.getItem('authorization');
   }
 
   // تنظیم توکن احراز هویت
   setAuthToken(token: string | null) {
     this.token = token;
     if (token) {
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('authorization', token);
     } else {
-      localStorage.removeItem('authToken');
+      localStorage.removeItem('authorization');
     }
   }
 
@@ -73,7 +73,7 @@ class ApiService {
       });
 
       if (this.token) {
-        headers.set("Authorization", `Bearer ${this.token}`);
+        headers.set("Authorization", `${this.token}`);
       }
 
       const response = await fetch(`${this.baseURL}${endpoint}`, {

@@ -66,7 +66,8 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors(): Promise<ApiResponse<Doctor[]>> {
-    return apiService.get<Doctor[]>('/users/doctors');
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjUzNjg3MzMsImV4cCI6MTc2NTM3MjMzM30.VbaO0tBXJtMMpWwR4OtxOs93si-3JjbMwJiJXD5DCQ8")
+    return apiService.get<Doctor[]>('/admin/list/1/10?feild=role&word=doctor');
   }
 
   // دریافت لیست بیماران (برای دکتر یا ادمین)

@@ -43,5 +43,9 @@ export const RegisterUserDto = [
     .isString()
     .withMessage("شماره موبایل باید رشته باشد")
     .isLength({ min: 11, max: 11 })
-    .withMessage(" طول شماره موبایل باید ۱۱ کاراکتر باشد")
+    .withMessage(" طول شماره موبایل باید ۱۱ کاراکتر باشد"),
+
+  body("role")
+    .isString()
+    .withMessage("نفش میبایست کاراکتر است نه عدد")
 ];

@@ -87,32 +87,59 @@ async function deleteUser(req:RequestWithUser, res:Response) {
   }
 }
 
-
-
-async function allUser(req:RequestWithUser, res:Response) {
+async function allUser(req: RequestWithUser, res: Response) {
   try {
-    const limit = Number(req.params["limit"]);
-    const page = Number(req.params["page"]);
-    const feild = req.query["feild"];
-    const word = req.query["word"] || "";
-    const offset = (page - 1) * limit;
-    let query: any = { deletedAt: { $exists: false } };
-    if (feild) {
-      query[feild as string] = { $regex: word, $options: "i" };
-    }
-    const allusers = await model.UserModel.find(query)
-      .skip(offset)
-      .limit(limit);
-    
-    const response = new SuccessResponse(allusers);
-    return res.status(200).json(response);
+    const doctors = await model.UserModel.aggregate([
+      {
+        $match: {
+          deletedAt: { $exists: false }
+        }
+      },
+
+      // گرفتن بیماران هر دکتر
+      {
+        $lookup: {
+          from: "users", // اسم collection
+          let: { doctorId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$doctor", "$$doctorId"] },
+                    { $eq: ["$role", "user"] },
+                    { $not: [{ $ifNull: ["$deletedAt", false] }] }
+                  ]
+                }
+              }
+            },
+            {
+              $project: {
+                password: 0
+              }
+            }
+          ],
+          as: "patients"
+        }
+      },
+
+      // تعداد بیماران
+      {
+        $addFields: {
+          patientCount: { $size: "$patients" }
+        }
+      }
+    ]);
+
+    return res.status(200).json(new SuccessResponse(doctors));
+
   } catch (error) {
-    console.log("Server Error AllUser", error);
-    const response = new SuccessResponse({}, false, 500, systemErrors.SERVERERROR);
-    return res.status(500).send(response);
+    console.log(error);
+    return res
+      .status(500)
+      .json(new SuccessResponse({}, false, 500, systemErrors.SERVERERROR));
   }
 }
-
 
 
 

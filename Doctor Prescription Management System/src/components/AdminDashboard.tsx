@@ -1,27 +1,19 @@
 import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
 import { User } from '../App';
-import { LogOut, UserPlus, Trash2, Search, Users, Stethoscope } from 'lucide-react';
-import { userService, CreateUserRequest } from '../services/userService';
+import { LogOut, UserPlus, Trash2, Search, Users, Stethoscope, Rss } from 'lucide-react';
+import { userService, CreateUserRequest } from '../apis/user/user.services';
+import { IUser } from '../apis/user/user.types';
+import { IResponse } from '../lib/types/base';
+import { response } from 'express';
 
 interface AdminDashboardProps {
   user: User;
   onLogout: () => void;
 }
 
-interface Doctor {
-  id: string;
-  username?: string;
-  fullName: string;
-  phoneNumber: string;
-  role?: string;
-  password?: string;
-  specialty?: string;
-  patientsCount: number;
-}
-
 export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [doctors, setDoctors] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [newDoctor, setNewDoctor] = useState({
@@ -31,10 +23,8 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
     phoneNumber: '',
     specialty: '',
     role: '',
-    
     username: '',
   });
-
   // گرفتن دکترها از سرور
   useEffect(() => {
     fetchDoctors();
@@ -42,25 +32,11 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
 
 const fetchDoctors = async () => {
   try {
-    const res: any = await userService.getDoctors();
-
-    // بررسی اینکه res.data آرایه هست یا داخل فیلد allusers
-    const doctorsArray = Array.isArray(res.data)
-      ? res.data
-      : Array.isArray(res.data?.allusers)
-        ? res.data.allusers
-        : [];
-    setDoctors(
-      doctorsArray.map((d: any) => ({
-        id: d.id || d._id,
-        fullName: d.fullName || d.full_name || '',
-        phoneNumber: d.phoneNumber || d.phone || '',
-        specialty: d.specialty || '',
-        ...d,
-        patientsCount: d.patientsCount || 0,
-      }))
-    );
-
+    const res = await userService.getDoctors();
+    if (res.data){
+    setDoctors(res.data.data)
+    }
+    
   } catch (err: any) {
     Swal.fire('خطا!', err.message || 'خطای سرور', 'error');
   }
@@ -71,15 +47,14 @@ const fetchDoctors = async () => {
   // اضافه کردن دکتر جدید
   const handleAddDoctor = async (e: React.FormEvent) => {
     e.preventDefault();
-    const doctor: Doctor = { ...newDoctor, patientsCount: 0 };
-
+    const doctor: IUser = { ...newDoctor, _id:'',patientsCount: 0};
     try {
       const user: CreateUserRequest = {
         username: doctor.username || '',
         fullName: doctor.fullName || '',
         password: doctor.password || '',
-        phoneNumber: doctor.phoneNumber || '',
         specialty: doctor.specialty || '',
+        phoneNumber: doctor.phoneNumber || '', 
         role: 'doctor',
         doctor: '',
         patient: '',
@@ -97,7 +72,7 @@ const fetchDoctors = async () => {
       Swal.fire('خطا!', err?.err || 'خطای غیرمنتظره', 'error');
     }
 
-    setNewDoctor({id:'', fullName: '', password: '', phoneNumber: '', specialty: '', role: '', username: '' });
+    setNewDoctor({id:'1', fullName: 'kd', password: '13123', phoneNumber: '989', specialty: 'cedwr', role: '213', username: '3312312' });
     setShowAddForm(false);
   };
 
@@ -107,7 +82,7 @@ const fetchDoctors = async () => {
       const res = await userService.deleteUser(id); // فرض بر این است که چنین API دارید
       if (res.success) {
         Swal.fire('🙂', 'دکتر حذف شد', 'success');
-        setDoctors(doctors.filter(d => d.id !== id));
+        setDoctors(doctors.filter(d => d._id !== id));
       } else {
         Swal.fire('خطا!', res.error || 'خطا در حذف', 'error');
       }
@@ -116,9 +91,7 @@ const fetchDoctors = async () => {
     }
   };
 
-  const filteredDoctors = doctors.filter(d =>
-    d.fullName.includes(searchTerm) || d.specialty?.includes(searchTerm)
-  );
+  const filteredDoctors = doctors.filter(d => d.fullName.includes(searchTerm) || d.phoneNumber.includes(searchTerm) || d.specialty?.includes(searchTerm) || d.specialty?.includes(searchTerm));
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -280,14 +253,14 @@ const fetchDoctors = async () => {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {filteredDoctors.map((doctor) => (
-                  <tr key={doctor.id} className="hover:bg-gray-50">
+                  <tr key={doctor._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 text-gray-900">{doctor.fullName}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.phoneNumber}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.specialty}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.patientsCount}</td>
                     <td className="px-6 py-4">
                       <button
-                        onClick={() => handleDeleteDoctor(doctor.id)}
+                        onClick={() => handleDeleteDoctor(doctor._id)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       >
                         <Trash2 className="size-5" />
@@ -302,14 +275,14 @@ const fetchDoctors = async () => {
           {/* Doctors Cards - Mobile */}
           <div className="md:hidden space-y-3">
             {filteredDoctors.map((doctor) => (
-              <div key={doctor.id} className="p-4 border border-gray-200 rounded-lg">
+              <div key={doctor._id} className="p-4 border border-gray-200 rounded-lg">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <h3 className="text-gray-900 mb-1">{doctor.fullName}</h3>
                     <p className="text-gray-600 text-sm">{doctor.specialty}</p>
                   </div>
                   <button
-                    onClick={() => handleDeleteDoctor(doctor.id)}
+                    onClick={() => handleDeleteDoctor(doctor._id)}
                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <Trash2 className="size-4" />

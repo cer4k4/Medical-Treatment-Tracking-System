@@ -1,4 +1,4 @@
-import { apiService, ApiResponse } from './api';
+import { apiService, ApiResponse } from './instance';
 
 // تایپ‌های مربوط به نسخه
 export interface Prescription {

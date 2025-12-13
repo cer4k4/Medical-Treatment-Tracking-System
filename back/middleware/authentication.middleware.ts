@@ -6,6 +6,7 @@ import { RequestWithPayload, RequestWithUser } from "../shared/interfaces/reques
 import { IPayload } from "../shared/interfaces/jwt-payload.interface";
 import { IUser } from "../shared/models/user.interface";
 import { SuccessResponse } from "../shared/interfaces/responseInterface";
+import { isPromise } from "util/types";
 var secretKey = "@dsf$sdsaxcxzxc213";
 
 const Authorization = (roles:UserRoles[]) => {
@@ -63,7 +64,24 @@ async function Authentication(req: RequestWithPayload, res: Response, next: Next
     return res.status(500).json(response);
   }
 }
-
+function givePayload(token: string): any {
+  try{
+const payload:IPayload = jwt.verify(token, secretKey) as IPayload;
+    const userFound = model.UserModel.findById(payload.userId);
+    
+    if (!userFound) {
+      return {role:'',userId:''}
+    }
+    return payload
+  }catch(err){
+    if (String(err) === "TokenExpiredError: jwt expired") {
+      return systemErrors.TOKENISEXPIRED
+    }
+    if (String(err) === "JsonWebTokenError: invalid token")  {
+      return systemErrors.TOKENNOTVALEID
+    }
+  }
+}
 function generateToken(user: IUser): string {
   const payload:IPayload = {
     userId:user.userId,
@@ -73,4 +91,4 @@ function generateToken(user: IUser): string {
   return jwt.sign(payload, secretKey, {expiresIn: '1h'})
 }
 
-export = { Authentication, generateToken , Authorization };
+export = { Authentication, generateToken , Authorization ,givePayload};

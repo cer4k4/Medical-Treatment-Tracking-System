@@ -6,6 +6,7 @@ import { hash, compare } from "bcrypt";
 import { Request, Response } from "express";
 import { RequestWithUser } from "../../shared/interfaces/request-with-payload.interface";
 import { IUser } from "../../shared/models/user.interface";
+import { IPayload } from "../../shared/interfaces/jwt-payload.interface";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -28,6 +29,18 @@ async function registerUser(req:Request, res:Response) {
     const fullName = body.fullName;
     const password = body.password;
     const specialty = body.specialty;
+    let role = UserRoles.USER
+    if (req.headers.authorization){
+      const payload = auth.givePayload(req.headers.authorization)
+      if (payload as IPayload){
+        if (payload.role === UserRoles.ADMIN) {
+          role = UserRoles.DOCTOR
+        }else {
+          const response = new SuccessResponse({},false,400,payload)
+          return res.status(400).json(response);
+        }
+      }
+    }
     const hashedPassword = await hash(String(password), 10);
     const newUser = await model.UserModel.create({
       username,
@@ -36,6 +49,7 @@ async function registerUser(req:Request, res:Response) {
       patient,
       doctor,
       specialty,
+      role,
       password: hashedPassword,
     });
     const response = new SuccessResponse({

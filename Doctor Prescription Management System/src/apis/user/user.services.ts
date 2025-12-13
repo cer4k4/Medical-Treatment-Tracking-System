@@ -1,6 +1,6 @@
-import { IResponse } from '../lib/types/base';
-import { IUser } from '../apis/user/user';
-import { apiService, ApiResponse, User } from './api';
+import { IResponse } from '../../lib/types/base';
+import { IUser } from './user.types';
+import { apiService, ApiResponse, User } from '../instance';
 
 // تایپ‌های مربوط به کاربران
 export interface Doctor {
@@ -68,7 +68,7 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MjAzMTcsImV4cCI6MTc2NTYyMzkxN30.hMXF5YP2CiABsX0WRuyVZ8cdXJOKLRTHO2mZzHUrZSo")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MzMyOTQsImV4cCI6MTc2NTYzNjg5NH0.F0zORtYkTka8l1jb_mqu9tfZyolJVIB01faPLn6lyiE")
     return apiService.get<IResponse<IUser[]>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
@@ -112,7 +112,8 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    return apiService.delete<void>(`/users/${userId}`);
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MzMyOTQsImV4cCI6MTc2NTYzNjg5NH0.F0zORtYkTka8l1jb_mqu9tfZyolJVIB01faPLn6lyiE")
+    return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 
   // تغییر رمز عبور

@@ -31,29 +31,12 @@ export interface CreateUserRequest {
   phoneNumber: string;
 }
 
-export interface Patient {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  doctorId: string;
-  doctorName?: string;
-  prescriptionsCount?: number;
-}
 
 export interface CreateDoctorRequest {
   name: string;
   email: string;
   password: string;
   specialty?: string;
-  phone?: string;
-}
-
-export interface CreatePatientRequest {
-  name: string;
-  email: string;
-  password: string;
-  doctorId: string;
   phone?: string;
 }
 
@@ -68,22 +51,10 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MzMyOTQsImV4cCI6MTc2NTYzNjg5NH0.F0zORtYkTka8l1jb_mqu9tfZyolJVIB01faPLn6lyiE")
-    return apiService.get<IResponse<IUser[]>>('/admin/list/1/10?feild=role&word=doctor');
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxNzU5YmY0ZTlmNTkzMDg1OTUzMjciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU3MDQwNDEsImV4cCI6MTc2NTcwNzY0MX0.t1Hsiel2xe8VRk0fDJ4AH3Htj3dcv0PK_U0BmF8cdO8")
+    return apiService.get<IResponse<{doctors:IUser[],total_doctor:number,total_petition:number}>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
-  // دریافت لیست بیماران (برای دکتر یا ادمین)
-  async getPatients(doctorId?: string): Promise<ApiResponse<Patient[]>> {
-    const endpoint = doctorId 
-      ? `/users/patients?doctorId=${doctorId}`
-      : '/users/patients';
-    return apiService.get<Patient[]>(endpoint);
-  }
-
-  // دریافت بیماران یک دکتر خاص
-  async getDoctorPatients(doctorId: string): Promise<ApiResponse<Patient[]>> {
-    return apiService.get<Patient[]>(`/users/doctors/${doctorId}/patients`);
-  }
 
   // دریافت اطلاعات یک کاربر
   async getUser(userId: string): Promise<ApiResponse<User>> {
@@ -100,11 +71,6 @@ class UserService {
     return apiService.post<Doctor>('/users/doctors', data);
   }
 
-  // ایجاد بیمار جدید
-  async createPatient(data: CreatePatientRequest): Promise<ApiResponse<Patient>> {
-    return apiService.post<Patient>('/users/patients', data);
-  }
-
   // ویرایش کاربر
   async updateUser(userId: string, data: UpdateUserRequest): Promise<ApiResponse<User>> {
     return apiService.put<User>(`/users/${userId}`, data);
@@ -112,7 +78,7 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MzMyOTQsImV4cCI6MTc2NTYzNjg5NH0.F0zORtYkTka8l1jb_mqu9tfZyolJVIB01faPLn6lyiE")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxNzU5YmY0ZTlmNTkzMDg1OTUzMjciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU3MDQwNDEsImV4cCI6MTc2NTcwNzY0MX0.t1Hsiel2xe8VRk0fDJ4AH3Htj3dcv0PK_U0BmF8cdO8")
     return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 

@@ -11,5 +11,5 @@ export interface IUser {
   role?: string;
   password?: string;
   specialty?: string;
-  patientsCount: number;
+  patientCount: number;
 }

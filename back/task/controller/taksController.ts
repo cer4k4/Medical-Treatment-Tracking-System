@@ -13,15 +13,16 @@ async function createTask(req:RequestWithUser, res:Response) {
     const user = (req.user) as IUser
     const body = req.body
     const newTask = await model.TaskModel.create({
+      tip: body.tip,
       title: body.title,
-      description: body.description,
       creator: user.userId,
       patient: body.patient,
       patientDefault: true,
       createdAt: Date.now(),
       updatedAt: Date.now(),
+      description: body.description,
     });
-    const response = new SuccessResponse({"taskId":newTask.id,"title":newTask.title,"description":newTask.description},true,201,systemErrors.SUCCESSFUL)
+    const response = new SuccessResponse({"taskId":newTask.id,"title":newTask.title,"description":newTask.description,"patient":newTask.patient,"tip":newTask.tip},true,201,systemErrors.SUCCESSFUL)
     return res.status(201).json(response);
   } catch (error) {
     console.log("Server Error CreateTask",error)
@@ -115,10 +116,11 @@ async function deleteTask(req:RequestWithUser, res:Response) {
 async function allMyTasks(req:RequestWithUser, res:Response) {
   try {
     const user = (req.user) as IUser
+    const doctorId = req.params["doctorId"]
     const limit = Number(req.params["limit"])
     const page = Number(req.params["page"])
     const offset = (page - 1) * limit
-    const allMyTasks = await model.TaskModel.find({creator:user.doctor,deletedAt:{$exists:false}}).skip(offset).limit(limit);
+    const allMyTasks = await model.TaskModel.find({creator:doctorId,patient:user.patient,deletedAt:{$exists:false}}).skip(offset).limit(limit);
     const response = new SuccessResponse(allMyTasks)
     return res.status(200).json(response);
   } catch (error) {

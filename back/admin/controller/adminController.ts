@@ -89,17 +89,22 @@ async function deleteUser(req:RequestWithUser, res:Response) {
 
 async function allUser(req: RequestWithUser, res: Response) {
   try {
+
+    const limit = Number(req.params["limit"]);
+    const page = Number(req.params["page"]);
+    const feild = req.query["feild"];
+    const word = req.query["word"] || "";
+    const offset = (page - 1) * limit;
     const doctors = await model.UserModel.aggregate([
       {
         $match: {
-          deletedAt: { $exists: false }
+          role: "doctor",
+          deletedAt: null
         }
       },
-
-      // گرفتن بیماران هر دکتر
       {
         $lookup: {
-          from: "users", // اسم collection
+          from: "users",
           let: { doctorId: "$_id" },
           pipeline: [
             {
@@ -107,8 +112,7 @@ async function allUser(req: RequestWithUser, res: Response) {
                 $expr: {
                   $and: [
                     { $eq: ["$doctor", "$$doctorId"] },
-                    { $eq: ["$role", "user"] },
-                    { $not: [{ $ifNull: ["$deletedAt", false] }] }
+                    { $eq: ["$deletedAt", null] }
                   ]
                 }
               }
@@ -122,17 +126,19 @@ async function allUser(req: RequestWithUser, res: Response) {
           as: "patients"
         }
       },
-
-      // تعداد بیماران
       {
         $addFields: {
           patientCount: { $size: "$patients" }
         }
       }
     ]);
-
-    return res.status(200).json(new SuccessResponse(doctors));
-
+    for (let d of  doctors) {
+      const c = await countPatientsByDoctorId(d._id)
+      d.patientCount = c
+    }
+    const total_petition = await countAllPatients()
+    const total_doctor = await countDoctor()
+    return res.status(200).json(new SuccessResponse({doctors,total_doctor,total_petition}));
   } catch (error) {
     console.log(error);
     return res
@@ -141,7 +147,25 @@ async function allUser(req: RequestWithUser, res: Response) {
   }
 }
 
+async function countDoctor() {
+  return await model.UserModel.countDocuments({
+    role:'doctor',
+    deletedAt: null
+  });
+}
 
+async function countPatientsByDoctorId(doctorId: string) {
+  return await model.UserModel.countDocuments({
+    doctor: doctorId,
+    deletedAt: null
+  });
+}
+
+async function countAllPatients() {
+  return await model.UserModel.countDocuments({ 
+    patient: {$exists:true, $nin: [null,'',""] }
+  });
+}
 
 async function softDeleteUser(req: RequestWithUser,res: Response) {
   try {

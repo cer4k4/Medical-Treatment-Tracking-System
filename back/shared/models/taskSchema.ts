@@ -9,6 +9,7 @@ const taskSchema: Schema<ITask> = new Schema<ITask>({
   status:         { type: String, default: "open" },
   creator:        { type: String, required: true  },
   patient:        { type: String },
+  tip:            { type: String },
   patientDefault: { type: Boolean },
   ...baseSchema
 });

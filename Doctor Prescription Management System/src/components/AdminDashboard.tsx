@@ -15,6 +15,8 @@ interface AdminDashboardProps {
 export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
   const [doctors, setDoctors] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [countOfDoctors, setcountOfDoctors] = useState<number>();
+  const [countOfPetions, setcountOfPetions] = useState<number>();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newDoctor, setNewDoctor] = useState({
     id: '',
@@ -34,7 +36,9 @@ const fetchDoctors = async () => {
   try {
     const res = await userService.getDoctors();
     if (res.data){
-    setDoctors(res.data.data)
+      setcountOfPetions(res.data.data.total_petition)
+      setcountOfDoctors(res.data.data.total_doctor)
+      setDoctors(res.data.data.doctors)
     }
     
   } catch (err: any) {
@@ -47,7 +51,7 @@ const fetchDoctors = async () => {
   // اضافه کردن دکتر جدید
   const handleAddDoctor = async (e: React.FormEvent) => {
     e.preventDefault();
-    const doctor: IUser = { ...newDoctor, _id:'',patientsCount: 0};
+    const doctor: IUser = { ...newDoctor, _id:'',patientCount: 0};
     try {
       const user: CreateUserRequest = {
         username: doctor.username || '',
@@ -125,7 +129,7 @@ const fetchDoctors = async () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد پزشکان</p>
-                <p className="text-gray-900">{doctors.length}</p>
+                <p className="text-gray-900">{ countOfDoctors }</p>
               </div>
               <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
                 <Stethoscope className="size-5 sm:size-6 text-blue-600" />
@@ -137,7 +141,7 @@ const fetchDoctors = async () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بیماران</p>
-                <p className="text-gray-900">{doctors.reduce((sum, d) => sum + d.patientsCount, 0)}</p>
+                <p className="text-gray-900">{ countOfPetions }</p>
               </div>
               <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
                 <Users className="size-5 sm:size-6 text-green-600" />
@@ -148,9 +152,9 @@ const fetchDoctors = async () => {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">میانگین بیماران</p>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base">بهبود یافتگان</p>
                 <p className="text-gray-900">
-                  {doctors.length > 0 ? Math.round(doctors.reduce((sum, d) => sum + d.patientsCount, 0) / doctors.length) : 0}
+                  {doctors.length > 0 ? Math.round(doctors.reduce((sum, d) => sum + d.patientCount, 0) / doctors.length) : 0}
                 </p>
               </div>
               <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
@@ -257,7 +261,7 @@ const fetchDoctors = async () => {
                     <td className="px-6 py-4 text-gray-900">{doctor.fullName}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.phoneNumber}</td>
                     <td className="px-6 py-4 text-gray-600">{doctor.specialty}</td>
-                    <td className="px-6 py-4 text-gray-600">{doctor.patientsCount}</td>
+                    <td className="px-6 py-4 text-gray-600">{doctor.patientCount}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => handleDeleteDoctor(doctor._id)}
@@ -290,7 +294,7 @@ const fetchDoctors = async () => {
                 </div>
                 <div className="space-y-1 text-sm">
                   <p className="text-gray-600">{doctor.phoneNumber}</p>
-                  <p className="text-gray-600">بیماران: {doctor.patientsCount}</p>
+                  <p className="text-gray-600">بیماران: {doctor.patientCount}</p>
                 </div>
               </div>
             ))}

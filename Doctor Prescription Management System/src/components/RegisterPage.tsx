@@ -1,31 +1,79 @@
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import { UserPlus, ArrowRight } from 'lucide-react';
+import { CreateUserRequest, userService } from '../apis/user/user.services';
+import { error } from 'console';
 
 interface RegisterPageProps {
   onRegister: (data: any) => void;
   onBackToLogin: () => void;
 }
 
-const mockDoctors = [
-  { id: '2', name: 'دکتر احمدی', specialty: 'قلب و عروق' },
-  { id: '4', name: 'دکتر رضایی', specialty: 'داخلی' },
-  { id: '5', name: 'دکتر کریمی', specialty: 'گوارش' },
-];
+const mockDoctors = [];
 
 export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    fullName: '',
+    username: '',
+    petient: '',
     password: '',
-    phone: '',
-    doctorId: '',
+    phoneNumber: '',
+    doctor: '',
   });
+  const [doctors, setDoctors] = useState<
+    { id: string; name: string; specialty: string }[]
+  >([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const res = await userService.getListDoctors();
+
+        if (res.data?.data?.doctors) {
+          setDoctors(
+            res.data.data.doctors.map((d: any) => ({
+              id: d._id,
+              name: d.fullName,
+              specialty: d.specialty || ''
+            }))
+          );
+        }
+      } catch (err) {
+        console.error("خطا در دریافت لیست پزشکان", err);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onRegister(formData);
+     try {
+    // فراخوانی endpoint backend
+      let req : CreateUserRequest = {} as CreateUserRequest;
+      req.fullName = formData.fullName
+      req.password = formData.password
+      req.username = formData.username
+      req.doctor = formData.doctor
+      req.patient = formData.petient
+      req.role = 'user'
+      req.phoneNumber = formData.phoneNumber
+      req.specialty = ''
+      console.log(req)
+      const res = await userService.createUser(req);
+      if (res.data) {
+      // اگر می‌خوای بعد ثبت نام کاری انجام بدی
+      console.log("ثبت نام موفق:", res.data);
+      // مثلاً برگشت به صفحه ورود
+      onBackToLogin();
+    } else {
+      
+      console.error("خطا در ثبت نام:", res.error);
+    }
+  } catch (err) {
+    console.error("خطای شبکه یا سرور:", err);
+  }
+    // onRegister(formData);
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 sm:p-6" dir="rtl">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 sm:p-8">
@@ -44,8 +92,8 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
             <label className="block text-gray-700 mb-2">نام و نام خانوادگی</label>
             <input
               type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="نام کامل خود را وارد کنید"
               required
@@ -53,13 +101,13 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-2">ایمیل</label>
+            <label className="block text-gray-700 mb-2">بیماری</label>
             <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              type="text"
+              value={formData.petient}
+              onChange={(e) => setFormData({ ...formData, petient: e.target.value })}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              placeholder="email@example.com"
+              placeholder="چه نوع اختلالی دارید"
               required
             />
           </div>
@@ -68,14 +116,24 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
             <label className="block text-gray-700 mb-2">شماره تماس</label>
             <input
               type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              value={formData.phoneNumber}
+              onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               placeholder="09123456789"
               required
             />
           </div>
-
+          <div>
+            <label className="block text-gray-700 mb-2"> نام کاربری</label>
+            <input
+              type="text"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              placeholder="نام کاربری خود را به انگلیسی بنویسید"
+              required
+            />
+          </div>
           <div>
             <label className="block text-gray-700 mb-2">رمز عبور</label>
             <input
@@ -91,13 +149,13 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
           <div>
             <label className="block text-gray-700 mb-2">انتخاب پزشک</label>
             <select
-              value={formData.doctorId}
-              onChange={(e) => setFormData({ ...formData, doctorId: e.target.value })}
+              value={formData.doctor}
+              onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               required
             >
               <option value="">پزشک مورد نظر را انتخاب کنید</option>
-              {mockDoctors.map((doctor) => (
+              {doctors.map((doctor) => (
                 <option key={doctor.id} value={doctor.id}>
                   {doctor.name} - {doctor.specialty}
                 </option>

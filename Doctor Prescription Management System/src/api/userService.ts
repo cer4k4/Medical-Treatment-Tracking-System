@@ -68,7 +68,7 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxODkxZjI4NzNkZjNhOTg3YTMzZjkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU2MjAzMTcsImV4cCI6MTc2NTYyMzkxN30.hMXF5YP2CiABsX0WRuyVZ8cdXJOKLRTHO2mZzHUrZSo")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNmMmQxNGRjNjVlMjE4ZTQxOWFkZWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjYxODQ0ODMsImV4cCI6MTc2NjE4ODA4M30.BCaM7Ys0bCFv5biPEVPHAyikyr7ZMfNzZm5bK2ANEXI")
     return apiService.get<IResponse<IUser[]>>('/admin/list/1/10?feild=role&word=doctor');
   }
 

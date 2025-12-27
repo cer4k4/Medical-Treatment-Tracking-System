@@ -23,5 +23,9 @@ userRouter.patch("/update",middleware.Authentication,middleware.Authorization([U
 
 userRouter.post("/login",LoginUserDto,DataValidator,userController.loginUser)
 
+userRouter.get("/doctors",userController.getDoctors)
 
+userRouter.get("/doctors",userController.getDoctors)
+
+userRouter.get("/doctor/profile",middleware.Authentication,middleware.Authorization([UserRoles.DOCTOR]),userController.getDoctorProfile)
 export = userRouter;

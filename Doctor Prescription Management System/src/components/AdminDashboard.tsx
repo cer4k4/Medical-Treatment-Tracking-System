@@ -20,7 +20,7 @@ export function AdminDashboard({ user, onLogout }: AdminDashboardProps) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [newDoctor, setNewDoctor] = useState({
     id: '',
-    fullName: 'سس',
+    fullName: '',
     password: '',
     phoneNumber: '',
     specialty: '',
@@ -76,7 +76,7 @@ const fetchDoctors = async () => {
       Swal.fire('خطا!', err?.err || 'خطای غیرمنتظره', 'error');
     }
 
-    setNewDoctor({id:'1', fullName: 'kd', password: '13123', phoneNumber: '989', specialty: 'cedwr', role: '213', username: '3312312' });
+    setNewDoctor({id:'', fullName: '', password: '', phoneNumber: '', specialty: '', role: '', username: '' });
     setShowAddForm(false);
   };
 
@@ -154,7 +154,7 @@ const fetchDoctors = async () => {
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">بهبود یافتگان</p>
                 <p className="text-gray-900">
-                  {doctors.length > 0 ? Math.round(doctors.reduce((sum, d) => sum + d.patientCount, 0) / doctors.length) : 0}
+                  {0}
                 </p>
               </div>
               <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">

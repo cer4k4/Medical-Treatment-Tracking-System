@@ -12,6 +12,16 @@ async function createTask(req:RequestWithUser, res:Response) {
   try {
     const user = (req.user) as IUser
     const body = req.body
+    const oldTask = await model.TaskModel.findOne({ "patient" : body.patient })
+    if (!oldTask) {
+      throw new Error("Task not found");
+    }
+    const { _id, __v, createdAt, ...updateData } = oldTask.toObject();
+    await model.TaskModel.updateOne(
+      { _id: oldTask._id },
+      { $set: updateData }
+    );
+
     const newTask = await model.TaskModel.create({
       tip: body.tip,
       title: body.title,

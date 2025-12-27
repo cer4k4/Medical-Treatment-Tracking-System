@@ -21,6 +21,6 @@ class PatientService {
 
     // ایجاد بیمار جدید
   async createPatient(data: CreatePatientRequest): Promise<ApiResponse<Patient>> {
-    return apiService.post<Patient>('/users/patients', data);
+    return apiService.post<Patient>('/task/create', data);
   }
 }

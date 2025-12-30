@@ -47,7 +47,7 @@ export interface CreateUserRequest {
   doctor: string;
   patient: string;
   password: string;
-  specialty: string;
+  specialty?: string;
   phoneNumber: string;
 }
 
@@ -108,7 +108,7 @@ class UserService {
 
 
   async getProfileDoctor() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY2NzkyNzY0LCJleHAiOjE3NjY3OTYzNjR9.vH79o5rQS1hiRWneuQfdykANpMj9VrgUpDRa7BX-67Y")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY2OTU1MTY0LCJleHAiOjE3NjY5NTg3NjR9.vD9gmrdZJ00fFB7KiF0W-XTeoWD7X7L_rzB9oNDBzfo")
     return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 

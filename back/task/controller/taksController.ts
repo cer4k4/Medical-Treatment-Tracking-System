@@ -1,26 +1,30 @@
+
+import mongoose from 'mongoose';
 import model from "../../shared/models/taskSchema";
 import { SuccessResponse }  from "../../shared/interfaces/responseInterface";
 import { systemErrors } from "../../shared/models/enum"
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { RequestWithUser } from "../../shared/interfaces/request-with-payload.interface";
 import { IUser } from "../../shared/models/user.interface";
 import { ITask } from "../../shared/models/task.interface";
 import { date } from "joi";
-
+import { IUserTask } from '../../shared/models/usertask.interface';
+import  model2  from '../../shared/models/usertaskSchema';
+import  model3  from '../../shared/models/userSchema';
 
 async function createTask(req:RequestWithUser, res:Response) {
   try {
     const user = (req.user) as IUser
     const body = req.body
     const oldTask = await model.TaskModel.findOne({ "patient" : body.patient })
-    if (!oldTask) {
-      throw new Error("Task not found");
-    }
-    const { _id, __v, createdAt, ...updateData } = oldTask.toObject();
-    await model.TaskModel.updateOne(
-      { _id: oldTask._id },
-      { $set: updateData }
-    );
+    // if (!oldTask) {
+    //   throw new Error("Task not found");
+    // }
+    // const { _id, __v, createdAt, ...updateData } = oldTask.toObject();
+    // await model.TaskModel.updateOne(
+    //   { _id: oldTask._id },
+    //   { $set: updateData }
+    // );
 
     const newTask = await model.TaskModel.create({
       tip: body.tip,
@@ -87,13 +91,14 @@ async function getTask(req:Request, res:Response) {
 async function updateTaskStatus(req:Request, res:Response) {
   try {
     const id = req.params["taskId"]
-    const task = await model.TaskModel.findById(id) as ITask;
-    if (task.status === "open"){
-      task.status = "done"
+    console.log(id)
+    const task = await model2.UserTask.findById(id) as IUserTask;
+    if (task.status === true){
+      task.status = false
     }else{
-      task.status = "open"  
+      task.status = true  
     }
-    const result = await model.TaskModel.updateOne({ _id: id }, { $set: task});
+    const result = await model2.UserTask.updateOne({ _id: id }, { $set: task});
     const response = new SuccessResponse({task})
     return res.status(200).json(response);
   } catch (error) {
@@ -193,4 +198,122 @@ async function softDeleteTask(req:RequestWithUser, res:Response) {
 
 
 
-export = {createTask,editTask,allTasks,allMyTasks,getTask,deleteTask,softDeleteTask,updateTaskStatus};
+async function getPatientOfDoctor(req: Request, res: Response) {
+  try {
+    const doctorId = req.params["doctorId"];
+    const diseases = await model.TaskModel.find({ creator: doctorId }).distinct('patient');
+    console.log(doctorId,"loggg",diseases)
+    const response = new SuccessResponse(diseases);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log("Server Error AllPatient", error);
+    const response = new SuccessResponse({}, false, 500, systemErrors.SERVERERROR);
+    return res.status(500).send(response);
+  }
+}
+
+async function assignTasksToUser(creatorId: string,patient: string,userId: string) {
+  // 1. گرفتن taskId ها
+  const taskIds = await model.TaskModel.find(
+    {
+      creator: creatorId,
+      patient: patient,
+    },
+    { _id: 1 }
+  ).lean();
+
+  if (!taskIds.length) {
+    return {
+      successfully: true,
+      insertedCount: 0,
+      message: 'No tasks found',
+    };
+  }
+  let documents:IUserTask[] = []
+  for (let t of taskIds  ){
+    documents.push({taskId:String(t._id),userId:userId,status:true,createdAt:Date.now(),updatedAt:Date.now()})
+  }
+  // // 2. ساخت سندها برای TaskOfUser
+  // const documents = taskIds.map((task) => ({
+  //   userId: new mongoose.Types.ObjectId(userId),
+  //   taskId: task._id,
+  //   status: true,
+  // }));
+
+  // 3. insert bulk
+  const result = await model2.UserTask.insertMany(documents);
+
+  return {
+    successfully: true,
+    insertedCount: result.length,
+  };
+};
+
+interface TaskOfUser {
+  taskId: string;
+  status?: boolean;
+  title: string;
+  description: string;
+  patient: string;
+  tip?: string;
+  specialty?: string;
+  creatorName: string;
+  doctorPhoneNumber: string;
+}
+async function getTasksForUser(req: RequestWithUser , res:Response){
+  const user = (req.user) as IUser
+  try {
+    // 1. گرفتن همه taskId های کاربر
+    const userTasks = await model2.UserTask.find({ userId:user.userId }).lean();
+    if (!userTasks || userTasks.length === 0) return [];
+    // 2. ساخت Map برای دسترسی سریع به status
+    const userTasksMap = userTasks.reduce((acc, ut) => {
+      acc[ut.taskId.toString()] = ut.status ?? false;
+      return acc;
+    }, {} as Record<string, boolean>);
+
+    // 3. گرفتن task های مربوطه
+    const taskIds = userTasks.map(t => t.taskId);
+    const tasks = await model.TaskModel.find({ _id: { $in: taskIds } }).lean();
+    if (!tasks || tasks.length === 0) return [];
+
+    // 4. گرفتن creator ها و fullName
+    const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
+    const doctoruser = await model3.UserModel.findById(creatorIds)
+
+    // 5. ساخت Map برای دسترسی سریع به fullName
+    // const usersMap = users.reduce((acc, u) => {
+    //   acc[u._id.toString()] = u.fullName ?? 'نامعلوم';
+    //   acc[u._id.toString()] = u.specialty ?? 'نامعلوم';
+    //   return acc;
+    // }, {} as Record<string, string>);
+    
+    // 6. ترکیب اطلاعات با status و creatorName
+    const result: TaskOfUser[] = tasks.map(task => ({
+      taskId: task._id.toString(),
+      status: userTasksMap[task._id.toString()],
+      title: task.title,
+      description: task.description,
+      patient: task.patient,
+      tip: task.tip,
+      specialty: doctoruser?.specialty,
+      creatorName: doctoruser?.fullName || "",
+      doctorPhoneNumber: doctoruser?.phoneNumber || "",
+    }));
+    for (let r of result) {
+      const t = await model2.UserTask.findOne({taskId:r.taskId});
+      if (t){
+        r.taskId = t._id.toString();
+      }
+    }
+    const response = new SuccessResponse(result)
+    return res.status(200).json(response);
+  } catch (err) {
+    console.error('خطا در دریافت task های کاربر:', err);
+    return [];
+  }
+}
+
+
+
+export = {createTask,editTask,allTasks,allMyTasks,getTask,deleteTask,softDeleteTask,updateTaskStatus,getPatientOfDoctor,assignTasksToUser,getTasksForUser};

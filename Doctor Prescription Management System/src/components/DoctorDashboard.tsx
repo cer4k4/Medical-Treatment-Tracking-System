@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { User } from '../App';
 import { LogOut, Plus, Search, Users, FileText, Calendar } from 'lucide-react';
 import { Doctor, Patient, userService } from '../apis/user/user.services';
+import { ITask } from '../apis/task/task.types';
+import { taskService } from '../apis/task/task.services';
 
 interface DoctorDashboardProps {
   user: User;
@@ -67,23 +69,39 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
     fetchDoctorProfile();
   }, []);
 
-  const handleAddPrescription = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedPatient) return;
+const handleAddPrescription = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    const prescription: Prescription = {
-      _id: Date.now().toString(),
-      patientId: selectedPatient._id,
+  try {
+    const payload: ITask = {
+      title: newPrescription.title || "نسخه بیماری",
+      description: newPrescription.description,
       patient: newPrescription.patient,
-      // description: newPrescription.description,
-      // date: new Date().toLocaleDateString('fa-IR'),
+      tip: newPrescription.tip,
     };
 
-    setPrescriptions([prescription, ...prescriptions]);
-    setNewPrescription({ title:'',patient: '', description: '', tip: '' });
-    setShowGlobalPrescriptionForm(false);
-    setSelectedPatient(null);
-  };
+    const res = await taskService.createTask(payload);
+
+    if (res.data) {
+      const createdTask = res.data;
+
+      const prescription: Prescription = {
+        _id: createdTask._id || '',
+        patientId: '_id',
+        patient: createdTask.patient,
+      };
+
+      setPrescriptions((prev) => [prescription, ...prev]);
+
+      setNewPrescription({ title: '', patient: '', description: '', tip: '' });
+      setShowGlobalPrescriptionForm(false);
+      setSelectedPatient(null);
+    }
+  } catch (error) {
+    console.error('Error creating prescription:', error);
+  }
+};
+
 
   const filteredPatients = patients.filter(
     (p) => p.fullName.includes(searchTerm) || p.patient?.includes(searchTerm)

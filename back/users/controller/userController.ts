@@ -8,6 +8,7 @@ import { Request, Response } from "express";
 import { RequestWithUser } from "../../shared/interfaces/request-with-payload.interface";
 import { IUser } from "../../shared/models/user.interface";
 import { IPayload } from "../../shared/interfaces/jwt-payload.interface";
+import  TasksToUser  from "../../task/controller/taksController";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -53,6 +54,9 @@ async function registerUser(req:Request, res:Response) {
       role,
       password: hashedPassword,
     });
+    if (newUser.role === "user" && newUser.doctor && newUser._id){
+      await TasksToUser.assignTasksToUser(newUser.doctor,newUser.patient,String(newUser._id))
+    }
     const response = new SuccessResponse({
       username: newUser.username,
       fullName: newUser.fullName,

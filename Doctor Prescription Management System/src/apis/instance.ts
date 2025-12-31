@@ -115,6 +115,14 @@ class ApiService {
     });
   }
 
+  async patch<T>(endpoint: string, body: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    });
+  }
+
+
   async put<T>(endpoint: string, body: any): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       method: 'PUT',
@@ -151,6 +159,7 @@ class ApiService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
     return this.get<User>('/auth/me');
   }
+
 }
 
 // اینستنس singleton از ApiService

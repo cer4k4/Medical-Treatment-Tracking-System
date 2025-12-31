@@ -38,13 +38,12 @@ async function Authentication(req: RequestWithPayload, res: Response, next: Next
     
     const payload:IPayload = jwt.verify(token, secretKey) as IPayload;
     const userFound = await model.UserModel.findById(payload.userId);
-    
     if (!userFound) {
       const response = new SuccessResponse({},false,404,systemErrors.USERNOTFOUNDED)
       return res.status(404).json(response);
     }
-
     (req as RequestWithUser).user = userFound;
+    
     const requestWithUser = req as RequestWithUser;
     if (requestWithUser.user){
       requestWithUser.user.userId = String(userFound._id)

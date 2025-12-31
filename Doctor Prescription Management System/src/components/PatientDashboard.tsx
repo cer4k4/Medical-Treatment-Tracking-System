@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User } from '../App';
-import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone } from 'lucide-react';
+import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check } from 'lucide-react';
+import { taskService } from '../apis/task/task.services';
 
 interface PatientDashboardProps {
   user: User;
@@ -14,38 +15,55 @@ interface Prescription {
   instructions: string;
   date: string;
   doctorName: string;
+  status: boolean; // وضعیت از سرور
 }
 
-const mockPrescriptions: Prescription[] = [
-  {
-    id: '1',
-    disease: 'فشار خون',
-    medicines: ['لوزارتان 50mg', 'آسپرین 80mg'],
-    instructions: 'یک قرص صبح و یک قرص شب همراه با غذا. از خوردن غذاهای شور خودداری کنید.',
-    date: '1403/09/15',
-    doctorName: 'دکتر احمدی'
-  },
-  {
-    id: '2',
-    disease: 'سردرد میگرنی',
-    medicines: ['ایبوپروفن 400mg', 'استامینوفن 500mg'],
-    instructions: 'در صورت شروع سردرد، یک قرص مصرف کنید. حداکثر ۳ قرص در روز.',
-    date: '1403/09/10',
-    doctorName: 'دکتر احمدی'
-  },
-  {
-    id: '3',
-    disease: 'آلرژی فصلی',
-    medicines: ['سترزین 10mg'],
-    instructions: 'یک قرص در شب قبل از خواب. از مواجهه با گرد و غبار اجتناب کنید.',
-    date: '1403/09/05',
-    doctorName: 'دکتر احمدی'
-  },
-];
-
 export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
-  const [prescriptions] = useState<Prescription[]>(mockPrescriptions);
+  const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
   const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
+
+  const [doctorname, setdoctorname] = useState('');
+  const [special, setSpecial] = useState('');
+  const [doctorNumber, setDoctorNumber] = useState('');
+
+  useEffect(() => {
+    async function getData() {
+      const tasks = await taskService.getTaskOfUser();
+
+      if (tasks.data?.data) {
+        const mapped: Prescription[] = tasks.data.data.map(t => ({
+          id: t.taskId || '',
+          disease: t.title,
+          medicines:  [],
+          instructions: t.description,
+          date: '',
+          doctorName: t.creatorName,
+          status: t.status || false
+        }));
+        setPrescriptions(mapped);
+
+        setSpecial(tasks.data.data[0]?.specialty || '');
+        setdoctorname(tasks.data.data[0]?.creatorName || '');
+        setDoctorNumber(tasks.data.data[0]?.doctorPhoneNumber || '');
+      }
+    }
+
+    getData();
+  }, []);
+
+  const toggleCheck = async (id: string) => {
+    setPrescriptions(prev =>
+      prev.map(p =>
+        p.id === id ? { ...p, status: !p.status } : p
+      )
+    );
+
+    try {
+      await taskService.updateStatusTask(id);
+    } catch (error) {
+      console.error('خطا در به‌روزرسانی وضعیت:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -81,11 +99,11 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
             </div>
             <div className="flex-1">
               <h2>پزشک معالج شما</h2>
-              <p className="text-blue-100 text-sm sm:text-base">دکتر احمدی - متخصص قلب و عروق</p>
+              <p className="text-blue-100 text-sm sm:text-base">{doctorname} - {special}</p>
             </div>
             <div className="flex items-center gap-2 bg-white/20 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base">
               <Phone className="size-4 sm:size-5" />
-              <span>021-12345678</span>
+              <span>{ doctorNumber }</span>
             </div>
           </div>
         </div>
@@ -138,31 +156,55 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
             <h2 className="text-gray-800 mb-4 sm:mb-6">نسخه‌های پزشکی</h2>
 
             <div className="space-y-3 sm:space-y-4">
-              {prescriptions.map((prescription) => (
-                <div
-                  key={prescription.id}
-                  onClick={() => setSelectedPrescription(prescription)}
-                  className={`p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                    selectedPrescription?.id === prescription.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-2 sm:mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-gray-900 mb-1 text-sm sm:text-base">{prescription.disease}</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm">دکتر: {prescription.doctorName}</p>
+              {prescriptions.map((prescription) => {
+                const isChecked = prescription.status;
+
+                return (
+                  <div
+                    key={prescription.id}
+                    className={`p-3 sm:p-4 border-2 rounded-lg cursor-pointer transition-all flex items-center
+                      ${selectedPrescription?.id === prescription.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'}
+                      ${isChecked ? 'bg-green-50 border-green-500' : ''}
+                    `}
+                  >
+
+                    <div
+                      onClick={() => setSelectedPrescription(prescription)}
+                      className="flex-1"
+                    >
+                      <div className="flex items-start justify-between mb-2 sm:mb-3">
+                        <div className="flex-1">
+                          <h3 className="text-gray-900 mb-1 text-sm sm:text-base">{prescription.disease}</h3>
+                          <p className="text-gray-600 text-xs sm:text-sm">دکتر: {prescription.doctorName}</p>
+                        </div>
+                        <span className="px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm whitespace-nowrap mr-2">
+                          {prescription.date}
+                        </span>
+                      </div>
+
+                    {/* Check Button */}
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        await toggleCheck(prescription.id);
+                      }}
+                      className={`flex-shrink-0 flex items-center justify-center mr-3 w-8 h-8 rounded-full border transition-all duration-200
+                        ${isChecked ? 'bg-green-600 border-green-600 text-white scale-110' : 'bg-white border-gray-300 hover:scale-105'}
+                      `}
+                    >
+                      <Check className="size-4" />
+                    </button>
+
+
+
+                      <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm">
+                        <Pill className="size-3 sm:size-4" />
+                        <span>{prescription.medicines.length} دارو</span>
+                      </div>
                     </div>
-                    <span className="px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm whitespace-nowrap mr-2">
-                      {prescription.date}
-                    </span>
                   </div>
-                  <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm">
-                    <Pill className="size-3 sm:size-4" />
-                    <span>{prescription.medicines.length} دارو</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

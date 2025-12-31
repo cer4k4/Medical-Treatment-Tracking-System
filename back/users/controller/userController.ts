@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import model from "../../shared/models/userSchema";
 import { SuccessResponse }  from "../../shared/interfaces/responseInterface";
 import auth from "../../middleware/authentication.middleware";
@@ -7,6 +8,7 @@ import { Request, Response } from "express";
 import { RequestWithUser } from "../../shared/interfaces/request-with-payload.interface";
 import { IUser } from "../../shared/models/user.interface";
 import { IPayload } from "../../shared/interfaces/jwt-payload.interface";
+import  TasksToUser  from "../../task/controller/taksController";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -52,6 +54,9 @@ async function registerUser(req:Request, res:Response) {
       role,
       password: hashedPassword,
     });
+    if (newUser.role === "user" && newUser.doctor && newUser._id){
+      await TasksToUser.assignTasksToUser(newUser.doctor,newUser.patient,String(newUser._id))
+    }
     const response = new SuccessResponse({
       username: newUser.username,
       fullName: newUser.fullName,
@@ -169,10 +174,86 @@ async function getUserByPhoneNumber(req:Request, res:Response) {
 }
 
 
+async function getDoctors(req:Request, res:Response) {
+  try {
+    const doctors = await model.UserModel.find(
+      {
+        role: "doctor",
+        deletedAt: null
+      },
+      {
+        password: 0 // حذف پسورد از خروجی
+      }
+    );
+
+    return res.status(200).json(
+      new SuccessResponse({
+        doctors
+      })
+    );
+
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json(new SuccessResponse({}, false, 500, systemErrors.SERVERERROR));
+  }
+}
 
 
 
 
+async function getDoctorProfile(req: RequestWithUser, res: Response) {
+  try {
+    if (!req.user || req.user.role !== "doctor") {
+      return res
+        .status(403)
+        .json(new SuccessResponse({}, false, 403, "Access denied"));
+    }
+
+    const doctorId = new mongoose.Types.ObjectId(req.user.userId);
+    const doctorIdStr = doctorId.toString();
+
+    const doctor = await model.UserModel.aggregate([
+      {
+        $match: {
+          _id: doctorId,
+          role: "doctor",
+          deletedAt: null
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          pipeline: [
+            {
+              $match: {
+                doctor: doctorIdStr
+              }
+            },
+            {
+              $project: { password: 0 }
+            }
+          ],
+          as: "patients"
+        }
+      },
+      {
+        $project: { password: 0 }
+      }
+    ]);
+
+    return res.status(200).json(
+      new SuccessResponse({ doctor: doctor[0] })
+    );
+
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json(new SuccessResponse({}, false, 500, systemErrors.SERVERERROR));
+  }
+}
 
 
-export = {getUser,registerUser,updateUser,loginUser,getUserByPhoneNumber};
+export = {getDoctorProfile,getDoctors,getUser,registerUser,updateUser,loginUser,getUserByPhoneNumber};

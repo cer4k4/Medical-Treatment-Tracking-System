@@ -89,18 +89,25 @@ async function deleteUser(req:RequestWithUser, res:Response) {
 
 async function allUser(req: RequestWithUser, res: Response) {
   try {
-
     const limit = Number(req.params["limit"]);
     const page = Number(req.params["page"]);
-    const feild = req.query["feild"];
-    const word = req.query["word"] || "";
     const offset = (page - 1) * limit;
+    const user = req.user
+    const matchStage: any = {
+      deletedAt: null
+    };
+
+    if (req.user?.role === "admin") {
+      matchStage.role = "doctor";
+    }
+
+    if (req.user?.role === "doctor") {
+      matchStage._id = req.user?.userId;
+    }
+
     const doctors = await model.UserModel.aggregate([
       {
-        $match: {
-          role: "doctor",
-          deletedAt: null
-        }
+        $match: matchStage
       },
       {
         $lookup: {
@@ -132,13 +139,29 @@ async function allUser(req: RequestWithUser, res: Response) {
         }
       }
     ]);
-    for (let d of  doctors) {
-      const c = await countPatientsByDoctorId(d._id)
-      d.patientCount = c
+
+    let total_doctor = 0;
+    let total_petition = 0;
+
+    if (req.user?.role === "admin") {
+      total_petition = await countAllPatients();
+      total_doctor = await countDoctor();
     }
-    const total_petition = await countAllPatients()
-    const total_doctor = await countDoctor()
-    return res.status(200).json(new SuccessResponse({doctors,total_doctor,total_petition}));
+
+    if (req.user?.role === "doctor") {
+      total_petition = doctors[0]?.patientCount || 0;
+    }
+    //console.log(await countPatientsByDoctorId(doctors[0]._id))
+    for (let d of doctors){
+      d.patientCount = await countPatientsByDoctorId(d._id)
+    }
+    return res.status(200).json(
+      new SuccessResponse({
+        doctors,
+        total_doctor,
+        total_petition
+      })
+    );
   } catch (error) {
     console.log(error);
     return res

@@ -10,7 +10,7 @@ import { UpdateTaskDto } from "../dto/request/update-task.dto";
 
 const taskRouter= express.Router()
 
-taskRouter.post("/create",middleware.Authentication,CreateTaskDto,DataValidator,taskController.createTask)
+taskRouter.post("/create",middleware.Authentication,taskController.createTask)
 
 taskRouter.put("/edit/:taskId",middleware.Authentication,ParamTaskIdDto,UpdateTaskDto,DataValidator,taskController.editTask)
 
@@ -18,13 +18,16 @@ taskRouter.get("/byId/:taskId",middleware.Authentication,ParamTaskIdDto,DataVali
 
 taskRouter.get("/my/:page/:limit/:doctorId",middleware.Authentication,PaginationParam,DataValidator,taskController.allMyTasks)
 
+taskRouter.get("/patient/:doctorId",taskController.getPatientOfDoctor)
+
 taskRouter.get("/all/:page/:limit",middleware.Authentication,PaginationParam,DataValidator,taskController.allTasks)
 
 taskRouter.delete("/delete/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.deleteTask)
 
 taskRouter.delete("/soft/delete/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.softDeleteTask)
 
-taskRouter.patch("/status/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.updateTaskStatus)
+taskRouter.get("/status/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.updateTaskStatus)
 
+taskRouter.get("/myTask",middleware.Authentication,taskController.getTasksForUser)
 
 export = taskRouter;

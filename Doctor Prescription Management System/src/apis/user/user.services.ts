@@ -1,16 +1,36 @@
 import { IResponse } from '../../lib/types/base';
 import { IUser } from './user.types';
 import { apiService, ApiResponse, User } from '../instance';
-
+export interface Patient {
+  _id: string;
+  username: string;
+  fullName: string;
+  role: 'user';
+  phoneNumber?: string;
+  patient?: string;   // اطلاعات بیماری / نوع بیمار
+  doctor: string;     // id دکتر (string)
+  specialty?: string;
+  createdAt?: number;
+  updatedAt?: number;
+}
 // تایپ‌های مربوط به کاربران
 export interface Doctor {
-  id: string;
-  name: string;
-  email: string;
+  _id?: string;
+  name?: string;
+  email?: string;
   specialty?: string; 
-  phone?: string;
+  phoneNumber?: string;
   patientsCount?: number;
+  username?:string;
+  fullName?:string;
+  role?: string;
+  patient?: string;
+  patients?: Patient[];
+  doctor?: string;
+  // "createdAt": 1766186440207,
+  // "updatedAt": 1766186440207
 }
+
 
 export interface CreateUserResponse {
   successfully: boolean;
@@ -27,7 +47,7 @@ export interface CreateUserRequest {
   doctor: string;
   patient: string;
   password: string;
-  specialty: string;
+  specialty?: string;
   phoneNumber: string;
 }
 
@@ -51,7 +71,7 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxNzU5YmY0ZTlmNTkzMDg1OTUzMjciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU3MDQwNDEsImV4cCI6MTc2NTcwNzY0MX0.t1Hsiel2xe8VRk0fDJ4AH3Htj3dcv0PK_U0BmF8cdO8")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNmMmQxNGRjNjVlMjE4ZTQxOWFkZWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjYxODk1MzksImV4cCI6MTc2NjE5MzEzOX0.mAfUIONUHMfv9DA8y6sMEC7aASyJsARdb2tgFbCYG_Y")
     return apiService.get<IResponse<{doctors:IUser[],total_doctor:number,total_petition:number}>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
@@ -78,8 +98,18 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTIxNzU5YmY0ZTlmNTkzMDg1OTUzMjciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjU3MDQwNDEsImV4cCI6MTc2NTcwNzY0MX0.t1Hsiel2xe8VRk0fDJ4AH3Htj3dcv0PK_U0BmF8cdO8")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNmMmQxNGRjNjVlMjE4ZTQxOWFkZWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjYxODk1MzksImV4cCI6MTc2NjE5MzEzOX0.mAfUIONUHMfv9DA8y6sMEC7aASyJsARdb2tgFbCYG_Y")
     return apiService.delete<void>(`/admin/delete/${userId}`);
+  }
+
+  async getListDoctors() {
+    return apiService.get<IResponse<{doctors:Doctor[]}>>(`/users/doctors`);
+  }
+
+
+  async getProfileDoctor() {
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY2OTU1MTY0LCJleHAiOjE3NjY5NTg3NjR9.vD9gmrdZJ00fFB7KiF0W-XTeoWD7X7L_rzB9oNDBzfo")
+    return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 
   // تغییر رمز عبور

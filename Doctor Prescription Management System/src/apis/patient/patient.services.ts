@@ -6,7 +6,7 @@ class PatientService {
 
   // دریافت لیست بیماران (برای دکتر یا ادمین)
   async getPatients(doctorId?: string): Promise<ApiResponse<Patient[]>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTMzZjQ4M2EyMTM3Y2ZiMTM5MGNkMmMiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NTcwNjI4MSwiZXhwIjoxNzY1NzA5ODgxfQ.aOdcdmcNYmeqSAdVKcyunoUQGyuv84Eyg8za88lXrmg")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NDk5NDM3LCJleHAiOjE3Njc1MDMwMzd9.-48Z7oMCYhWAAEEqyPFYm4bk-cFPiFzwUtCcF6mlFwE")
     const endpoint = doctorId 
       ? `/users/patients?doctorId=${doctorId}`
       : '/users/patients';

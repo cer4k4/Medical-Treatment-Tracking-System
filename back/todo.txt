@@ -1,8 +1,10 @@
 ToDo:
-    - add search to list all task
-    - add search to user list
-    - seprate request from middleware our modules
+    - add task of user with status (doctor dashboard)
+    - change count of to recovered (doctor dashboard)
+    - change name of medicent to count of done task (patient dashboard)
+    - change calender to count of open task (patient dashboard)
+    - add name of user to dashboard (patient dashboard)
+    - add tip of task (patient dashboard)
     
 _____________________________________________
 Done:
-    - PATCH method for update status

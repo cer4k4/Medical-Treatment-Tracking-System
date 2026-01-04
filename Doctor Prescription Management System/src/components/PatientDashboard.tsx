@@ -4,7 +4,7 @@ import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check } from
 import { taskService } from '../apis/task/task.services';
 import { userService } from '../apis/user/user.services';
 import { IGetUserProfile } from '../apis/user/user.types';
-
+import moment from 'moment-jalaali';
 interface PatientDashboardProps {
   user: User;
   onLogout: () => void;
@@ -28,12 +28,14 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [doctorname, setdoctorname] = useState('');
   const [special, setSpecial] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
-
+  const [taskDone,settaskDone] = useState(0);
+  const [todoTask,settodoTask] = useState(0);
+  const [dateTime,setdateTime] = useState('');
   useEffect(() => {
     async function getData() {
       const tasks = await taskService.getTaskOfUser();
-      if (tasks.data?.data) {
-        const mapped: Prescription[] = tasks.data.data.map(t => ({
+      if (tasks.data?.data?.data) {
+        const mapped: Prescription[] = tasks.data.data.data.map(t => ({
           id: t.taskId || '',
           tip: t.tip,
           disease: t.title,
@@ -44,9 +46,16 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           status: t.status || false
         }))
         setPrescriptions(mapped);
-        setSpecial(tasks.data.data[0]?.specialty || '');
-        setdoctorname(tasks.data.data[0]?.creatorName || '');
-        setDoctorNumber(tasks.data.data[0]?.doctorPhoneNumber || '');
+        setSpecial(tasks.data.data.data[0]?.specialty || '');
+        setdoctorname(tasks.data.data.data[0]?.creatorName || '');
+        setDoctorNumber(tasks.data.data.data[0]?.doctorPhoneNumber || '');
+      }
+      settaskDone(tasks.data?.data?.taskDone || 0)
+      settodoTask(tasks.data?.data?.todo || 0)
+      const utcDate = tasks.data?.data?.startDate;
+      if (utcDate) {
+        const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
+        setdateTime(shamsi);
       }
     }
 
@@ -115,8 +124,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">نسخه‌های فعال</p>
-                <p className="text-gray-900">{prescriptions.length}</p>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base">امور در حال پیگیری</p>
+                <p className="text-gray-900">{ todoTask }</p>
               </div>
               <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
                 <FileText className="size-5 sm:size-6 text-blue-600" />
@@ -127,8 +136,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">آخرین ویزیت</p>
-                <p className="text-gray-900">1403/09/15</p>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base">تاریخ ویزیت</p>
+                <p className="text-gray-900"></p>{ dateTime }
               </div>
               <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
                 <Calendar className="size-5 sm:size-6 text-green-600" />
@@ -141,7 +150,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">کار های انجام شده</p>
                 <p className="text-gray-900">
-                  {[...new Set(prescriptions.flatMap(p => p.medicines))].length}
+                  { taskDone }
                 </p>
               </div>
               <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
@@ -196,13 +205,6 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
                     >
                       <Check className="size-4" />
                     </button>
-
-
-
-                      <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm">
-                        <Pill className="size-3 sm:size-4" />
-                        <span>{prescription.medicines.length} دارو</span>
-                      </div>
                     </div>
                   </div>
                 );
@@ -234,7 +236,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
                 <div className="mb-4 sm:mb-6">
                   <div className="flex items-center gap-2 mb-2 sm:mb-3">
                     <Pill className="size-4 sm:size-5 text-blue-600" />
-                    <h3 className="text-gray-800 text-sm sm:text-base">داروهای تجویز شده</h3>
+                    <h3 className="text-gray-800 text-sm sm:text-base"></h3>
                   </div>
                   <div className="space-y-1.5 sm:space-y-2">
                     {selectedPrescription.medicines.map((medicine, idx) => (

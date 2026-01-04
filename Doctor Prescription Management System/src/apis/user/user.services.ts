@@ -99,7 +99,7 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTYwNzUwLCJleHAiOjE3Njc1NjQzNTB9.OBBjbr6uW0YRVQ-wDbSKbAifalZux8i1x-47Kweq4m0")
     return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 
@@ -109,7 +109,7 @@ class UserService {
 
 
   async getProfileDoctor() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTE3OTU5LCJleHAiOjE3Njc1MjE1NTl9.U0XmtWd9VLDqI95Up9UKB-f-axIVQLCS3BfWiAQcKQA")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTYwNzUwLCJleHAiOjE3Njc1NjQzNTB9.OBBjbr6uW0YRVQ-wDbSKbAifalZux8i1x-47Kweq4m0")
     return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 

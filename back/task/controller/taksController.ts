@@ -280,13 +280,6 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
     // 4. گرفتن creator ها و fullName
     const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
     const doctoruser = await model3.UserModel.findById(creatorIds)
-
-    // 5. ساخت Map برای دسترسی سریع به fullName
-    // const usersMap = users.reduce((acc, u) => {
-    //   acc[u._id.toString()] = u.fullName ?? 'نامعلوم';
-    //   acc[u._id.toString()] = u.specialty ?? 'نامعلوم';
-    //   return acc;
-    // }, {} as Record<string, string>);
     
     // 6. ترکیب اطلاعات با status و creatorName
     const result: TaskOfUser[] = tasks.map(task => ({
@@ -306,7 +299,10 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
         r.taskId = t._id.toString();
       }
     }
-    const response = new SuccessResponse(result)
+    const trueCount = result.filter(t => t.status === true).length;
+    const falseCount = result.filter(t => t.status === false).length;
+    const startDate = tasks[0].createdAt
+    const response = new SuccessResponse({data:result,taskDone:trueCount,todo:falseCount,startDate})
     return res.status(200).json(response);
   } catch (err) {
     console.error('خطا در دریافت task های کاربر:', err);

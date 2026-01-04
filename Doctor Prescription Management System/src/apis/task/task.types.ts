@@ -22,6 +22,14 @@ export interface GetUserITask {
     doctorPhoneNumber: string,
 }
 
+export interface GetUserTaskResponse {
+  data: GetUserITask[];
+  taskDone: number;
+  todo: number;
+  startDate: number;
+}
+
+
 export interface UpdateStatus {
     _id: string,
     userId: string,

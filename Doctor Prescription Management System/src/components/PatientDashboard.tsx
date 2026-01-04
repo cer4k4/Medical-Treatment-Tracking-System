@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { User } from '../App';
 import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check } from 'lucide-react';
 import { taskService } from '../apis/task/task.services';
+import { userService } from '../apis/user/user.services';
+import { IGetUserProfile } from '../apis/user/user.types';
 
 interface PatientDashboardProps {
   user: User;
@@ -13,15 +15,16 @@ interface Prescription {
   disease: string;
   medicines: string[];
   instructions: string;
+  tip: string;
   date: string;
   doctorName: string;
   status: boolean; // وضعیت از سرور
 }
 
-export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
+export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
   const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
-
+  // const [patientname , setpatientname] = useState('');
   const [doctorname, setdoctorname] = useState('');
   const [special, setSpecial] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
@@ -29,19 +32,18 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
   useEffect(() => {
     async function getData() {
       const tasks = await taskService.getTaskOfUser();
-
       if (tasks.data?.data) {
         const mapped: Prescription[] = tasks.data.data.map(t => ({
           id: t.taskId || '',
+          tip: t.tip,
           disease: t.title,
           medicines:  [],
           instructions: t.description,
           date: '',
           doctorName: t.creatorName,
           status: t.status || false
-        }));
+        }))
         setPrescriptions(mapped);
-
         setSpecial(tasks.data.data[0]?.specialty || '');
         setdoctorname(tasks.data.data[0]?.creatorName || '');
         setDoctorNumber(tasks.data.data[0]?.doctorPhoneNumber || '');
@@ -49,8 +51,8 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
     }
 
     getData();
+    
   }, []);
-
   const toggleCheck = async (id: string) => {
     setPrescriptions(prev =>
       prev.map(p =>
@@ -76,7 +78,7 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
             </div>
             <div>
               <h1 className="text-gray-800">پنل بیمار</h1>
-              <p className="text-gray-600 text-sm sm:text-base">{user.name}</p>
+              <p className="text-gray-600 text-sm sm:text-base">{ user.name }</p>
             </div>
           </div>
           <button
@@ -137,7 +139,7 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">داروهای مصرفی</p>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base">کار های انجام شده</p>
                 <p className="text-gray-900">
                   {[...new Set(prescriptions.flatMap(p => p.medicines))].length}
                 </p>
@@ -260,7 +262,7 @@ export function PatientDashboard({ user, onLogout }: PatientDashboardProps) {
                 {/* Warning */}
                 <div className="p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg">
                   <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
-                    <strong>توجه:</strong> لطفاً داروها را دقیقاً طبق دستور پزشک مصرف کنید. در صورت بروز هرگونه عارضه با پزشک خود تماس بگیرید.
+                    <strong>توجه:</strong> { selectedPrescription.tip }
                   </p>
                 </div>
               </div>

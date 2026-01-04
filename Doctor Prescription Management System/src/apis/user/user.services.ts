@@ -1,5 +1,5 @@
 import { IResponse } from '../../lib/types/base';
-import { IUser } from './user.types';
+import { IGetUserProfile, IUser } from './user.types';
 import { apiService, ApiResponse, User } from '../instance';
 export interface Patient {
   _id: string;
@@ -71,14 +71,15 @@ export interface UpdateUserRequest {
 class UserService {
   // دریافت لیست دکترها
   async getDoctors() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNmMmQxNGRjNjVlMjE4ZTQxOWFkZWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjYxODk1MzksImV4cCI6MTc2NjE5MzEzOX0.mAfUIONUHMfv9DA8y6sMEC7aASyJsARdb2tgFbCYG_Y")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
     return apiService.get<IResponse<{doctors:IUser[],total_doctor:number,total_petition:number}>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
 
   // دریافت اطلاعات یک کاربر
-  async getUser(userId: string): Promise<ApiResponse<User>> {
-    return apiService.get<User>(`/users/${userId}`);
+  async getUser(): Promise<ApiResponse<IGetUserProfile>> {
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
+    return apiService.get<IGetUserProfile>(`/users/byId`);
   }
 
   // ساخت یوزر جدید
@@ -98,7 +99,7 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNmMmQxNGRjNjVlMjE4ZTQxOWFkZWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjYxODk1MzksImV4cCI6MTc2NjE5MzEzOX0.mAfUIONUHMfv9DA8y6sMEC7aASyJsARdb2tgFbCYG_Y")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
     return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 
@@ -108,7 +109,7 @@ class UserService {
 
 
   async getProfileDoctor() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NDk5NDM3LCJleHAiOjE3Njc1MDMwMzd9.-48Z7oMCYhWAAEEqyPFYm4bk-cFPiFzwUtCcF6mlFwE")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTE3OTU5LCJleHAiOjE3Njc1MjE1NTl9.U0XmtWd9VLDqI95Up9UKB-f-axIVQLCS3BfWiAQcKQA")
     return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 

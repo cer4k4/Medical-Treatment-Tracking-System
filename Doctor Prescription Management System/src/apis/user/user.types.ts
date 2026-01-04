@@ -13,3 +13,10 @@ export interface IUser {
   specialty?: string;
   patientCount: number;
 }
+
+export interface IGetUserProfile {
+  username: string;
+  fullName: string;
+  phoneNumber: string;
+  role: 'admin' | 'doctor' | 'patient';
+}

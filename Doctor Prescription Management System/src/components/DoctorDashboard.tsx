@@ -52,12 +52,19 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
     tip:'',
   });
 
+  
   useEffect(() => {
+    if (selectedPatient) {
+      console.log("Selected patient changed:", selectedPatient);
+    }
+  }, [selectedPatient]);
+
+  useEffect(() => {
+    
     const fetchDoctorProfile = async () => {
       try {
         const res = await userService.getProfileDoctor();
         if (res.data?.successfully) {
-          console.log('Doctor profile:', res.data.data.doctor);
           setProfile(res.data.data.doctor);
           setPatients(res.data.data.doctor.patients || []);
         }
@@ -81,7 +88,6 @@ const handleAddPrescription = async (e: React.FormEvent) => {
     };
 
     const res = await taskService.createTask(payload);
-
     if (res.data) {
       const createdTask = res.data;
 
@@ -91,8 +97,7 @@ const handleAddPrescription = async (e: React.FormEvent) => {
         patient: createdTask.patient,
       };
 
-      setPrescriptions((prev) => [prescription, ...prev]);
-
+      //setPrescriptions((prev) => [prescription, ...prev]);
       setNewPrescription({ title: '', patient: '', description: '', tip: '' });
       setShowGlobalPrescriptionForm(false);
       setSelectedPatient(null);
@@ -208,7 +213,12 @@ const handleAddPrescription = async (e: React.FormEvent) => {
                   className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer"
                   onClick={() => {
                     // فقط انتخاب بیمار، بدون باز کردن فرم نسخه جدید
-                    setSelectedPatient(patient);
+                    setSelectedPatient((prev) => {
+                      
+                      console.log("Clicked patient:",patient._id);
+                      
+                      return prev
+                    });
                   }}
                 >
                   <div className="flex items-start justify-between mb-2">

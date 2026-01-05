@@ -6,7 +6,7 @@ import { GetUserITask, GetUserTaskResponse, ITask, UpdateStatus } from "./task.t
 class TaskService {
   // doctor role
   async createTask(data: ITask): Promise<ApiResponse<ITask>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTg1NDAwLCJleHAiOjE3Njc1ODkwMDB9.lZOngSCb5Kc5NEnnpuT8w65NCwOmumdYKqDm3sPo3HI")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
     return apiService.post<ITask>(`/task/create`,data);
   }
 

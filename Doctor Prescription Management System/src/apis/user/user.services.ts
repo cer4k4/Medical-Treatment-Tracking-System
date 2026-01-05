@@ -1,6 +1,7 @@
 import { IResponse } from '../../lib/types/base';
 import { IGetUserProfile, IUser } from './user.types';
 import { apiService, ApiResponse, User } from '../instance';
+
 export interface Patient {
   _id: string;
   username: string;
@@ -78,7 +79,7 @@ class UserService {
 
   // all roles
   async getUser(): Promise<ApiResponse<IGetUserProfile>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
     return apiService.get<IGetUserProfile>(`/users/byId`);
   }
 
@@ -99,7 +100,7 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTYwNzUwLCJleHAiOjE3Njc1NjQzNTB9.OBBjbr6uW0YRVQ-wDbSKbAifalZux8i1x-47Kweq4m0")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
     return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 
@@ -109,7 +110,7 @@ class UserService {
 
 
   async getProfileDoctor() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTQ1ZGRjOGM1MDczYzRkODJlNmUzZjQiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NTYwNzUwLCJleHAiOjE3Njc1NjQzNTB9.OBBjbr6uW0YRVQ-wDbSKbAifalZux8i1x-47Kweq4m0")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
     return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 

@@ -263,6 +263,46 @@ interface TaskOfUser {
 async function getTasksForUser(req: RequestWithUser , res:Response){
   const user = (req.user) as IUser
   try {
+    if (user.role !== "user" ){
+      // 1. گرفتن همه taskId های کاربر
+      const userTasks = await model2.UserTask.find({ userId: req.body.userId }).lean();
+      if (!userTasks || userTasks.length === 0) return [];
+      // 2. ساخت Map برای دسترسی سریع به status
+      const userTasksMap = userTasks.reduce((acc, ut) => {
+        acc[ut.taskId.toString()] = ut.status ?? false;
+        return acc;
+      }, {} as Record<string, boolean>);
+      // 3. گرفتن task های مربوطه
+      const taskIds = userTasks.map(t => t.taskId);
+      const tasks = await model.TaskModel.find({ _id: { $in: taskIds } }).lean();
+      if (!tasks || tasks.length === 0) return [];
+      // 4. گرفتن creator ها و fullName
+      const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
+      const doctoruser = await model3.UserModel.findById(creatorIds)
+      // 6. ترکیب اطلاعات با status و creatorName
+      const result: TaskOfUser[] = tasks.map(task => ({
+        taskId: task._id.toString(),
+        status: userTasksMap[task._id.toString()],
+        title: task.title,
+        description: task.description,
+        patient: task.patient,
+        tip: task.tip,
+        specialty: doctoruser?.specialty,
+        creatorName: doctoruser?.fullName || "",
+        doctorPhoneNumber: doctoruser?.phoneNumber || "",
+      }));
+      for (let r of result) {
+        const t = await model2.UserTask.findOne({taskId:r.taskId});
+        if (t){
+          r.taskId = t._id.toString();
+        }
+      }
+      const trueCount = result.filter(t => t.status === true).length;
+      const falseCount = result.filter(t => t.status === false).length;
+      const startDate = tasks[0].createdAt
+      const response = new SuccessResponse({data:result,taskDone:trueCount,todo:falseCount,startDate})
+      return res.status(200).json(response);      
+    }
     // 1. گرفتن همه taskId های کاربر
     const userTasks = await model2.UserTask.find({ userId:user.userId }).lean();
     if (!userTasks || userTasks.length === 0) return [];

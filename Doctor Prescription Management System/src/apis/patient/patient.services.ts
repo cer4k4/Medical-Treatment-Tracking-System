@@ -19,7 +19,7 @@ class PatientService {
   }
 
 
-    // ایجاد بیمار جدید
+// doctor role
   async createPatient(data: CreatePatientRequest): Promise<ApiResponse<Patient>> {
     return apiService.post<Patient>('/task/create', data);
   }

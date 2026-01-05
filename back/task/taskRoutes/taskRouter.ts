@@ -28,6 +28,6 @@ taskRouter.delete("/soft/delete/:taskId",middleware.Authentication,ParamTaskIdDt
 
 taskRouter.get("/status/:taskId",middleware.Authentication,ParamTaskIdDto,DataValidator,taskController.updateTaskStatus)
 
-taskRouter.get("/myTask",middleware.Authentication,taskController.getTasksForUser)
+taskRouter.post("/myTask",middleware.Authentication,taskController.getTasksForUser)
 
 export = taskRouter;

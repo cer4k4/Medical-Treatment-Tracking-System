@@ -33,7 +33,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [dateTime,setdateTime] = useState('');
   useEffect(() => {
     async function getData() {
-      const tasks = await taskService.getTaskOfUser();
+      const tasks = await taskService.getTaskOfUser("");
       if (tasks.data?.data?.data) {
         const mapped: Prescription[] = tasks.data.data.data.map(t => ({
           id: t.taskId || '',

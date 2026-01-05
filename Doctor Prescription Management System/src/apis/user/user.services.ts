@@ -69,14 +69,14 @@ export interface UpdateUserRequest {
 
 // سرویس مدیریت کاربران
 class UserService {
-  // دریافت لیست دکترها
+  // admin role
   async getDoctors() {
     apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
     return apiService.get<IResponse<{doctors:IUser[],total_doctor:number,total_petition:number}>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
 
-  // دریافت اطلاعات یک کاربر
+  // all roles
   async getUser(): Promise<ApiResponse<IGetUserProfile>> {
     apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzUzNTkyMSwiZXhwIjoxNzY3NTM5NTIxfQ.1bzwABmGbw9_SgstL_-OJpu-b_-m9f1PSST1VtQNGrw")
     return apiService.get<IGetUserProfile>(`/users/byId`);
@@ -87,7 +87,7 @@ class UserService {
     return apiService.post<CreateUserResponse>(`/users/create`,data);
   }
 
-  // ایجاد دکتر جدید (فقط ادمین)
+  // admin role
   async createDoctor(data: CreateDoctorRequest): Promise<ApiResponse<Doctor>> {
     return apiService.post<Doctor>('/users/doctors', data);
   }

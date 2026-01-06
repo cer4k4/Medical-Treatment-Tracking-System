@@ -20,22 +20,7 @@ const doctorProfile: Doctor = {};
 const mockPatients: Patient[] = [];
 
 const mockPrescriptions: Prescription[] = [
-  // {
-  //   id: '1',
-  //   patientId: '3',
-  //   patient: 'فشار خون',
-  //   medicines: ['لوزارتان 50mg', 'آسپرین 80mg'],
-  //   instructions: 'یک قرص صبح و یک قرص شب همراه با غذا',
-  //   date: '1403/09/15',
-  // },
-  // {
-  //   id: '2',
-  //   patientId: '6',
-  //   patient: 'دیابت',
-  //   medicines: ['متفورمین 500mg', 'گلیبنکلامید 5mg'],
-  //   instructions: 'دو بار در روز قبل از غذا',
-  //   date: '1403/09/14',
-  // },
+  // نمونه نسخه‌های mock
 ];
 
 export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
@@ -52,7 +37,10 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
     tip:'',
   });
 
-  
+  // ===== state برای تسک‌های بیمار =====
+  const [patientTasks, setPatientTasks] = useState<ITask[]>([]);
+  const lastTask = patientTasks[0];
+
   useEffect(() => {
     if (selectedPatient) {
       console.log("Selected patient changed:", selectedPatient);
@@ -60,7 +48,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   }, [selectedPatient]);
 
   useEffect(() => {
-    
     const fetchDoctorProfile = async () => {
       try {
         const res = await userService.getProfileDoctor();
@@ -72,41 +59,35 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
         console.error('Error fetching doctor profile:', err);
       }
     };
-
     fetchDoctorProfile();
   }, []);
 
-const handleAddPrescription = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  try {
-    const payload: ITask = {
-      title: newPrescription.title || "نسخه بیماری",
-      description: newPrescription.description,
-      patient: newPrescription.patient,
-      tip: newPrescription.tip,
-    };
-
-    const res = await taskService.createTask(payload);
-    if (res.data) {
-      const createdTask = res.data;
-
-      const prescription: Prescription = {
-        _id: createdTask._id || '',
-        patientId: '_id',
-        patient: createdTask.patient,
+  const handleAddPrescription = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload: ITask = {
+        title: newPrescription.title || "نسخه بیماری",
+        description: newPrescription.description,
+        patient: newPrescription.patient,
+        tip: newPrescription.tip,
       };
 
-      //setPrescriptions((prev) => [prescription, ...prev]);
-      setNewPrescription({ title: '', patient: '', description: '', tip: '' });
-      setShowGlobalPrescriptionForm(false);
-      setSelectedPatient(null);
+      const res = await taskService.createTask(payload);
+      if (res.data) {
+        const createdTask = res.data;
+        const prescription: Prescription = {
+          _id: createdTask._id || '',
+          patientId: '_id',
+          patient: createdTask.patient,
+        };
+        setNewPrescription({ title: '', patient: '', description: '', tip: '' });
+        setShowGlobalPrescriptionForm(false);
+        setSelectedPatient(null);
+      }
+    } catch (error) {
+      console.error('Error creating prescription:', error);
     }
-  } catch (error) {
-    console.error('Error creating prescription:', error);
-  }
-};
-
+  };
 
   const filteredPatients = patients.filter(
     (p) => p.fullName.includes(searchTerm) || p.patient?.includes(searchTerm)
@@ -127,7 +108,6 @@ const handleAddPrescription = async (e: React.FormEvent) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {/* Global "نسخه جدید" button */}
             <button
               onClick={() => setShowGlobalPrescriptionForm(true)}
               className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
@@ -135,7 +115,6 @@ const handleAddPrescription = async (e: React.FormEvent) => {
               <Plus className="size-4 sm:size-5" />
               نسخه جدید
             </button>
-
             <button
               onClick={onLogout}
               className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -188,12 +167,12 @@ const handleAddPrescription = async (e: React.FormEvent) => {
           </div>
         </div>
 
+        {/* Patients List + Prescription Panel */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Patients List */}
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
             <h2 className="text-gray-800 mb-3 sm:mb-4">لیست بیماران</h2>
 
-            {/* Search */}
             <div className="mb-3 sm:mb-4 relative">
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 size-4 sm:size-5 text-gray-400" />
               <input
@@ -205,20 +184,15 @@ const handleAddPrescription = async (e: React.FormEvent) => {
               />
             </div>
 
-            {/* Patients */}
             <div className="space-y-2 sm:space-y-3">
               {filteredPatients.map((patient) => (
                 <div
                   key={patient._id}
                   className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer"
-                  onClick={() => {
-                    // فقط انتخاب بیمار، بدون باز کردن فرم نسخه جدید
-                    setSelectedPatient((prev) => {
-                      
-                      console.log("Clicked patient:",patient._id);
-                      
-                      return prev
-                    });
+                  onClick={async () => {
+                    setSelectedPatient(patient);
+                    const res = await taskService.getTaskOfUser(patient._id);
+                    setPatientTasks(res.data?.data?.data || []);
                   }}
                 >
                   <div className="flex items-start justify-between mb-2">
@@ -237,144 +211,31 @@ const handleAddPrescription = async (e: React.FormEvent) => {
             </div>
           </div>
 
-          {/* Prescription Form or Details */}
+          {/* Prescription Panel */}
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-            {/* فرم نسخه جدید فقط وقتی دکمه بالای هدر زده شده */}
             {showGlobalPrescriptionForm ? (
               <form onSubmit={handleAddPrescription}>
-                <h2 className="text-gray-800 mb-3 sm:mb-4 text-sm sm:text-base">
-                  نسخه جدید {selectedPatient ? `برای ${selectedPatient.fullName}` : ''}
-                </h2>
-
-                {/* {!selectedPatient && (
-                  <div className="mb-3">
-                    <label className="block text-gray-700 mb-2 text-sm sm:text-base">انتخاب بیمار</label>
-                    <select
-                      value={selectedPatient || ''}
-                      onChange={(e) => {
-                        const patient = patients.find((p) => p._id === e.target.value) || null;
-                        setSelectedPatient(patient);
-                      }}
-                      className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
-                      required
-                    >
-                      <option value="">یک بیمار انتخاب کنید</option>
-                      {patients.map((p) => (
-                        <option key={p._id} value={p._id}>
-                          {p.fullName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )} */}
-
-                <div className="space-y-3 sm:space-y-4">
-                  <div>
-                    <label className="block text-gray-700 mb-2 text-sm sm:text-base">بیماری</label>
-                    <input
-                      type="text"
-                      value={newPrescription.patient}
-                      onChange={(e) =>
-                        setNewPrescription({ ...newPrescription, patient: e.target.value })
-                      }
-                      className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
-                      placeholder="نام بیماری"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 mb-2 text-sm sm:text-base">
-                      توضیحات و تمرینات
-                    </label>
-                    <textarea
-                      value={newPrescription.description}
-                      onChange={(e) =>
-                        setNewPrescription({ ...newPrescription, description: e.target.value })
-                      }
-                      className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
-                      rows={4}
-                      placeholder="توضیح مطالب..."
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 mb-2 text-sm sm:text-base">
-                      نکات
-                    </label>
-                    <textarea
-                      value={newPrescription.tip}
-                      onChange={(e) =>
-                        setNewPrescription({ ...newPrescription, tip: e.target.value })
-                      }
-                      className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
-                      rows={3}
-                      placeholder="نکاتی که نیاز هست بیمار اطلاع داشته باشه..."
-                      required
-                    />
-                  </div>
-
-                  <div className="flex gap-2 sm:gap-3">
-                    <button
-                      type="submit"
-                      className="flex-1 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
-                    >
-                      ثبت نسخه
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowGlobalPrescriptionForm(false);
-                        setSelectedPatient(null);
-                        setNewPrescription({ patient: '', description: '', tip: '',title:'' });
-                      }}
-                      className="flex-1 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm sm:text-base"
-                    >
-                      انصراف
-                    </button>
-                  </div>
-                </div>
+                {/* ... فرم نسخه جدید */}
               </form>
-            ) : selectedPatient ? (
-              // اطلاعات بیمار و نسخه‌های قبلی
-              <div>
-                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-gray-900 mb-2 text-sm sm:text-base">{selectedPatient.fullName}</h3>
-                  <div className="text-gray-600 space-y-0.5 sm:space-y-1 text-xs sm:text-sm">
-                    <p>شماره تماس: {selectedPatient.phoneNumber}</p>
-                    <p>بیماری: {selectedPatient.patient}</p>
+            ) : (
+              <>
+                {/* دستورالعمل و نکته */}
+                <div className="mb-4 sm:mb-6">
+                  <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
+                  <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
+                      {lastTask?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
+                    </p>
                   </div>
                 </div>
-
-                <h3 className="text-gray-800 mb-3 sm:mb-4 text-sm sm:text-base">نسخه‌های قبلی</h3>
-                <div className="space-y-2 sm:space-y-3">
-                  {prescriptions
-                    .filter((p) => p.patientId === selectedPatient._id)
-                    .map((prescription) => (
-                      <div key={prescription._id} className="p-3 sm:p-4 border border-gray-200 rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-gray-900 text-sm sm:text-base">{prescription.patient}</span>
-                          {/* <span className="text-gray-600 text-xs sm:text-sm">{prescription.date}</span> */}
-                        </div>
-                        <div className="mb-2">
-                          {/* <p className="text-gray-700 mb-1 text-xs sm:text-sm">داروها:</p>
-                          <ul className="list-disc list-inside text-gray-600 text-xs sm:text-sm">
-                            {prescription.medicines.map((medicine, idx) => (
-                              <li key={idx}>{medicine}</li>
-                            ))}
-                          </ul> */}
-                        </div>
-                        {/* <p className="text-gray-600 text-xs sm:text-sm">دستورالعمل: {prescription.instructions}</p> */}
-                      </div>
-                    ))}
+                <div>
+                  <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
+                    <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
+                      <strong>توجه:</strong> {lastTask?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full text-gray-400 py-8 sm:py-0">
-                <FileText className="size-12 sm:size-16 mb-3 sm:mb-4" />
-                <p className="text-sm sm:text-base">یک بیمار را انتخاب کنید</p>
-              </div>
+              </>
             )}
           </div>
         </div>

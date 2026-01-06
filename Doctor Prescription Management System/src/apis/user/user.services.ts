@@ -79,7 +79,7 @@ class UserService {
 
   // all roles
   async getUser(): Promise<ApiResponse<IGetUserProfile>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NzA0Mzk1LCJleHAiOjE3Njc3MDc5OTV9.ZaP5dG4miF6RpjapjSqCqOqTqoUE9o6fmvlqM_-eiZk")
     return apiService.get<IGetUserProfile>(`/users/byId`);
   }
 
@@ -100,7 +100,7 @@ class UserService {
 
   // حذف کاربر
   async deleteUser(userId: string): Promise<ApiResponse<void>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3Njc0ODM3LCJleHAiOjE3Njc2Nzg0Mzd9.Zyn9W5pk6cC0faGmQwVqS6E7B7xmrbZltsUcZLKYL30")
     return apiService.delete<void>(`/admin/delete/${userId}`);
   }
 
@@ -110,7 +110,7 @@ class UserService {
 
 
   async getProfileDoctor() {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NzA0Mzk1LCJleHAiOjE3Njc3MDc5OTV9.ZaP5dG4miF6RpjapjSqCqOqTqoUE9o6fmvlqM_-eiZk")
     return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 

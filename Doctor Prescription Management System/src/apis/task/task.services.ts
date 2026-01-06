@@ -16,8 +16,8 @@ class TaskService {
 
   // user role
   async getTaskOfUser(data: string) {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRmMjM2YzM5ZTUwMDE0ZDJjNzYzMDAiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzU2MDM5NCwiZXhwIjoxNzY3NTYzOTk0fQ.ZsyHV0GqqfAOTEKLsU1HSKbhhfuqpC7kBiJHfRa4re8")
-    return apiService.post<IResponse<GetUserTaskResponse>>(`/task/mytask`,data);
+    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NzA0Mzk1LCJleHAiOjE3Njc3MDc5OTV9.ZaP5dG4miF6RpjapjSqCqOqTqoUE9o6fmvlqM_-eiZk")
+    return apiService.post<IResponse<GetUserTaskResponse>>(`/task/mytask`,{"userId":data});
   }
 
   async updateStatusTask(taskId: string) {

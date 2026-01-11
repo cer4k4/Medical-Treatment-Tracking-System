@@ -266,7 +266,7 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
     if (user.role !== "user" ){
       // 1. گرفتن همه taskId های کاربر
       const userTasks = await model2.UserTask.find({ userId: req.body.userId }).lean();
-      if (!userTasks || userTasks.length === 0) return [];
+      if ( !userTasks || userTasks.length === 0 ) return [];
       // 2. ساخت Map برای دسترسی سریع به status
       const userTasksMap = userTasks.reduce((acc, ut) => {
         acc[ut.taskId.toString()] = ut.status ?? false;
@@ -352,4 +352,4 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
 
 
 
-export = {createTask,editTask,allTasks,allMyTasks,getTask,deleteTask,softDeleteTask,updateTaskStatus,getPatientOfDoctor,assignTasksToUser,getTasksForUser};
+export = { createTask,editTask,allTasks,allMyTasks,getTask,deleteTask,softDeleteTask,updateTaskStatus,getPatientOfDoctor,assignTasksToUser,getTasksForUser };

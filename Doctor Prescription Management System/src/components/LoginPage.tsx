@@ -1,18 +1,28 @@
 import { useState } from 'react';
 import { LogIn, Stethoscope } from 'lucide-react';
+import { userService } from '../apis/user/user.services';
 
 interface LoginPageProps {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (username: string, fullname: string, password: string, role: string) => void;
   onShowRegister: () => void;
 }
 
 export function LoginPage({ onLogin, onShowRegister }: LoginPageProps) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(email, password);
+    async function test() {
+      const res = await userService.Login(username,password)
+      setRole(res.data?.data.role || "")
+      const profile = await userService.getUser()
+      setFullname(profile.data?.data.fullName || "")
+    }
+    test()
+    onLogin(username,fullname, password, role);
   };
 
   return (
@@ -29,13 +39,12 @@ export function LoginPage({ onLogin, onShowRegister }: LoginPageProps) {
 
         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-gray-700 mb-2">ایمیل</label>
+            <label className="block text-gray-700 mb-2">نام کاربری</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              placeholder="email@example.com"
               required
             />
           </div>
@@ -47,7 +56,6 @@ export function LoginPage({ onLogin, onShowRegister }: LoginPageProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              placeholder="••••••••"
               required
             />
           </div>
@@ -64,18 +72,17 @@ export function LoginPage({ onLogin, onShowRegister }: LoginPageProps) {
         <div className="mt-4 sm:mt-6 text-center">
           <button
             onClick={onShowRegister}
-            className="text-blue-600 hover:text-blue-700"
-          >
+            className="text-blue-600 hover:text-blue-700">
             ثبت نام بیمار جدید
           </button>
         </div>
 
         <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-gray-50 rounded-lg text-xs sm:text-sm">
-          <p className="text-gray-600 mb-2">حساب‌های آزمایشی:</p>
+          {/* <p className="text-gray-600 mb-2">حساب‌های آزمایشی:</p> */}
           <div className="space-y-1 text-gray-700">
-            <p>• مدیر: admin@clinic.com</p>
+            {/* <p>• مدیر: admin@clinic.com</p>
             <p>• دکتر: doctor@clinic.com</p>
-            <p>• بیمار: patient@clinic.com</p>
+            <p>• بیمار: patient@clinic.com</p> */}
           </div>
         </div>
       </div>

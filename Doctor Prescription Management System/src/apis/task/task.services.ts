@@ -6,7 +6,7 @@ import { GetUserITask, GetUserTaskResponse, ITask, UpdateStatus } from "./task.t
 class TaskService {
   // doctor role
   async createTask(data: ITask): Promise<ApiResponse<ITask>> {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNlNzEyZTAyNDEzNDZhNzQzOTRiY2MiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NjAwNDg3LCJleHAiOjE3Njc2MDQwODd9.2yW4w8q84yi60Ujexr_foG3sT8udFVhn61FMdGWeqFs")
+  //apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY4MTI2OTU3LCJleHAiOjE3NjgxMzA1NTd9.aXB_fK54I-xlPYFOUNzoPstDhbSHxMMvDaTdrzLZ-RQ")
     return apiService.post<ITask>(`/task/create`,data);
   }
 
@@ -16,12 +16,12 @@ class TaskService {
 
   // user role
   async getTaskOfUser(data: string) {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY3NzA0Mzk1LCJleHAiOjE3Njc3MDc5OTV9.ZaP5dG4miF6RpjapjSqCqOqTqoUE9o6fmvlqM_-eiZk")
+    //apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2ODE5MTk1MSwiZXhwIjoxNzY4MTk1NTUxfQ.NVsGg_lr_mT2hXxcHUDauh1RZemwY7R0RHc53Nl3wPk")
     return apiService.post<IResponse<GetUserTaskResponse>>(`/task/mytask`,{"userId":data});
   }
 
   async updateStatusTask(taskId: string) {
-    apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTRmMjM2YzM5ZTUwMDE0ZDJjNzYzMDAiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzU2MDM5NCwiZXhwIjoxNzY3NTYzOTk0fQ.ZsyHV0GqqfAOTEKLsU1HSKbhhfuqpC7kBiJHfRa4re8")
+    //apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU5ZTg2NjhmNTljNzU2NmQ0NDU2YjciLCJyb2xlIjoidXNlciIsImlhdCI6MTc2ODE5MTk1MSwiZXhwIjoxNzY4MTk1NTUxfQ.NVsGg_lr_mT2hXxcHUDauh1RZemwY7R0RHc53Nl3wPk")
     return apiService.get<IResponse<UpdateStatus>>(`/task/status/${taskId}`);
   }
 }

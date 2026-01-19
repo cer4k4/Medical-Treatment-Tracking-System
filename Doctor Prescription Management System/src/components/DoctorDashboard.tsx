@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { User } from '../App';
-import { LogOut, Plus, Search, Users, FileText, Calendar } from 'lucide-react';
+import { LogOut, Plus, Search, Users, FileText, Calendar, AlarmCheck } from 'lucide-react';
 import { Doctor, Patient, userService } from '../apis/user/user.services';
 import { ITask } from '../apis/task/task.types';
 import { taskService } from '../apis/task/task.services';
+import moment from 'moment-jalaali';
 
 interface DoctorDashboardProps {
   user: User;
@@ -30,6 +31,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [showGlobalPrescriptionForm, setShowGlobalPrescriptionForm] = useState(false);
+  const [dateTime,setdateTime] = useState('');
   const [newPrescription, setNewPrescription] = useState({
     title:'',
     description:'',
@@ -39,11 +41,14 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
 
   // ===== state برای تسک‌های بیمار =====
   const [patientTasks, setPatientTasks] = useState<ITask[]>([]);
-  const lastTask = patientTasks[0];
-
+  
   useEffect(() => {
     if (selectedPatient) {
-      console.log("Selected patient changed:", selectedPatient);
+      async () => {
+        const res = await taskService.getTaskOfUser(selectedPatient._id);
+        setPatientTasks(res.data?.data?.data || []);
+      }
+      console.log("Selected patient changed:", patientTasks);
     }
   }, [selectedPatient]);
 
@@ -134,10 +139,22 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بیماران</p>
-                <p className="text-gray-900">{patients.length}</p>
+                <p className="text-gray-600">{patients.length}</p>
               </div>
-              <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
-                <Users className="size-5 sm:size-6 text-blue-600" />
+              <div className="bg-red-100 p-2 sm:p-3 rounded-lg">
+                <Users className="size-5 sm:size-6 text-red-600" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بهبود یافتگان</p>
+                <p className="text-gray-600">{patients.length}</p>
+              </div>
+              <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
+                <Users className="size-5 sm:size-6 text-green-600" />
               </div>
             </div>
           </div>
@@ -146,22 +163,10 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">نسخه‌های صادر شده</p>
-                <p className="text-gray-900">{prescriptions.length}</p>
+                <p className="text-gray-600">{prescriptions.length}</p>
               </div>
-              <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
-                <FileText className="size-5 sm:size-6 text-green-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">ویزیت امروز</p>
-                <p className="text-gray-900">3</p>
-              </div>
-              <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
-                <Calendar className="size-5 sm:size-6 text-purple-600" />
+              <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
+                <FileText className="size-5 sm:size-6 text-blue-600" />
               </div>
             </div>
           </div>
@@ -192,6 +197,13 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                   onClick={async () => {
                     setSelectedPatient(patient);
                     const res = await taskService.getTaskOfUser(patient._id);
+                    const utcDate = res.data?.data?.startDate;
+                    const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
+                    console.log(utcDate)
+                    setdateTime('')
+                    if (utcDate){
+                      setdateTime(shamsi)
+                    }
                     setPatientTasks(res.data?.data?.data || []);
                   }}
                 >
@@ -219,19 +231,34 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
               </form>
             ) : (
               <>
+              
+
+          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 mb-1 text-sm sm:text-base"> تاریخ ویزیت</p>
+                <p className="text-gray-900">{ dateTime }</p>
+              </div>
+              <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
+                <Calendar className="size-5 sm:size-6 text-purple-600" />
+              </div>
+            </div>
+          </div>
+<br></br>
                 {/* دستورالعمل و نکته */}
                 <div className="mb-4 sm:mb-6">
                   <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
                   <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
-                      {lastTask?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
+                      {patientTasks[0]?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
                     </p>
                   </div>
                 </div>
+                
                 <div>
                   <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
                     <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
-                      <strong>توجه:</strong> {lastTask?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
+                      <strong>توجه:</strong> {patientTasks[0]?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
                     </p>
                   </div>
                 </div>

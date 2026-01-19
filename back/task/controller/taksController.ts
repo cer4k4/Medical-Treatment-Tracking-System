@@ -266,7 +266,8 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
     if (user.role !== "user" ){
       // 1. گرفتن همه taskId های کاربر
       const userTasks = await model2.UserTask.find({ userId: req.body.userId }).lean();
-      if ( !userTasks || userTasks.length === 0 ) return [];
+      const responsenotfound = new SuccessResponse([],false,404,systemErrors.TASKNOTFOUNDED)
+      if ( !userTasks || userTasks.length === 0 ) return res.status(404).json(responsenotfound) ;
       // 2. ساخت Map برای دسترسی سریع به status
       const userTasksMap = userTasks.reduce((acc, ut) => {
         acc[ut.taskId.toString()] = ut.status ?? false;

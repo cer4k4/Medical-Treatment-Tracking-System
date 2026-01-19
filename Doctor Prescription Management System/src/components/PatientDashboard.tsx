@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User } from '../App';
-import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check } from 'lucide-react';
+import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check, Presentation } from 'lucide-react';
 import { taskService } from '../apis/task/task.services';
 import { userService } from '../apis/user/user.services';
 import { IGetUserProfile } from '../apis/user/user.types';
@@ -20,6 +20,27 @@ interface Prescription {
   doctorName: string;
   status: boolean; // وضعیت از سرور
 }
+
+function getCountOfDoneTask(list: Prescription[]) {
+  let count: number = 0 
+  for(let p of list){
+    if (!p.status){
+      count++
+    }
+  }
+  return count
+}
+
+function getCountOfTODoTask(list: Prescription[]) {
+  let count: number = 0 
+  for(let p of list){
+    if (p.status){
+      count++
+    }
+  }
+  return count
+}
+
 
 export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
@@ -50,17 +71,15 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         setdoctorname(tasks.data.data.data[0]?.creatorName || '');
         setDoctorNumber(tasks.data.data.data[0]?.doctorPhoneNumber || '');
       }
-      settaskDone(tasks.data?.data?.taskDone || 0)
-      settodoTask(tasks.data?.data?.todo || 0)
+      //settaskDone(tasks.data?.data?.taskDone || 0)
+      //settodoTask(tasks.data?.data?.todo || 0)
       const utcDate = tasks.data?.data?.startDate;
       if (utcDate) {
         const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
         setdateTime(shamsi);
       }
     }
-
     getData();
-    
   }, []);
   const toggleCheck = async (id: string) => {
     setPrescriptions(prev =>
@@ -68,8 +87,9 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         p.id === id ? { ...p, status: !p.status } : p
       )
     );
-
     try {
+      settaskDone(getCountOfDoneTask(prescriptions))
+      settodoTask(getCountOfTODoTask(prescriptions))
       await taskService.updateStatusTask(id);
     } catch (error) {
       console.error('خطا در به‌روزرسانی وضعیت:', error);

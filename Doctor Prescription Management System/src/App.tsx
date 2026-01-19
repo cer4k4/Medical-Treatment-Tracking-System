@@ -5,12 +5,12 @@ import { DoctorDashboard } from "./components/DoctorDashboard";
 import { PatientDashboard } from "./components/PatientDashboard";
 import { RegisterPage } from "./components/RegisterPage";
 
-export type UserRole = "admin" | "doctor" | "patient" | null;
+export type UserRole = "admin" | "doctor" | "user" | null;
 
 export interface User {
   id: string;
   name: string;
-  email: string;
+  email?: string;
   role: UserRole;
   doctorId?: string;
 }
@@ -21,39 +21,36 @@ function App() {
   );
   const [showRegister, setShowRegister] = useState(false);
 
-  const handleLogin = (email: string, password: string) => {
+  const handleLogin = (username: string,fullname: string, password: string,role: string) => {
+    
     // Mock login logic
-    if (email === "admin@clinic.com") {
+    if (role === "admin") {
       setCurrentUser({
         id: "1",
-        name: "مدیر سیستم",
-        email: "admin@clinic.com",
-        role: "admin",
+        name: fullname,
+        role: role,
       });
-    } else if (email === "doctor@clinic.com") {
+    } else if (role === "doctor") {
       setCurrentUser({
         id: "2",
-        name: "دکتر احمدی",
-        email: "doctor@clinic.com",
-        role: "doctor",
+        name: fullname,
+        role: role,
       });
-    } else if (email === "patient@clinic.com") {
+    } else if (role === "user") {
       setCurrentUser({
         id: "3",
-        name: "علی محمدی",
-        email: "patient@clinic.com",
-        role: "patient",
+        name: fullname,
+        role: role,
         doctorId: "2",
       });
     }
   };
-
   const handleRegister = (data: any) => {
     setCurrentUser({
       id: Date.now().toString(),
       name: data.name,
       email: data.email,
-      role: "patient",
+      role: data.role,
       doctorId: data.doctorId,
     });
     setShowRegister(false);
@@ -96,7 +93,7 @@ function App() {
           onLogout={handleLogout}
         />
       )}
-      {currentUser?.role === "patient" && (
+      {currentUser?.role === "user" && (
         <PatientDashboard
           user={currentUser}
           onLogout={handleLogout}

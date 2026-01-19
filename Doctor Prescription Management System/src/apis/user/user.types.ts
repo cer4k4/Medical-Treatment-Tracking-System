@@ -18,5 +18,10 @@ export interface IGetUserProfile {
   username: string;
   fullName: string;
   phoneNumber: string;
-  role: 'admin' | 'doctor' | 'patient';
+  role: 'admin' | 'doctor' | 'user';
+}
+
+export interface IResOfLogin{
+  token: string;
+  role: string;
 }

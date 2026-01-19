@@ -15,7 +15,7 @@ const userRouter= express.Router()
 
 userRouter.post("/create",RegisterUserDto,DataValidator,userController.registerUser)
 
-userRouter.get("/byId",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER]),userController.getUser)
+userRouter.get("/byId",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER,UserRoles.DOCTOR]),userController.getUser)
 
 userRouter.get("/by/phone/:phoneNumber",middleware.Authentication,middleware.Authorization([UserRoles.ADMIN,UserRoles.USER]),userController.getUserByPhoneNumber)
 

@@ -9,6 +9,7 @@ import { RequestWithUser } from "../../shared/interfaces/request-with-payload.in
 import { IUser } from "../../shared/models/user.interface";
 import { IPayload } from "../../shared/interfaces/jwt-payload.interface";
 import  TasksToUser  from "../../task/controller/taksController";
+import modelTask  from "../../shared/models/taskSchema";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -242,7 +243,9 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
         $project: { password: 0 }
       }
     ]);
-
+    // ToDo
+    const ll = await modelTask.TaskModel.countDocuments()
+    console.log(ll,req.user.userId)
     return res.status(200).json(
       new SuccessResponse({ doctor: doctor[0] })
     );

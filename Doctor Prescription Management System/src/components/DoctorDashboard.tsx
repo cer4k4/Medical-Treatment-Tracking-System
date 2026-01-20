@@ -308,7 +308,9 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
               </form>
             ) : (
               <>
-                <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
+              {patientTasks.map((task) =>
+              <>
+                  <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-600 mb-1 text-sm sm:text-base"> تاریخ ویزیت</p>
@@ -327,7 +329,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                   <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
                   <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
-                      {patientTasks[0]?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
+                      {task?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
                     </p>
                   </div>
                 </div>
@@ -335,10 +337,13 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                 <div>
                   <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
                     <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
-                      <strong>توجه:</strong> {patientTasks[0]?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
+                      <strong>توجه:</strong> {task?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
                     </p>
                   </div>
                 </div>
+              </>
+              )}
+
               </>
             )}
           </div>

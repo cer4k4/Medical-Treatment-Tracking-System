@@ -243,11 +243,9 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
         $project: { password: 0 }
       }
     ]);
-    // ToDo
-    const ll = await modelTask.TaskModel.countDocuments()
-    console.log(ll,req.user.userId)
+    const prescriptions = await modelTask.TaskModel.find({creator:req.user.userId}).countDocuments()
     return res.status(200).json(
-      new SuccessResponse({ doctor: doctor[0] })
+      new SuccessResponse({ doctor: doctor[0],prescriptions })
     );
 
   } catch (error) {

@@ -202,7 +202,6 @@ async function getPatientOfDoctor(req: Request, res: Response) {
   try {
     const doctorId = req.params["doctorId"];
     const diseases = await model.TaskModel.find({ creator: doctorId }).distinct('patient');
-    console.log(doctorId,"loggg",diseases)
     const response = new SuccessResponse(diseases);
     return res.status(200).json(response);
   } catch (error) {

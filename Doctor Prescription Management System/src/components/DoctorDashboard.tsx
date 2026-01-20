@@ -32,6 +32,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [showGlobalPrescriptionForm, setShowGlobalPrescriptionForm] = useState(false);
   const [dateTime,setdateTime] = useState('');
+  const [countOfprescriptions,setcountOfprescriptions] = useState(0)
   const [newPrescription, setNewPrescription] = useState({
     title:'',
     description:'',
@@ -59,6 +60,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
         if (res.data?.successfully) {
           setProfile(res.data.data.doctor);
           setPatients(res.data.data.doctor.patients || []);
+          setcountOfprescriptions(res.data.data.prescriptions)
         }
       } catch (err) {
         console.error('Error fetching doctor profile:', err);
@@ -163,7 +165,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">نسخه‌های صادر شده</p>
-                <p className="text-gray-600">{prescriptions.length}</p>
+                <p className="text-gray-600">{countOfprescriptions}</p>
               </div>
               <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
                 <FileText className="size-5 sm:size-6 text-blue-600" />

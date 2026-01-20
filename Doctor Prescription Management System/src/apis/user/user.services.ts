@@ -111,7 +111,7 @@ class UserService {
 
   async getProfileDoctor() {
     //apiService.setAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTNkNTY1ODE4ZjU5YzJjNzQ4MGFhMWEiLCJyb2xlIjoiZG9jdG9yIiwiaWF0IjoxNzY4MTI2OTU3LCJleHAiOjE3NjgxMzA1NTd9.aXB_fK54I-xlPYFOUNzoPstDhbSHxMMvDaTdrzLZ-RQ")
-    return apiService.get<IResponse<{doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
+    return apiService.get<IResponse<{prescriptions:number,doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
   }
 
   async Login(username: string, password: string) {

@@ -133,31 +133,6 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
             />
           </div>
 
-          {/* بیماری */}
-          <div>
-            <label className="block text-gray-700 mb-2">بیماری</label>
-            <select
-              value={formData.patient}
-              onChange={e =>
-                setFormData({ ...formData, patient: e.target.value })
-              }
-              disabled={!formData.doctor || loadingPatients}
-              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100"
-              required
-            >
-              <option value="">
-                {loadingPatients
-                  ? 'در حال دریافت...'
-                  : 'بیماری را انتخاب کنید'}
-              </option>
-              {patients.map((p, i) => (
-                <option key={i} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-          </div>
-
           {/* شماره تماس */}
           <div>
             <label className="block text-gray-700 mb-2">شماره تماس</label>
@@ -217,6 +192,32 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
               ))}
             </select>
           </div>
+
+          {/* بیماری */}
+          <div>
+            <label className="block text-gray-700 mb-2">بیماری</label>
+            <select
+              value={formData.patient}
+              onChange={e =>
+                setFormData({ ...formData, patient: e.target.value })
+              }
+              disabled={!formData.doctor || loadingPatients}
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:bg-gray-100"
+              required
+            >
+              <option value="">
+                {loadingPatients
+                  ? 'در حال دریافت...'
+                  : 'بیماری را انتخاب کنید'}
+              </option>
+              {patients.map((p, i) => (
+                <option key={i} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </div>
+
 
           <button
             type="submit"

@@ -10,6 +10,9 @@ import { IUser } from "../../shared/models/user.interface";
 import { IPayload } from "../../shared/interfaces/jwt-payload.interface";
 import  TasksToUser  from "../../task/controller/taksController";
 import modelTask  from "../../shared/models/taskSchema";
+import  model2  from '../../shared/models/usertaskSchema';
+import { IUserTask } from "../../shared/models/usertask.interface";
+import { MongoAzureError } from "mongodb";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -244,8 +247,31 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
       }
     ]);
     const prescriptions = await modelTask.TaskModel.find({creator:req.user.userId}).countDocuments()
+    let behbod:number = 0
+    let mariz:number = 0
+    for (let patientList of doctor){
+      for (let p of patientList["patients"]){
+        const userTasks = await model2.UserTask.find({"userId":String(p["_id"])})
+        let done:number=0,todo:number=0
+        for (let ut of userTasks){
+          if (ut["status"]) {
+            done++
+          } else {
+            todo++
+          }
+        }
+        if(todo > 0){
+          behbod++
+        }else{
+          mariz++
+        }
+        p["done"]=done
+        p["todo"]=todo
+        console.log(p)
+      }
+    }
     return res.status(200).json(
-      new SuccessResponse({ doctor: doctor[0],prescriptions })
+      new SuccessResponse({ doctor: doctor[0],prescriptions,mariz,behbod })
     );
 
   } catch (error) {

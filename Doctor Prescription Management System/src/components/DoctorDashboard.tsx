@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User } from '../App';
-import { LogOut, Plus, Search, Users, FileText, Calendar, AlarmCheck } from 'lucide-react';
+import { LogOut, Plus, Search, Users, FileText, Calendar, AlarmCheck, Check, CheckCheck, CheckCheckIcon, ListTodo } from 'lucide-react';
 import { Doctor, Patient, userService } from '../apis/user/user.services';
 import { ITask } from '../apis/task/task.types';
 import { taskService } from '../apis/task/task.services';
@@ -33,16 +33,21 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   const [showGlobalPrescriptionForm, setShowGlobalPrescriptionForm] = useState(false);
   const [dateTime,setdateTime] = useState('');
   const [countOfprescriptions,setcountOfprescriptions] = useState(0)
+  const [countOfMariz,setCountOfMariz] = useState(0)
+  const [countOfBehbod,setCountOfBehbod] = useState(0)
+
+
+  const [countOfTodo,setCountOfTodo] = useState(0)
+  const [countOfDone,setCountOfDone] = useState(0)
+
   const [newPrescription, setNewPrescription] = useState({
     title:'',
     description:'',
     patient:'',
     tip:'',
   });
-  // const SS = patientTasks.map(()=>{
 
-  // })
-
+  
   // ===== state برای تسک‌های بیمار =====
   const [patientTasks, setPatientTasks] = useState<ITask[]>([]);
   
@@ -61,6 +66,8 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
       try {
         const res = await userService.getProfileDoctor();
         if (res.data?.successfully) {
+          setCountOfBehbod(res.data.data.behbod)
+          setCountOfMariz(res.data.data.mariz)
           setProfile(res.data.data.doctor);
           setPatients(res.data.data.doctor.patients || []);
           setcountOfprescriptions(res.data.data.prescriptions)
@@ -128,7 +135,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <button
               onClick={onLogout}
               className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-            >
+              >
               <LogOut className="size-4 sm:size-5" />
               <span className="hidden sm:inline">خروج</span>
             </button>
@@ -144,7 +151,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بیماران</p>
-                <p className="text-gray-600">{patients.length}</p>
+                <p className="text-gray-600">{ countOfMariz }</p>
               </div>
               <div className="bg-red-100 p-2 sm:p-3 rounded-lg">
                 <Users className="size-5 sm:size-6 text-red-600" />
@@ -156,7 +163,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بهبود یافتگان</p>
-                <p className="text-gray-600">{patients.length}</p>
+                <p className="text-gray-600">{ countOfBehbod }</p>
               </div>
               <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
                 <Users className="size-5 sm:size-6 text-green-600" />
@@ -205,12 +212,13 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                     const res = await taskService.getTaskOfUser(patient._id);
                     const utcDate = res.data?.data?.startDate;
                     const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
-                    console.log(utcDate)
                     setdateTime('')
                     if (utcDate){
                       setdateTime(shamsi)
                     }
                     setPatientTasks(res.data?.data?.data || []);
+                    setCountOfDone(res.data?.data?.taskDone || 0)
+                    setCountOfTodo(res.data?.data?.todo || 0)
                   }}
                 >
                   <div className="flex items-start justify-between mb-2">
@@ -237,7 +245,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                 <h2 className="text-gray-800 mb-3 sm:mb-4 text-sm sm:text-base">
                   نسخه جدید
                 </h2>
-
                 <div className="space-y-3 sm:space-y-4">
                   <div>
                     <label className="block text-gray-700 mb-2 text-sm sm:text-base">بیماری</label>
@@ -324,6 +331,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
 
                 <br></br>
 
+
                 {/* دستورالعمل و نکته */}
                 <div className="mb-4 sm:mb-6">
                   <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
@@ -341,9 +349,27 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                     </p>
                   </div>
                 </div>
+                <br></br>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-600 mb-1 text-sm sm:text-base">امور انجام شده</p>
+                    <p className="text-gray-600">{ countOfDone }</p>
+                  </div>
+                  <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
+                    <CheckCheck className="size-5 sm:size-6 text-green-600" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-600 mb-1 text-sm sm:text-base"> امور مانده </p>
+                    <p className="text-gray-600">{ countOfTodo }</p>
+                  </div>
+                  <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
+                    <ListTodo className="size-5 sm:size-6 text-blue-600" />
+                  </div>
+                </div>
               </>
               )}
-
               </>
             )}
           </div>

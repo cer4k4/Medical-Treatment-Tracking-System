@@ -1,10 +1,10 @@
 ToDo:
-    - add task of user with status (doctor dashboard)
-    - change count of to recovered (doctor dashboard)
-    - add name of user to dashboard (patient dashboard)
     - fix reload: when i reload the pages then logout and go to login page
-_____________________________________________
+________________________________________________________________________________
 Done:
+    - add task of user with status (doctor dashboard)
+    - count of patinet
+    - add name of user to dashboard (patient dashboard)
     - fix login page
     - add tip of task (patient dashboard)
     - change name of medicent to count of done task (patient dashboard)

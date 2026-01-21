@@ -70,6 +70,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         setSpecial(tasks.data.data.data[0]?.specialty || '');
         setdoctorname(tasks.data.data.data[0]?.creatorName || '');
         setDoctorNumber(tasks.data.data.data[0]?.doctorPhoneNumber || '');
+        settodoTask(tasks.data.data.todo)
+        settaskDone(tasks.data.data.taskDone)
       }
       //settaskDone(tasks.data?.data?.taskDone || 0)
       //settodoTask(tasks.data?.data?.todo || 0)

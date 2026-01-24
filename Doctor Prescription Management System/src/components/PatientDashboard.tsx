@@ -18,7 +18,7 @@ interface Prescription {
   tip: string;
   date: string;
   doctorName: string;
-  status: boolean; // وضعیت از سرور
+  status?: boolean; // وضعیت از سرور
 }
 
 function getCountOfDoneTask(list: Prescription[]) {
@@ -51,10 +51,12 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [doctorNumber, setDoctorNumber] = useState('');
   const [taskDone,settaskDone] = useState(0);
   const [todoTask,settodoTask] = useState(0);
+  const [totalTask,settotalTask] = useState(0);
   const [dateTime,setdateTime] = useState('');
   useEffect(() => {
     async function getData() {
       const tasks = await taskService.getTaskOfUser("");
+      console.log("okkkkkkkkk",tasks.data?.data.data)
       if (tasks.data?.data?.data) {
         const mapped: Prescription[] = tasks.data.data.data.map(t => ({
           id: t.taskId || '',
@@ -64,7 +66,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           instructions: t.description,
           date: '',
           doctorName: t.creatorName,
-          status: t.status || false
+          status: t.status
         }))
         setPrescriptions(mapped);
         setSpecial(tasks.data.data.data[0]?.specialty || '');
@@ -72,6 +74,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         setDoctorNumber(tasks.data.data.data[0]?.doctorPhoneNumber || '');
         settodoTask(tasks.data.data.todo)
         settaskDone(tasks.data.data.taskDone)
+        settotalTask(tasks.data.data.taskDone+tasks.data.data.taskDone)
       }
       //settaskDone(tasks.data?.data?.taskDone || 0)
       //settodoTask(tasks.data?.data?.todo || 0)
@@ -89,14 +92,16 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         p.id === id ? { ...p, status: !p.status } : p
       )
     );
-    try {
-      settaskDone(getCountOfDoneTask(prescriptions))
-      settodoTask(getCountOfTODoTask(prescriptions))
-      await taskService.updateStatusTask(id);
-    } catch (error) {
-      console.error('خطا در به‌روزرسانی وضعیت:', error);
-    }
-  };
+  console.log("log of prescriptions",prescriptions)
+  try {
+    await taskService.updateStatusTask(id);
+    //console.log("Heyyyyyyyyyyyyyyyy",getCountOfDoneTask(prescriptions))
+    settaskDone(getCountOfDoneTask(prescriptions))
+    settodoTask(getCountOfTODoTask(prescriptions))
+  } catch (error) {
+    console.error('خطا در به‌روزرسانی وضعیت:', error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -225,7 +230,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
                         ${isChecked ? 'bg-green-600 border-green-600 text-white scale-110' : 'bg-white border-gray-300 hover:scale-105'}
                       `}
                     >
-                      <Check className="size-4" />
+                      <Check className="size-7" />
                     </button>
                     </div>
                   </div>

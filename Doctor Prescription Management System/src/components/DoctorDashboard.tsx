@@ -35,8 +35,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   const [countOfprescriptions,setcountOfprescriptions] = useState(0)
   const [countOfMariz,setCountOfMariz] = useState(0)
   const [countOfBehbod,setCountOfBehbod] = useState(0)
-
-
   const [countOfTodo,setCountOfTodo] = useState(0)
   const [countOfDone,setCountOfDone] = useState(0)
 
@@ -88,7 +86,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
         patient: newPrescription.patient,
         tip: newPrescription.tip,
       };
-
       const res = await taskService.createTask(payload);
       if (res.data) {
         const createdTask = res.data;
@@ -97,6 +94,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
           patientId: '_id',
           patient: createdTask.patient,
         };
+        setcountOfprescriptions(countOfprescriptions+1)
         setNewPrescription({ title: '', patient: '', description: '', tip: '' });
         setShowGlobalPrescriptionForm(false);
         setSelectedPatient(null);
@@ -284,18 +282,20 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                       value={newPrescription.tip}
                       onChange={(e) =>
                         setNewPrescription({ ...newPrescription, tip: e.target.value })
+                        
                       }
                       className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
                       rows={3}
                       placeholder="نکاتی که نیاز هست بیمار اطلاع داشته باشه..."
                       required
-                    />
+                      />
                   </div>
 
                   <div className="flex gap-2 sm:gap-3">
                     <button
                       type="submit"
                       className="flex-1 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
+                      
                     >
                       ثبت نسخه
                     </button>

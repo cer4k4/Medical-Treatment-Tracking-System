@@ -88,10 +88,10 @@ async function getTask(req:Request, res:Response) {
 }
 
 
-async function updateTaskStatus(req:Request, res:Response) {
+async function updateTaskStatus(req:RequestWithUser, res:Response) {
   try {
+    const user = (req.user) as IUser
     const id = req.params["taskId"]
-    console.log(id)
     const task = await model2.UserTask.findById(id) as IUserTask;
     if (task.status === true){
       task.status = false
@@ -99,6 +99,7 @@ async function updateTaskStatus(req:Request, res:Response) {
       task.status = true  
     }
     const result = await model2.UserTask.updateOne({ _id: id }, { $set: task});
+    console.log(result)
     const response = new SuccessResponse({task})
     return res.status(200).json(response);
   } catch (error) {
@@ -230,7 +231,7 @@ async function assignTasksToUser(creatorId: string,patient: string,userId: strin
   }
   let documents:IUserTask[] = []
   for (let t of taskIds  ){
-    documents.push({taskId:String(t._id),userId:userId,status:true,createdAt:Date.now(),updatedAt:Date.now()})
+    documents.push({taskId:String(t._id),userId:userId,status:false,createdAt:Date.now(),updatedAt:Date.now()})
   }
   // // 2. ساخت سندها برای TaskOfUser
   // const documents = taskIds.map((task) => ({
@@ -303,46 +304,62 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
       const response = new SuccessResponse({data:result,taskDone:trueCount,todo:falseCount,startDate})
       return res.status(200).json(response);      
     }
+    const result2: TaskOfUser[] = []
     // 1. گرفتن همه taskId های کاربر
-    const userTasks = await model2.UserTask.find({ userId:user.userId }).lean();
+    const userTasks = await model2.UserTask.find({ userId: user.userId }).lean();
     if (!userTasks || userTasks.length === 0) return [];
     // 2. ساخت Map برای دسترسی سریع به status
-    const userTasksMap = userTasks.reduce((acc, ut) => {
-      acc[ut.taskId.toString()] = ut.status ?? false;
-      return acc;
-    }, {} as Record<string, boolean>);
+    // const userTasksMap = userTasks.reduce((acc, ut) => {
+    //   acc[ut.taskId.toString()] = ut.status;
+    //   return acc;
+    // }, {} as Record<string, boolean>);
 
     // 3. گرفتن task های مربوطه
     const taskIds = userTasks.map(t => t.taskId);
     const tasks = await model.TaskModel.find({ _id: { $in: taskIds } }).lean();
     if (!tasks || tasks.length === 0) return [];
-
+    console.log("tasks",userTasks)
+    console.log("taskIds",taskIds)
     // 4. گرفتن creator ها و fullName
     const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
     const doctoruser = await model3.UserModel.findById(creatorIds)
     
+
     // 6. ترکیب اطلاعات با status و creatorName
-    const result: TaskOfUser[] = tasks.map(task => ({
-      taskId: task._id.toString(),
-      status: userTasksMap[task._id.toString()],
-      title: task.title,
-      description: task.description,
-      patient: task.patient,
-      tip: task.tip,
-      specialty: doctoruser?.specialty,
-      creatorName: doctoruser?.fullName || "",
-      doctorPhoneNumber: doctoruser?.phoneNumber || "",
-    }));
-    for (let r of result) {
-      const t = await model2.UserTask.findOne({taskId:r.taskId});
-      if (t){
-        r.taskId = t._id.toString();
-      }
-    }
-    const trueCount = result.filter(t => t.status === true).length;
-    const falseCount = result.filter(t => t.status === false).length;
+    // const result: TaskOfUser[] = tasks.map(task => ({
+    //   taskId: ,
+    //   //    status: userTasksMap[task._id.toString()],
+    //   title: task.title,
+    //   description: task.description,
+    //   patient: task.patient,
+    //   tip: task.tip,
+    //   specialty: doctoruser?.specialty,
+    //   creatorName: doctoruser?.fullName || "",
+    //   doctorPhoneNumber: doctoruser?.phoneNumber || "",
+    // }));
+    
+    // for (let r of result) {
+    //   if (t){
+    //     r.taskId = t._id.toString();
+    //   }
+    // }
     const startDate = tasks[0].createdAt
-    const response = new SuccessResponse({data:result,taskDone:trueCount,todo:falseCount,startDate})
+    for (let ut of userTasks ){
+      const taskFound = await model.TaskModel.findOne({ _id: ut.taskId });
+      result2.push({
+        taskId: ut._id.toString(),
+        status: ut.status,
+        creatorName: doctoruser?.fullName || "",
+        doctorPhoneNumber: doctoruser?.phoneNumber || "",
+        title: taskFound?.title || "",
+        description: taskFound?.description || "",
+        patient: taskFound?.patient || "",
+        tip: taskFound?.tip,
+      })
+    }
+    const trueCount = result2.filter(t => t.status === true).length;
+    const falseCount = result2.filter(t => t.status === false).length;
+    const response = new SuccessResponse({data:result2,taskDone:trueCount,todo:falseCount,startDate})
     return res.status(200).json(response);
   } catch (err) {
     console.error('خطا در دریافت task های کاربر:', err);

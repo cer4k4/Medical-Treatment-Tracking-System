@@ -260,7 +260,7 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
             todo++
           }
         }
-        if(todo > 0){
+        if(todo === 0 && done > 0){
           behbod++
         }else{
           mariz++

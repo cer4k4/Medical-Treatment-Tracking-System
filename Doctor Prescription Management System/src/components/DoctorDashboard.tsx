@@ -317,11 +317,12 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
               <>
               {patientTasks.map((task) =>
               <>
-                  <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
+                  <br></br>
+                  <div className="bg-white-100 p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-600 mb-1 text-sm sm:text-base"> تاریخ ویزیت</p>
-                      <p className="text-gray-900">{ dateTime }</p>
+                      <p className="shadow-sm text-gray-700">{ dateTime }</p>
                     </div>
                     <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
                       <Calendar className="size-5 sm:size-6 text-purple-600" />

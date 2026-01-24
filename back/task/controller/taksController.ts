@@ -263,6 +263,7 @@ interface TaskOfUser {
 async function getTasksForUser(req: RequestWithUser , res:Response){
   const user = (req.user) as IUser
   try {
+    const result2: TaskOfUser[] = []
     if (user.role !== "user" ){
       // 1. گرفتن همه taskId های کاربر
       const userTasks = await model2.UserTask.find({ userId: req.body.userId }).lean();
@@ -280,31 +281,46 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
       // 4. گرفتن creator ها و fullName
       const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
       const doctoruser = await model3.UserModel.findById(creatorIds)
+
       // 6. ترکیب اطلاعات با status و creatorName
-      const result: TaskOfUser[] = tasks.map(task => ({
-        taskId: task._id.toString(),
-        status: userTasksMap[task._id.toString()],
-        title: task.title,
-        description: task.description,
-        patient: task.patient,
-        tip: task.tip,
-        specialty: doctoruser?.specialty,
-        creatorName: doctoruser?.fullName || "",
-        doctorPhoneNumber: doctoruser?.phoneNumber || "",
-      }));
-      for (let r of result) {
-        const t = await model2.UserTask.findOne({taskId:r.taskId});
-        if (t){
-          r.taskId = t._id.toString();
-        }
+      // const result: TaskOfUser[] = tasks.map(task => ({
+      //   taskId: task._id.toString(),
+      //   status: userTasksMap[task._id.toString()],
+      //   title: task.title,
+      //   description: task.description,
+      //   patient: task.patient,
+      //   tip: task.tip,
+      //   specialty: doctoruser?.specialty,
+      //   creatorName: doctoruser?.fullName || "",
+      //   doctorPhoneNumber: doctoruser?.phoneNumber || "",
+      // }));
+      // for (let r of result) {
+      //   const t = await model2.UserTask.findOne({taskId:r.taskId});
+      //   if (t){
+      //     r.taskId = t._id.toString();
+      //   }
+      // }
+
+      for (let ut of userTasks ){
+      const taskFound = await model.TaskModel.findOne({ _id: ut.taskId });
+      result2.push({
+          taskId: ut._id.toString(),
+          status: ut.status,
+          creatorName: doctoruser?.fullName || "",
+          doctorPhoneNumber: doctoruser?.phoneNumber || "",
+          specialty: doctoruser?.specialty || "",
+          title: taskFound?.title || "",
+          description: taskFound?.description || "",
+          patient: taskFound?.patient || "",
+          tip: taskFound?.tip,
+        })
       }
-      const trueCount = result.filter(t => t.status === true).length;
-      const falseCount = result.filter(t => t.status === false).length;
+      const trueCount = result2.filter(t => t.status === true).length;
+      const falseCount = result2.filter(t => t.status === false).length;
       const startDate = tasks[0].createdAt
-      const response = new SuccessResponse({data:result,taskDone:trueCount,todo:falseCount,startDate})
+      const response = new SuccessResponse({data:result2,taskDone:trueCount,todo:falseCount,startDate})
       return res.status(200).json(response);      
     }
-    const result2: TaskOfUser[] = []
     // 1. گرفتن همه taskId های کاربر
     const userTasks = await model2.UserTask.find({ userId: user.userId }).lean();
     if (!userTasks || userTasks.length === 0) return [];
@@ -323,8 +339,6 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
     // 4. گرفتن creator ها و fullName
     const creatorIds = Array.from(new Set(tasks.map(t => t.creator)));
     const doctoruser = await model3.UserModel.findById(creatorIds)
-    
-
     // 6. ترکیب اطلاعات با status و creatorName
     // const result: TaskOfUser[] = tasks.map(task => ({
     //   taskId: ,
@@ -351,6 +365,7 @@ async function getTasksForUser(req: RequestWithUser , res:Response){
         status: ut.status,
         creatorName: doctoruser?.fullName || "",
         doctorPhoneNumber: doctoruser?.phoneNumber || "",
+        specialty: doctoruser?.specialty || "",
         title: taskFound?.title || "",
         description: taskFound?.description || "",
         patient: taskFound?.patient || "",

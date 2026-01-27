@@ -34,7 +34,7 @@ export function LoginPage({ onLogin, onShowRegister }: LoginPageProps) {
           </div>
         </div>
         
-        <h1 className="text-center text-gray-800 mb-2">سیستم مدیریت نسخه پزشکی</h1>
+        <h1 className="text-center text-gray-800 mb-2">          سیستم آموزشی بیماران اسکیزوفرنی  </h1>
         <p className="text-center text-gray-600 mb-4 sm:mb-6">وارد حساب کاربری خود شوید</p>
 
         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">

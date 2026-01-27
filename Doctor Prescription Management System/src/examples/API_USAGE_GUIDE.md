@@ -25,7 +25,7 @@
 در فایل `.env` در ریشه پروژه:
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_BASE_URL=http://localhost:4000/api
 # یا
 VITE_API_BASE_URL=https://your-backend-api.com/api
 ```

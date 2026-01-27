@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { User } from '../App';
-import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check, Presentation } from 'lucide-react';
+import { LogOut, FileText, Calendar, Pill, User as UserIcon, Phone, Check } from 'lucide-react';
 import { taskService } from '../apis/task/task.services';
-import { userService } from '../apis/user/user.services';
-import { IGetUserProfile } from '../apis/user/user.types';
 import moment from 'moment-jalaali';
+import { userService } from '../apis/user/user.services';
 interface PatientDashboardProps {
   user: User;
   onLogout: () => void;
@@ -21,42 +20,18 @@ interface Prescription {
   status?: boolean; // وضعیت از سرور
 }
 
-function getCountOfDoneTask(list: Prescription[]) {
-  let count: number = 0 
-  for(let p of list){
-    if (!p.status){
-      count++
-    }
-  }
-  return count
-}
-
-function getCountOfTODoTask(list: Prescription[]) {
-  let count: number = 0 
-  for(let p of list){
-    if (p.status){
-      count++
-    }
-  }
-  return count
-}
-
-
 export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
   const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
-  // const [patientname , setpatientname] = useState('');
   const [doctorname, setdoctorname] = useState('');
   const [special, setSpecial] = useState('');
   const [doctorNumber, setDoctorNumber] = useState('');
   const [taskDone,settaskDone] = useState(0);
   const [todoTask,settodoTask] = useState(0);
-  const [totalTask,settotalTask] = useState(0);
   const [dateTime,setdateTime] = useState('');
   useEffect(() => {
     async function getData() {
       const tasks = await taskService.getTaskOfUser("");
-      console.log("okkkkkkkkk",tasks.data?.data.data)
       if (tasks.data?.data?.data) {
         const mapped: Prescription[] = tasks.data.data.data.map(t => ({
           id: t.taskId || '',
@@ -74,10 +49,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         setDoctorNumber(tasks.data.data.data[0]?.doctorPhoneNumber || '');
         settodoTask(tasks.data.data.todo)
         settaskDone(tasks.data.data.taskDone)
-        settotalTask(tasks.data.data.taskDone+tasks.data.data.taskDone)
       }
-      //settaskDone(tasks.data?.data?.taskDone || 0)
-      //settodoTask(tasks.data?.data?.todo || 0)
       const utcDate = tasks.data?.data?.startDate;
       if (utcDate) {
         const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
@@ -92,17 +64,23 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         p.id === id ? { ...p, status: !p.status } : p
       )
     );
+
   console.log("log of prescriptions",prescriptions)
   try {
     await taskService.updateStatusTask(id);
-    //console.log("Heyyyyyyyyyyyyyyyy",getCountOfDoneTask(prescriptions))
-    settaskDone(getCountOfDoneTask(prescriptions))
-    settodoTask(getCountOfTODoTask(prescriptions))
+    const tasks = await taskService.getTaskOfUser("");
+    if (tasks.data?.data?.data) {
+      settodoTask(tasks.data.data.todo)
+      settaskDone(tasks.data.data.taskDone)
+    }
   } catch (error) {
     console.error('خطا در به‌روزرسانی وضعیت:', error);
   }
 };
-
+  const handleLogOut = () => {
+    onLogout()
+    userService.logOut()
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -118,7 +96,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
             </div>
           </div>
           <button
-            onClick={onLogout}
+            onClick={ () => handleLogOut()}
             className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
           >
             <LogOut className="size-4 sm:size-5" />
@@ -136,7 +114,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
               <UserIcon className="size-6 sm:size-8" />
             </div>
             <div className="flex-1">
-              <h2>پزشک معالج شما</h2>
+              <h2>همیار شما</h2>
               <p className="text-blue-100 text-sm sm:text-base">{doctorname} - {special}</p>
             </div>
             <div className="flex items-center gap-2 bg-white/20 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base">
@@ -151,8 +129,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">امور در حال پیگیری</p>
-                <p className="text-gray-900">{ todoTask }</p>
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">تعداد جلسات مانده </p>
+                <p className="text-gray-600">{ todoTask }</p>
               </div>
               <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
                 <FileText className="size-5 sm:size-6 text-blue-600" />
@@ -163,8 +141,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">تاریخ ویزیت</p>
-                <p className="text-gray-900"></p>{ dateTime }
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">تاریخ شروع دوره</p>
+                <p className="text-gray-600"> { dateTime } </p>
               </div>
               <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
                 <Calendar className="size-5 sm:size-6 text-green-600" />
@@ -175,8 +153,8 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">کار های انجام شده</p>
-                <p className="text-gray-900">
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">جلسات گذرانده شده</p>
+                <p className="text-gray-600">
                   { taskDone }
                 </p>
               </div>
@@ -191,7 +169,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Prescriptions List */}
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
-            <h2 className="text-gray-800 mb-4 sm:mb-6">نسخه‌های پزشکی</h2>
+            <h2 className="text-gray-800 mb-4 sm:mb-6">جلسات</h2>
 
             <div className="space-y-3 sm:space-y-4">
               {prescriptions.map((prescription) => {
@@ -213,7 +191,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
                       <div className="flex items-start justify-between mb-2 sm:mb-3">
                         <div className="flex-1">
                           <h3 className="text-gray-900 mb-1 text-sm sm:text-base">{prescription.disease}</h3>
-                          <p className="text-gray-600 text-xs sm:text-sm">دکتر: {prescription.doctorName}</p>
+                          <p className="text-gray-600 text-xs sm:text-sm">همیار: {prescription.doctorName}</p>
                         </div>
                         <span className="px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs sm:text-sm whitespace-nowrap mr-2">
                           {prescription.date}
@@ -244,18 +222,18 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
             {!selectedPrescription ? (
               <div className="flex flex-col items-center justify-center h-full text-gray-400 py-8 sm:py-0">
                 <FileText className="size-12 sm:size-16 mb-3 sm:mb-4" />
-                <p className="text-sm sm:text-base">یک نسخه را انتخاب کنید</p>
+                <p className="text-sm sm:text-base">یک جلسه را انتخاب کنید</p>
               </div>
             ) : (
               <div>
                 <div className="mb-4 sm:mb-6">
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <h2 className="text-gray-800">جزئیات نسخه</h2>
+                    <h2 className="text-gray-800">جزئیات جلسه</h2>
                     <span className="text-gray-600 text-xs sm:text-sm">{selectedPrescription.date}</span>
                   </div>
                   <div className="p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                     <h3 className="text-gray-900 mb-1 text-sm sm:text-base">{selectedPrescription.disease}</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">تجویز شده توسط: {selectedPrescription.doctorName}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm">تنظیم شده توسط: {selectedPrescription.doctorName}</p>
                   </div>
                 </div>
 
@@ -280,7 +258,7 @@ export function PatientDashboard({ user,onLogout }: PatientDashboardProps) {
 
                 {/* Instructions */}
                 <div className="mb-4 sm:mb-6">
-                  <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
+                  <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">توضیحات</h3>
                   <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
                       {selectedPrescription.instructions}

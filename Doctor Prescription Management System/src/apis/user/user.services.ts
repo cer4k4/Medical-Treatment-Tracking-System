@@ -28,8 +28,6 @@ export interface Doctor {
   patient?: string;
   patients?: Patient[];
   doctor?: string;
-  // "createdAt": 1766186440207,
-  // "updatedAt": 1766186440207
 }
 
 
@@ -75,7 +73,6 @@ class UserService {
     return apiService.get<IResponse<{doctors:IUser[],total_doctor:number,total_petition:number}>>('/admin/list/1/10?feild=role&word=doctor');
   }
 
-
   // all roles
   async getUser(): Promise<ApiResponse<IResponse<IGetUserProfile>>> {
     return apiService.get<IResponse<IGetUserProfile>>(`/users/byId`);
@@ -106,8 +103,8 @@ class UserService {
   }
 
 
-  async getProfileDoctor() {
-    return apiService.get<IResponse<{behbod:number,mariz:number,prescriptions:number,doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`);
+  async getProfileDoctor(userId:string) {
+    return apiService.post<IResponse<{behbod:number,mariz:number,prescriptions:number,doctor:Doctor,patients:Patient[]}>>(`/users/doctor/profile`,{"userId":userId});
   }
 
   async Login(username: string, password: string) {
@@ -122,6 +119,9 @@ class UserService {
       oldPassword,
       newPassword,
     });
+  }
+  logOut(){
+    apiService.logout()
   }
 }
 

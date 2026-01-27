@@ -1,0 +1,22 @@
+{
+  "short_name": "eskizo",
+  "name": "eskizo",
+  "description": "Be Keen. Follow Ethics",
+  "icons": [
+    {
+      "src": "/home/aka/Downloads/1212.jpeg",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/home/aka/Downloads/1212.jpeg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#12233d",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#12233d"
+}

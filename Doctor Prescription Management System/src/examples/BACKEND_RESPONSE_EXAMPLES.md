@@ -578,7 +578,7 @@ Backend باید validation انجام دهد:
 برای تست API ها می‌توانید از Postman استفاده کنید:
 
 1. Import collection
-2. Set environment variable: `{{baseUrl}}` = `http://localhost:3000/api`
+2. Set environment variable: `{{baseUrl}}` = `http://localhost:4000/api`
 3. After login, save token in environment
 4. Use `{{token}}` in Authorization header
 

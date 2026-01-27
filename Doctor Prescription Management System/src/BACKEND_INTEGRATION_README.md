@@ -32,7 +32,7 @@
 فایل `.env` در ریشه پروژه بسازید:
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_BASE_URL=http://localhost:4000/api
 ```
 
 ### 2️⃣ اضافه کردن AuthProvider

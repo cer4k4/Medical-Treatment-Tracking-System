@@ -20,16 +20,12 @@ interface Prescription {
 const doctorProfile: Doctor = {};
 const mockPatients: Patient[] = [];
 
-const mockPrescriptions: Prescription[] = [
-  // نمونه نسخه‌های mock
-];
 
 export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
   const [profile, setProfile] = useState<Doctor>(doctorProfile);
   const [patients, setPatients] = useState<Patient[]>(mockPatients);
-  const [prescriptions, setPrescriptions] = useState<Prescription[]>(mockPrescriptions);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const [selectedPatient, setSelectedPatient] = useState(false);
   const [showGlobalPrescriptionForm, setShowGlobalPrescriptionForm] = useState(false);
   const [dateTime,setdateTime] = useState('');
   const [countOfprescriptions,setcountOfprescriptions] = useState(0)
@@ -45,24 +41,18 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
     tip:'',
   });
 
+  const handleLogOut = () => {
+    onLogout()
+    userService.logOut()
+  }
   
   // ===== state برای تسک‌های بیمار =====
   const [patientTasks, setPatientTasks] = useState<ITask[]>([]);
   
-  // useEffect(() => {
-  //   if (selectedPatient) {
-  //     async () => {
-  //       const res = await taskService.getTaskOfUser(selectedPatient._id);
-  //       setPatientTasks(res.data?.data?.data || []);
-  //     }
-  //     console.log("Selected patient changed:", patientTasks);
-  //   }
-  // }, [selectedPatient]);
-
   useEffect(() => {
     const fetchDoctorProfile = async () => {
       try {
-        const res = await userService.getProfileDoctor();
+        const res = await userService.getProfileDoctor("");
         if (res.data?.successfully) {
           setCountOfBehbod(res.data.data.behbod)
           setCountOfMariz(res.data.data.mariz)
@@ -81,9 +71,9 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
     e.preventDefault();
     try {
       const payload: ITask = {
-        title: newPrescription.title || "نسخه بیماری",
+        title: newPrescription.title,
         description: newPrescription.description,
-        patient: newPrescription.patient,
+        patient: newPrescription.patient || 'اسکیزوفرنی',
         tip: newPrescription.tip,
       };
       const res = await taskService.createTask(payload);
@@ -97,7 +87,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
         setcountOfprescriptions(countOfprescriptions+1)
         setNewPrescription({ title: '', patient: '', description: '', tip: '' });
         setShowGlobalPrescriptionForm(false);
-        setSelectedPatient(null);
       }
     } catch (error) {
       console.error('Error creating prescription:', error);
@@ -118,7 +107,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
               <FileText className="size-5 sm:size-6 text-white" />
             </div>
             <div>
-              <h1 className="text-gray-800">پنل پزشک</h1>
+              <h1 className="text-gray-800">پنل همیار</h1>
               <p className="text-gray-600 text-sm sm:text-base">{profile.fullName}</p>
             </div>
           </div>
@@ -128,10 +117,11 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
               className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
             >
               <Plus className="size-4 sm:size-5" />
-              نسخه جدید
+              جلسه جدید
             </button>
             <button
-              onClick={onLogout}
+              onClick={ () => handleLogOut()}
+              
               className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
               >
               <LogOut className="size-4 sm:size-5" />
@@ -148,7 +138,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بیماران</p>
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">تعداد افراد در حال آموزش</p>
                 <p className="text-gray-600">{ countOfMariz }</p>
               </div>
               <div className="bg-red-100 p-2 sm:p-3 rounded-lg">
@@ -160,7 +150,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">تعداد بهبود یافتگان</p>
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">تعداد آموزش دیدگان</p>
                 <p className="text-gray-600">{ countOfBehbod }</p>
               </div>
               <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
@@ -172,7 +162,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 mb-1 text-sm sm:text-base">نسخه‌های صادر شده</p>
+                <p className="text-gray-800 mb-1 text-sm sm:text-base">جلسات صادر شده</p>
                 <p className="text-gray-600">{countOfprescriptions}</p>
               </div>
               <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
@@ -206,7 +196,6 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                   className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer"
                   onClick={async () => {
                     setShowGlobalPrescriptionForm(false);
-                    //setSelectedPatient(patient);
                     const res = await taskService.getTaskOfUser(patient._id);
                     const utcDate = res.data?.data?.startDate;
                     const shamsi = moment.utc(utcDate).local().format('jYYYY/jMM/jDD');
@@ -214,6 +203,7 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                     if (utcDate){
                       setdateTime(shamsi)
                     }
+                    setSelectedPatient(true)
                     setPatientTasks(res.data?.data?.data || []);
                     setCountOfDone(res.data?.data?.taskDone || 0)
                     setCountOfTodo(res.data?.data?.todo || 0)
@@ -239,9 +229,9 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
             {showGlobalPrescriptionForm ? (
               <form onSubmit={handleAddPrescription}>
-                {/* ... فرم نسخه جدید */}
+                {/* ... فرم جلسه جدید */}
                 <h2 className="text-gray-800 mb-3 sm:mb-4 text-sm sm:text-base">
-                  نسخه جدید
+                  جلسه جدید
                 </h2>
                 <div className="space-y-3 sm:space-y-4">
                   <div>
@@ -254,6 +244,19 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                       }
                       className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
                       placeholder="نام بیماری"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 mb-2 text-sm sm:text-base">عنوان یا موضوع</label>
+                    <input
+                      type="text"
+                      value={newPrescription.title}
+                      onChange={(e) =>
+                        setNewPrescription({ ...newPrescription, title: e.target.value })
+                      }
+                      className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm sm:text-base"
+                      placeholder="موضوع یا عنوان جلسه چیست"
                       required
                     />
                   </div>
@@ -297,13 +300,12 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                       className="flex-1 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
                       
                     >
-                      ثبت نسخه
+                      ثبت
                     </button>
                     <button
                       type="button"
                       onClick={() => {
                         setShowGlobalPrescriptionForm(false);
-                        setSelectedPatient(null);
                         setNewPrescription({ patient: '', description: '', tip: '',title:'' });
                       }}
                       className="flex-1 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm sm:text-base"
@@ -314,46 +316,21 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                 </div>
               </form>
             ) : (
-              <>
-              {patientTasks.map((task) =>
-              <>
-                  <br></br>
-                  <div className="bg-white-100 p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-600 mb-1 text-sm sm:text-base"> تاریخ ویزیت</p>
-                      <p className="shadow-sm text-gray-700">{ dateTime }</p>
-                    </div>
-                    <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
-                      <Calendar className="size-5 sm:size-6 text-purple-600" />
-                    </div>
-                  </div>
-                </div>
-
-                <br></br>
-
-
-                {/* دستورالعمل و نکته */}
-                <div className="mb-4 sm:mb-6">
-                  <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base">دستورالعمل مصرف</h3>
-                  <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
-                      {task?.description || 'لطفاً بیمار را انتخاب کنید تا دستورالعمل نمایش داده شود.'}
-                    </p>
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
-                    <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
-                      <strong>توجه:</strong> {task?.tip || 'نکته خاصی برای نمایش وجود ندارد.'}
-                    </p>
-                  </div>
-                </div>
-                <br></br>
+            <>
+            {selectedPatient ? (<>
+              <div className="bg-white-100 p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 mb-1 text-sm sm:text-base">امور انجام شده</p>
+                    <p className="text-gray-800 mb-1 text-sm sm:text-base"> تاریخ شروع دوره</p>
+                    <p className="text-gray-700">{ dateTime }</p>
+                  </div>
+                  <div className="bg-purple-100 p-2 sm:p-3 rounded-lg">
+                    <Calendar className="size-5 sm:size-6 text-purple-600" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-800 mb-1 text-sm sm:text-base">جلسات گذرانده شده</p>
                     <p className="text-gray-600">{ countOfDone }</p>
                   </div>
                   <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
@@ -362,16 +339,53 @@ export function DoctorDashboard({ user, onLogout }: DoctorDashboardProps) {
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 mb-1 text-sm sm:text-base"> امور مانده </p>
+                    <p className="text-gray-800 mb-1 text-sm sm:text-base"> جلسات مانده </p>
                     <p className="text-gray-600">{ countOfTodo }</p>
                   </div>
                   <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
                     <ListTodo className="size-5 sm:size-6 text-blue-600" />
                   </div>
                 </div>
-              </>
+              </div>
+              {patientTasks.map((task) =>
+                <>
+                <br></br>
+                  <div className={`bg-white-100 p-4 sm:p-6 rounded-xl shadow-sm sm:col-span-2 md:col-span-1
+                    ${task.status ? 'bg-green-100 border-green-600 text-white scale-110' : 'bg-blue-100 border-gray-300 hover:scale-105'}
+                    `}>
+                    {task.status ? (<CheckCheck className="size-5 sm:size-6 text-green-600" />):(<ListTodo className="size-5 sm:size-6 text-blue-600" />)}
+                    <div className="mb-3 sm:mb-3">
+                      <p className="text-gray-800 mb-1 text-sm sm:text-base"> موضوع یا عنوان</p>
+                      <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base"> </h3>
+                      <div className="p-3 sm:p-4 bg-white border rounded-lg">
+                        <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
+                          {task?.title}
+                        </p>
+                      </div>
+                    </div>
+                    {/* دستورالعمل و نکته */}
+                    <div className="mb-3 sm:mb-3">
+                      <p className="text-gray-800 mb-1 text-sm sm:text-base"> توضیحات</p>
+                      <h3 className="text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base"> </h3>
+                      <div className="p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <p className="text-gray-700 leading-relaxed text-xs sm:text-sm">
+                          {task?.description}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
+                        <p className="text-red-800 text-xs sm:text-sm leading-relaxed">
+                          <strong>توجه:</strong> {task?.tip}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
-              </>
+            </>):(<></>)}
+
+            </>
             )}
           </div>
         </div>

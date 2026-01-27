@@ -16,9 +16,7 @@ export interface User {
 }
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | null>(
-    null,
-  );
+  const [currentUser, setCurrentUser] = useState<User | null>();
   const [showRegister, setShowRegister] = useState(false);
 
   const handleLogin = (username: string,fullname: string, password: string,role: string) => {
@@ -41,7 +39,6 @@ function App() {
         id: "3",
         name: fullname,
         role: role,
-        doctorId: "2",
       });
     }
   };
@@ -53,13 +50,15 @@ function App() {
       role: data.role,
       doctorId: data.doctorId,
     });
-    setShowRegister(false);
+    //localStorage.setItem('currentUser',currentUser);
+    setShowRegister(true);
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
     setShowRegister(false);
   };
+  
 
   if (!currentUser && !showRegister) {
     return (

@@ -13,6 +13,7 @@ import modelTask  from "../../shared/models/taskSchema";
 import  model2  from '../../shared/models/usertaskSchema';
 import { IUserTask } from "../../shared/models/usertask.interface";
 import { MongoAzureError } from "mongodb";
+import { any } from "joi";
 
 
 async function registerUser(req:Request, res:Response) {
@@ -209,43 +210,75 @@ async function getDoctors(req:Request, res:Response) {
 
 async function getDoctorProfile(req: RequestWithUser, res: Response) {
   try {
-    if (!req.user || req.user.role !== "doctor") {
-      return res
-        .status(403)
-        .json(new SuccessResponse({}, false, 403, "Access denied"));
+    if (!req.user || (req.user.role !== "doctor" && req.user.role !== "admin")) {
+      return res.status(403).json(new SuccessResponse({}, false, 403, "Access denied"));
     }
-
-    const doctorId = new mongoose.Types.ObjectId(req.user.userId);
-    const doctorIdStr = doctorId.toString();
-
-    const doctor = await model.UserModel.aggregate([
-      {
-        $match: {
-          _id: doctorId,
-          role: "doctor",
-          deletedAt: null
-        }
-      },
-      {
-        $lookup: {
-          from: "users",
-          pipeline: [
-            {
-              $match: {
-                doctor: doctorIdStr
+    let doctor:any[] = []
+    if (req.user.role === "admin"){
+      const userId:string = req.body.userId
+      const doctorId = new mongoose.Types.ObjectId(userId);
+      const doctorIdStr = doctorId.toString();
+      doctor = await model.UserModel.aggregate([
+        {
+          $match: {
+            _id: doctorId,
+            role: "doctor",
+            deletedAt: null
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            pipeline: [
+              {
+                $match: {
+                  doctor: doctorIdStr
+                }
+              },
+              {
+                $project: { password: 0 }
               }
-            },
-            {
-              $project: { password: 0 }
-            }
-          ],
-          as: "patients"
+            ],
+            as: "patients"
+          }
+        },
+        {
+          $project: { password: 0 }
         }
-      },
-      {
-        $project: { password: 0 }
-      }
-    ]);
+      ]);
+      
+    }else{
+      const doctorId = new mongoose.Types.ObjectId(req.user.userId);
+      const doctorIdStr = doctorId.toString();
+      doctor = await model.UserModel.aggregate([
+        {
+          $match: {
+            _id: doctorId,
+            role: "doctor",
+            deletedAt: null
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            pipeline: [
+              {
+                $match: {
+                  doctor: doctorIdStr
+                }
+              },
+              {
+                $project: { password: 0 }
+              }
+            ],
+            as: "patients"
+          }
+        },
+        {
+          $project: { password: 0 }
+        }
+      ]);
+    }
     const prescriptions = await modelTask.TaskModel.find({creator:req.user.userId}).countDocuments()
     let behbod:number = 0
     let mariz:number = 0
@@ -273,7 +306,6 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
     return res.status(200).json(
       new SuccessResponse({ doctor: doctor[0],prescriptions,mariz,behbod })
     );
-
   } catch (error) {
     console.error(error);
     return res

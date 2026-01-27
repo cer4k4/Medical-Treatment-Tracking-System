@@ -1,5 +1,5 @@
 
-From docker.arvancloud.ir/node
+FROM docker.arvancloud.ir/node
 
 WORKDIR /app
 

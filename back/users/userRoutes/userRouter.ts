@@ -27,5 +27,5 @@ userRouter.get("/doctors",userController.getDoctors)
 
 userRouter.get("/doctors",userController.getDoctors)
 
-userRouter.get("/doctor/profile",middleware.Authentication,middleware.Authorization([UserRoles.DOCTOR]),userController.getDoctorProfile)
+userRouter.post("/doctor/profile",middleware.Authentication,middleware.Authorization([UserRoles.DOCTOR,UserRoles.ADMIN]),userController.getDoctorProfile)
 export = userRouter;

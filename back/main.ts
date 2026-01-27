@@ -11,8 +11,10 @@ const app: express.Application = express();
 app.use(
   cors({
     origin: "*", // allow all (good for development)
-    methods: ["GET", "POST", "PATCH", "DELETE","PUT"],
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    preflightContinue: false,
   })
 );
 

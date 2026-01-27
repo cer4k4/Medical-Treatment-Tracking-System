@@ -9,7 +9,6 @@ export interface ITask {
     updatedAt?: Date,
 }
 
-
 export interface GetUserITask {
     taskId?: string,
     title: string,
@@ -28,7 +27,6 @@ export interface GetUserTaskResponse {
   todo: number;
   startDate: number;
 }
-
 
 export interface UpdateStatus {
     _id: string,

@@ -81,7 +81,7 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
       const req: CreateUserRequest = {
         fullName: formData.fullName,
         username: formData.username,
-        password: formData.password,
+        password: formData.password || 'Ff123456!', 
         phoneNumber: formData.phoneNumber,
         doctor: formData.doctor,
         patient: formData.patient,
@@ -168,23 +168,22 @@ export function RegisterPage({ onRegister, onBackToLogin }: RegisterPageProps) {
               type="password"
               value={formData.password}
               onChange={e =>
-                setFormData({ ...formData, password: e.target.value })
+                setFormData({ ...formData, password: e.target.value})
               }
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-              required
             />
           </div>
 
           {/* پزشک */}
           <div>
-            <label className="block text-gray-700 mb-2">انتخاب پزشک</label>
+            <label className="block text-gray-700 mb-2">انتخاب همیار</label>
             <select
               value={formData.doctor}
               onChange={e => handleDoctorChange(e.target.value)}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               required
             >
-              <option value="">پزشک مورد نظر را انتخاب کنید</option>
+              <option value="">همیار مورد نظر را انتخاب کنید</option>
               {doctors.map(d => (
                 <option key={d.id} value={d.id}>
                   {d.name} - {d.specialty}

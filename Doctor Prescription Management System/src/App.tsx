@@ -16,7 +16,10 @@ export interface User {
 }
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | null>();
+const [currentUser, setCurrentUser] = useState<User | null>(() => {
+  const savedUser = localStorage.getItem("currentUser");
+  return savedUser ? JSON.parse(savedUser) : null;
+});
   const [showRegister, setShowRegister] = useState(false);
 
   const handleLogin = (username: string,fullname: string, password: string,role: string) => {
@@ -42,6 +45,7 @@ function App() {
       });
     }
   };
+  localStorage.setItem('currentUser',JSON.stringify(currentUser));
   const handleRegister = (data: any) => {
     setCurrentUser({
       id: Date.now().toString(),
@@ -50,12 +54,12 @@ function App() {
       role: data.role,
       doctorId: data.doctorId,
     });
-    //localStorage.setItem('currentUser',currentUser);
     setShowRegister(true);
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
+    localStorage.setItem('currentUser',"")
     setShowRegister(false);
   };
   

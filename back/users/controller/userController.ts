@@ -300,7 +300,6 @@ async function getDoctorProfile(req: RequestWithUser, res: Response) {
         }
         p["done"]=done
         p["todo"]=todo
-        console.log(p)
       }
     }
     return res.status(200).json(

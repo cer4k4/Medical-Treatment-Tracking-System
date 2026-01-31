@@ -12,5 +12,7 @@ export const configFile = {
   "dbHost": process.env.DB_HOST,
   "dbName": process.env.DB_NAME,
   "dbPort": process.env.DB_PORT,
+  "dbUserName": process.env.DB_USERNAME,
+  "dbPassword": process.env.DB_PASSWORD,
   "uri": `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/`,
 };
